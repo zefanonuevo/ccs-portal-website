@@ -1,0 +1,65 @@
+/* CCS design tokens. One source for the portal, the Task Tracker and the Grant Support System.
+   Values come from CCS Portal Blueprint v2 (brand slide) and the Task Tracker. Green, black, white. */
+:root {
+  /* palette */
+  --ink: #111a15;
+  --forest: #0b5d45;
+  --forest-deep: #094a37;
+  --mint: #dcebe2;
+  --paper: #f4f7f3;
+  --white: #ffffff;
+
+  /* roles (light) */
+  --bg: var(--paper);
+  --surface: #ffffff;
+  --surface-2: #eef4f0;
+  --text: #14221b;
+  --muted: #4a5a52;
+  --line: #d3ddd6;
+  --accent: var(--forest);
+  --accent-ink: #ffffff;
+  --accent-soft: var(--mint);
+  --band: var(--ink);
+  --band-text: #f4f7f3;
+  --band-muted: #b9cbc1;
+  --nav-bg: rgba(244, 247, 243, 0.78);
+
+  /* type */
+  --f-display: 'Bricolage Grotesque', 'Segoe UI', system-ui, sans-serif;
+  --f-body: 'IBM Plex Sans', 'Segoe UI', system-ui, sans-serif;
+
+  /* shape */
+  --r-sm: 10px;
+  --r-md: 16px;
+  --r-lg: 24px;
+  --r-xl: 32px;
+
+  /* motion */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  --t-press: 160ms;
+  --t-ui: 200ms;
+  --t-sheet: 320ms;
+  --t-reveal: 420ms;
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --bg: #0b110e;
+    --surface: #121c17;
+    --surface-2: #17241d;
+    --text: #e6eee9;
+    --muted: #9db0a5;
+    --line: #243529;
+    --accent: #5fcfa5;
+    --accent-ink: #06251a;
+    --accent-soft: #183b2e;
+    --band: #050806;
+    --band-text: #f1f6f3;
+    --band-muted: #9db0a5;
+    --nav-bg: rgba(11, 17, 14, 0.78);
+    color-scheme: dark;
+  }
+}
