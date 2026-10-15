@@ -103,7 +103,9 @@
     '<div><h4>Across the college</h4>' + SIDE.map(function (a) { return '<a href="' + a.href + '">' + a.label + '</a>'; }).join('') + '</div>' +
     '<div><h4>Systems</h4><a href="' + mods.tracker.url + '" target="_blank" rel="noopener">' + mods.tracker.name + '</a>' +
     '<a href="' + mods.scgss.url + '" target="_blank" rel="noopener">' + mods.scgss.name + '</a>' +
-    '<a href="' + mods.design.url + '" target="_blank" rel="noopener">Design system</a></div>' +
+    '<a href="' + mods.design.url + '" target="_blank" rel="noopener">Design system</a>' +
+    '<a href="' + mods.tracker.repo + '" target="_blank" rel="noopener">Task Tracker on GitHub</a>' +
+    '<a href="' + mods.scgss.repo + '" target="_blank" rel="noopener">Grant Support on GitHub</a></div>' +
     '<p class="fine">' + C.name + ' ' + C.version + '. Draft for review: sample content is marked, access shown here is a preview and is not enforced until sign-in is built.</p></div>';
 
   var main = document.querySelector('main');

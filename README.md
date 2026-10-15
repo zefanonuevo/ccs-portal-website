@@ -34,16 +34,16 @@ One-time setup: **Settings → Pages → Source: GitHub Actions**.
 
 The portal links to, and later embeds, two sibling systems. Both are set in `assets/js/config.js` under `modules`.
 
-| Module | Portal label | Repo (planned) | Today |
+| Module | Portal label | Repo | Live |
 | --- | --- | --- | --- |
-| CCS Task Tracker | Request a Service | `ccs-task-tracker` | Claude artifact prototype |
-| CCS Student Conference Grant Support System | Student Grants | `ccs-scgss` | Claude artifact mockups |
+| CCS Task Tracker | Request a Service | [ccs-task-tracker](https://github.com/zefanonuevo/ccs-task-tracker) | https://zefanonuevo.github.io/ccs-task-tracker/ |
+| CCS Student Conference Grant Support System | Student Grants | [ccs-scgss](https://github.com/zefanonuevo/ccs-scgss) | https://zefanonuevo.github.io/ccs-scgss/ |
 
-When a system gets its own deployment, change its `url` in `config.js`. Nothing else moves.
+To point at a different deployment, change its `url` in `config.js`. Nothing else moves.
 
 ## Same design everywhere
 
-Other CCS systems should import `assets/css/tokens.css` (or copy its `:root` block) so color, type, shape and motion stay identical. The Design System artifact is the visual reference; this file is the code source.
+Every page loads [ccs-design](https://github.com/zefanonuevo/ccs-design) (`ccs-tokens.css`) first, then `assets/css/tokens.css`, which sets the portal palette (green, black, white) on top. Note: ccs-design currently uses an Apple-blue accent, so the portal overrides it. To make all three sites match, change the accent values in ccs-design to the portal green.
 
 ## Draft status
 

@@ -2,7 +2,7 @@
    Values come from CCS Portal Blueprint v2 (brand slide) and the Task Tracker. Green, black, white. */
 :root {
   /* palette */
-  --ink: #111a15;
+  --black: #111a15;
   --forest: #0b5d45;
   --forest-deep: #094a37;
   --mint: #dcebe2;
@@ -19,7 +19,7 @@
   --accent: var(--forest);
   --accent-ink: #ffffff;
   --accent-soft: var(--mint);
-  --band: var(--ink);
+  --band: var(--black);
   --band-text: #f4f7f3;
   --band-muted: #b9cbc1;
   --nav-bg: rgba(244, 247, 243, 0.78);

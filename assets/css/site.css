@@ -19,7 +19,7 @@ button, input, select { font: inherit; color: inherit; }
 [hidden] { display: none !important; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .wrap { width: min(1180px, 100% - 48px); margin-inline: auto; }
-.skip { position: absolute; left: 16px; top: -60px; z-index: 100; background: var(--ink); color: #fff; padding: 10px 16px; border-radius: 10px; }
+.skip { position: absolute; left: 16px; top: -60px; z-index: 100; background: var(--black); color: #fff; padding: 10px 16px; border-radius: 10px; }
 .skip:focus { top: 12px; }
 
 /* ---------- navigation ---------- */
@@ -60,7 +60,7 @@ button, input, select { font: inherit; color: inherit; }
 .btn:active { transform: scale(0.97); }
 .btn.quiet { background: transparent; color: var(--accent); border-color: var(--line); }
 .btn.small { min-height: 36px; padding: 0 16px; font-size: 14px; }
-.btn.on-dark { background: #fff; color: var(--ink); }
+.btn.on-dark { background: #fff; color: var(--black); }
 .btn.on-dark.quiet { background: transparent; color: var(--band-text); border-color: rgba(255,255,255,.28); }
 .chip { display: inline-block; font: 600 12px/1 var(--f-body); letter-spacing: 0.03em; padding: 5px 9px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); white-space: nowrap; }
 .chip.muted { background: var(--surface-2); color: var(--muted); }
@@ -144,6 +144,7 @@ a.card { transition: border-color var(--t-ui) ease, transform var(--t-press) var
 a.card:active { transform: scale(0.985); }
 .card h3 { font-size: 22px; font-weight: 700; }
 .card p { color: var(--muted); font-size: 16px; line-height: 1.45; }
+.card .chip, .q .chip { align-self: flex-start; }
 .card .row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: auto; padding-top: 6px; }
 .card.soft { background: var(--accent-soft); border-color: transparent; }
 .card.soft p { color: var(--text); }

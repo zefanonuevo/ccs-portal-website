@@ -8,24 +8,26 @@ window.CCS = {
       name: 'Request a Service',
       system: 'CCS Task Tracker',
       blurb: 'Ask the office for help and follow it to completion.',
-      status: 'Prototype',
-      // TODO: replace with the deployed tracker (repo: ccs-task-tracker)
-      url: 'https://claude.ai/artifact/GFmMz7eTWijHALrP8HAiL5'
+      status: 'Live',
+      repo: 'https://github.com/zefanonuevo/ccs-task-tracker',
+      url: 'https://zefanonuevo.github.io/ccs-task-tracker/'
     },
     scgss: {
       name: 'Student Grants',
       system: 'CCS Student Conference Grant Support System',
       blurb: 'Apply, track approval and claim reimbursement.',
-      status: 'Mockups',
-      // TODO: replace with the deployed system (repo: ccs-scgss)
-      url: 'https://claude.ai/artifact/7fnvRV15HkTWLbozYbrgk7'
+      status: 'Live',
+      repo: 'https://github.com/zefanonuevo/ccs-scgss',
+      url: 'https://zefanonuevo.github.io/ccs-scgss/'
     },
     design: {
       name: 'CCS Design System',
       system: 'Shared tokens',
       blurb: 'Colors, type, shape and motion shared by every CCS system.',
-      status: 'Tokens in this repo',
-      url: 'https://claude.ai/artifact/TBm4AVYAoDWUEKCww3mURv'
+      status: 'Shared',
+      repo: 'https://github.com/zefanonuevo/ccs-design',
+      css: 'https://zefanonuevo.github.io/ccs-design/ccs-tokens.css',
+      url: 'https://github.com/zefanonuevo/ccs-design'
     }
   },
   /* Blueprint v2, "Who sees what". Order: guest, student, faculty, staff, admin. */
