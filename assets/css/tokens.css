@@ -24,9 +24,7 @@
   --band-muted: #b9cbc1;
   --nav-bg: rgba(244, 247, 243, 0.78);
 
-  /* type */
-  --f-display: 'Bricolage Grotesque', 'Segoe UI', system-ui, sans-serif;
-  --f-body: 'IBM Plex Sans', 'Segoe UI', system-ui, sans-serif;
+  /* type: --f-display and --f-body (system font stack) come from ccs-design */
 
   /* shape */
   --r-sm: 10px;

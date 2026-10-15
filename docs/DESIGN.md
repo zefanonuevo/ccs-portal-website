@@ -15,7 +15,7 @@ Apple-style restraint in green, black and white: big quiet headlines, generous s
 Dark mode follows the system setting (accent becomes `#5fcfa5`). No amber in v1: the brief is green, black and white. Status is never color alone.
 
 ## Type
-Bricolage Grotesque for headings, IBM Plex Sans for text. Same as the Task Tracker.
+System font stack (SF Pro on Apple devices, Segoe UI on Windows), from ccs-design. Same as the Task Tracker and Grant Support System. No web fonts are downloaded.
 
 ## Motion thesis
 Calm and precise. Press feedback 160 ms (`scale(0.97)`), hover and color 200 ms, side menu 320 ms with a drawer curve, one scroll reveal (10 px rise and fade, 60 ms stagger, 420 ms). CSS only, no animation library. Only `transform`, `opacity` and color are animated.
