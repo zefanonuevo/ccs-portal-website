@@ -43,7 +43,7 @@ To point at a different deployment, change its `url` in `config.js`. Nothing els
 
 ## Same design everywhere
 
-Every page loads [ccs-design](https://github.com/zefanonuevo/ccs-design) (`ccs-tokens.css`) first, then `assets/css/tokens.css`, which sets the portal palette (green, black, white) on top. Note: ccs-design currently uses an Apple-blue accent, so the portal overrides it. To make all three sites match, change the accent values in ccs-design to the portal green.
+Every page loads [ccs-design](https://github.com/zefanonuevo/ccs-design) (`ccs-tokens.css`, v2) first. Its palette is green, white and black, and the same file drives the Task Tracker and the Grant Support System. `assets/css/tokens.css` adds portal-only tokens (band, nav, motion timings) on top. To change the palette for all three sites, edit ccs-design.
 
 ## Draft status
 
