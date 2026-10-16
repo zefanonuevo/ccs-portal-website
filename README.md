@@ -32,12 +32,13 @@ One-time setup: **Settings → Pages → Source: GitHub Actions**.
 
 ## Connected systems
 
-The portal links to, and later embeds, two sibling systems. Both are set in `assets/js/config.js` under `modules`.
+The portal links to, and later embeds, three sibling systems. Both are set in `assets/js/config.js` under `modules`.
 
 | Module | Portal label | Repo | Live |
 | --- | --- | --- | --- |
 | CCS Task Tracker | Request a Service | [ccs-task-tracker](https://github.com/zefanonuevo/ccs-task-tracker) | https://zefanonuevo.github.io/ccs-task-tracker/ |
 | CCS Student Conference Grant Support System | Student Grants | [ccs-scgss](https://github.com/zefanonuevo/ccs-scgss) | https://zefanonuevo.github.io/ccs-scgss/ |
+| CCS Virtual Office Dashboard | Usage dashboard (Community, Virtual Office) | [ccs-vo-dashboard](https://github.com/zefanonuevo/ccs-vo-dashboard) | https://zefanonuevo.github.io/ccs-vo-dashboard/ |
 
 To point at a different deployment, change its `url` in `config.js`. Nothing else moves.
 

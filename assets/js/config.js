@@ -20,6 +20,14 @@ window.CCS = {
       repo: 'https://github.com/zefanonuevo/ccs-scgss',
       url: 'https://zefanonuevo.github.io/ccs-scgss/'
     },
+    vo: {
+      name: 'Usage Dashboard',
+      system: 'CCS Virtual Office Dashboard',
+      blurb: 'Who registered, who joined, usage over time.',
+      status: 'Live',
+      repo: 'https://github.com/zefanonuevo/ccs-vo-dashboard',
+      url: 'https://zefanonuevo.github.io/ccs-vo-dashboard/'
+    },
     design: {
       name: 'CCS Design System',
       system: 'Shared tokens',
