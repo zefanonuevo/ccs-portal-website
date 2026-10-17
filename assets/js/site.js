@@ -175,7 +175,8 @@
     d.innerHTML = '<div class="fd-bar"><strong id="fd-title"></strong><span class="fd-actions">' +
       '<a class="fd-new" target="_blank" rel="noopener">Open in a new tab \u2197</a>' +
       '<button type="button" class="fd-close" aria-label="Close">\u00D7</button></span></div>' +
-      '<div class="fd-body"><iframe loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>';
+      '<div class="fd-body"><iframe loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>' +
+      '<p class="fd-foot">Form not showing? <a class="fd-new" target="_blank" rel="noopener">Open it in a new tab \u2197</a></p>';
     d.querySelector('.fd-close').addEventListener('click', function () { d.close(); });
     d.addEventListener('click', function (e) { if (e.target === d) d.close(); });
     d.addEventListener('close', function () { if (formTrigger) formTrigger.focus({ preventScroll: true }); });   // back to the card, for keyboard users
@@ -187,7 +188,7 @@
     if (!formDlg) formDlg = buildFormDialog();
     var frame = formDlg.querySelector('iframe');
     formDlg.querySelector('#fd-title').textContent = m.name;
-    formDlg.querySelector('.fd-new').href = m.url;
+    Array.prototype.forEach.call(formDlg.querySelectorAll('.fd-new'), function (l) { l.href = m.url; });
     frame.title = m.name + ' form';
     if (formKey !== key) { frame.src = m.url + (m.url.indexOf('?') < 0 ? '?' : '&') + 'embedded=true'; formKey = key; }   // loads once, kept if closed by accident
     formDlg.showModal();

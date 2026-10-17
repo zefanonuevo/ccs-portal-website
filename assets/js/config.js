@@ -3,7 +3,7 @@
 window.CCS = {
   name: 'CCS Compass',
   version: 'Draft v1',
-  release: '0.5.0',   // single source for the release number shown in the footer; keep in step with CHANGELOG.md
+  release: '0.5.1',   // single source for the release number shown in the footer; keep in step with CHANGELOG.md
   modules: {
     tracker: {
       name: 'Request a Service',

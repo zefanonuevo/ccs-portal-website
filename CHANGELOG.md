@@ -7,6 +7,14 @@ The release number shown in the footer of every page comes from `release` in
 `assets/js/config.js`. Change it together with this file when you cut a new release.
 (`version: 'Draft v1'` is the draft stage of the whole site, not the release number.)
 
+## 0.5.1 - Pop-up fallback and touch fixes (2026-10-17)
+- The registration pop-up always shows a *Form not showing? Open it in a new tab* link
+  under the form, in case a browser blocks the embedded form.
+- Page files carry a version in their address, so a new release is never hidden by a
+  cached copy of the old one.
+- Touch screens: logo, header icons, footer links and Sign in are at least 44px tall.
+- The page behind the open side menu no longer scrolls.
+
 ## 0.5.0 - Registration pop-up (2026-10-17)
 - **Register and join Zoom** (Community, Virtual Office) now opens the Virtual Office
   registration Google Form in a pop-up, with an *Open in a new tab* link and a close

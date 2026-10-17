@@ -160,6 +160,8 @@ dialog.form-dialog::backdrop { background: rgba(5, 8, 6, .42); }
 .fd-new { color: var(--accent); font-weight: 600; font-size: 14px; text-decoration: none; padding: 8px 10px; border-radius: 10px; white-space: nowrap; }
 .fd-close { appearance: none; border: 0; background: var(--surface-2); color: var(--text); width: 36px; height: 36px; border-radius: 50%; font-size: 22px; line-height: 1; cursor: pointer; display: grid; place-items: center; transition: transform var(--t-press) var(--ease-out); }
 .fd-close:active { transform: scale(0.94); }
+.fd-foot { flex: none; margin: 0; padding: 4px 16px; border-top: 1px solid var(--line); font-size: 13.5px; color: var(--muted); display: flex; align-items: center; justify-content: center; gap: 4px; flex-wrap: wrap; }
+.fd-foot .fd-new { padding: 10px 6px; }
 .fd-body { position: relative; flex: 1; overflow: auto; background: #fff; }
 /* shown until the form paints over it; the iframe has no background of its own */
 .fd-body::before { content: 'Loading the form\2026'; position: absolute; inset: 40px 0 auto; text-align: center; color: #5f6368; font-size: 15px; }
@@ -171,7 +173,15 @@ dialog.form-dialog::backdrop { background: rgba(5, 8, 6, .42); }
 @media (hover: hover) and (pointer: fine) { .fd-new:hover { background: var(--accent-soft); } .fd-close:hover { background: var(--line); } }
 @keyframes fd-in { from { opacity: 0; transform: translateY(8px) scale(0.985); } }
 @keyframes fd-fade { from { opacity: 0; } }
-body:has(dialog.form-dialog[open]) { overflow: hidden; }
+body:has(dialog.form-dialog[open]), body.sheet-open { overflow: hidden; }
+html:has(body.sheet-open) { overflow: hidden; }
+/* touch screens: tap targets of at least 44px */
+@media (pointer: coarse) {
+  .brand { min-height: 44px; }
+  .icon-btn { min-width: 44px; min-height: 44px; }
+  .foot a { padding: 9px 0; }
+  .btn.small.nav-signin { min-height: 44px; }
+}
 @media (prefers-reduced-motion: reduce) { dialog.form-dialog[open] { animation: fd-fade 120ms ease; } .fd-close:active { transform: none; } }
 .note { background: var(--accent-soft); border-radius: var(--r-md); padding: 18px 22px; font-size: 16px; }
 .sample { border: 1px dashed var(--line); }
