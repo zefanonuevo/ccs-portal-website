@@ -106,7 +106,7 @@
     '<a href="' + mods.design.url + '" target="_blank" rel="noopener">Design system</a>' +
     '<a href="' + mods.tracker.repo + '" target="_blank" rel="noopener">Task Tracker on GitHub</a>' +
     '<a href="' + mods.scgss.repo + '" target="_blank" rel="noopener">Grant Support on GitHub</a></div>' +
-    '<p class="fine">' + C.name + ' ' + C.version + '. Draft for review: sample content is marked, access shown here is a preview and is not enforced until sign-in is built.</p></div>';
+    '<p class="fine">' + C.name + ' ' + C.version + ' \u00B7 release v' + C.release + ' \u00B7 <a href="https://github.com/zefanonuevo/ccs-portal-website/blob/main/CHANGELOG.md" target="_blank" rel="noopener">Version history</a>. Draft for review: sample content is marked, access shown here is a preview and is not enforced until sign-in is built.</p></div>';
 
   var main = document.querySelector('main');
   if (main) { main.id = main.id || 'main'; }

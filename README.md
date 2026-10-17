@@ -47,6 +47,48 @@ To point at a different deployment, change its `url` in `config.js`. Nothing els
 
 Every page loads [ccs-design](https://github.com/zefanonuevo/ccs-design) (`ccs-tokens.css`, v2) first. Its palette is green, white and black, and the same file drives the Task Tracker and the Grant Support System. `assets/css/tokens.css` adds portal-only tokens (band, nav, motion timings) on top. To change the palette for all three sites, edit ccs-design.
 
+## Versions and restoring
+
+Every release is a git tag with a GitHub Release, and [CHANGELOG.md](CHANGELOG.md) says
+what changed in each. The release number is shown in the footer of every page.
+
+| Release | What it is |
+|---|---|
+| `v0.1.0` | Draft v1 from the blueprint |
+| `v0.2.0` | Connected to the Task Tracker, Grant Support and the shared design |
+| `v0.3.0` | Green, white and black palette and system font from `ccs-design` v2 |
+| `v0.4.0` | Usage dashboard link |
+| `v0.5.0` | Registration form pop-up, release number in the footer |
+
+**Look at an old release.** Open `https://github.com/zefanonuevo/ccs-portal-website/tree/v0.3.0`
+(swap in any tag), or download its zip from the Releases page.
+
+**Run it on your computer.**
+```bash
+git clone https://github.com/zefanonuevo/ccs-portal-website.git
+cd ccs-portal-website
+git checkout v0.3.0
+python3 -m http.server 8080      # then open http://localhost:8080
+```
+
+**Put an old release back on the live site.** This keeps the history, so you can go
+forward again. Pushing to `main` redeploys the site.
+```bash
+git checkout main
+git rm -rq .                      # clear the working files ...
+git checkout v0.3.0 -- .          # ... and bring back exactly that release's files
+git commit -m "Restore v0.3.0"
+git push
+```
+
+Only the portal's own files are versioned. The Task Tracker, Grant Support System,
+Virtual Office Dashboard and the Google Form are separate and always show their latest
+version. The shared design stylesheet is loaded with a `?v=` number that is part of each
+release's HTML, so an old release keeps asking for the stylesheet it was built with.
+
+To cut a new release: update `release` in `assets/js/config.js` and add an entry to
+`CHANGELOG.md`, commit, then `git tag -a vX.Y.Z -m "..."` and `git push --tags`.
+
 ## Draft status
 
 - Sample content is marked "Sample".

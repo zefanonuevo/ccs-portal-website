@@ -1,0 +1,33 @@
+# Changelog
+
+Every release is a git tag, so any of them can be opened, downloaded or restored.
+See [Versions and restoring](README.md#versions-and-restoring).
+
+The release number shown in the footer of every page comes from `release` in
+`assets/js/config.js`. Change it together with this file when you cut a new release.
+(`version: 'Draft v1'` is the draft stage of the whole site, not the release number.)
+
+## 0.5.0 - Registration pop-up (2026-10-17)
+- **Register and join Zoom** (Community, Virtual Office) now opens the Virtual Office
+  registration Google Form in a pop-up, with an *Open in a new tab* link and a close
+  button. Ctrl/Cmd-click, or no JavaScript, opens the form in a new tab. Esc and the
+  backdrop close it, and phones get a full-screen sheet. The form address is
+  `modules.register` in `config.js`.
+- Release number and a *Version history* link in the footer, and this changelog.
+- Briefly an inline embed (`d7fedc3`); replaced by the pop-up in the same release.
+
+## 0.4.0 - Usage dashboard link (2026-10-17)
+- The **Usage dashboard** card (Community, Virtual Office) links to the Virtual Office
+  Dashboard (`modules.vo`) and opens it in a new tab.
+
+## 0.3.0 - Same palette and type as the other CCS systems (2026-10-15)
+- Loads `ccs-design` v2 (green, white and black) and uses its system font stack. No
+  web fonts are downloaded.
+
+## 0.2.0 - Connected systems (2026-10-15)
+- Links to the Task Tracker (Request a Service) and the Grant Support System (Student
+  Grants), and loads the shared `ccs-design` tokens. The addresses are in `config.js`.
+
+## 0.1.0 - Draft v1 (2026-10-15)
+- First draft, built from CCS Portal Blueprint v2: home, the four areas, the side
+  menu, search, and the "Viewing as" role preview.
