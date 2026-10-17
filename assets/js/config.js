@@ -28,6 +28,13 @@ window.CCS = {
       repo: 'https://github.com/zefanonuevo/ccs-vo-dashboard',
       url: 'https://zefanonuevo.github.io/ccs-vo-dashboard/'
     },
+    register: {
+      name: 'Virtual Office Registration',
+      system: 'Google Form',
+      blurb: 'Register to receive a queue number and be notified when it is your turn.',
+      status: 'Live',
+      url: 'https://docs.google.com/forms/d/e/1FAIpQLScxxeeRJRwj0GbZBP6ahK0fUJOmgXz0ASjOI8aDNTrTBWj4QQ/viewform'
+    },
     design: {
       name: 'CCS Design System',
       system: 'Shared tokens',

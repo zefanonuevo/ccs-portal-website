@@ -165,6 +165,16 @@
     a.href = m.url; a.target = '_blank'; a.rel = 'noopener';
   });
 
+  /* ---------- embedded forms: data-embed="register" sets the iframe source, data-link opens the same form ---------- */
+  Array.prototype.forEach.call(document.querySelectorAll('[data-embed]'), function (f) {
+    var m = C.modules[f.getAttribute('data-embed')]; if (!m) return;
+    f.src = m.url + (m.url.indexOf('?') < 0 ? '?' : '&') + 'embedded=true';
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-link]'), function (a) {
+    var m = C.modules[a.getAttribute('data-link')]; if (!m) return;
+    a.href = m.url; a.target = '_blank'; a.rel = 'noopener';
+  });
+
   /* ---------- role preview: data-access="grants" adds a badge ---------- */
   var TEXT = { View: 'You can view', Use: 'You can use', Manage: 'You can manage' };
   function applyRole() {

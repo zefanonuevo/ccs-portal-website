@@ -148,6 +148,20 @@ a.card:active { transform: scale(0.985); }
 .card .row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: auto; padding-top: 6px; }
 .card.soft { background: var(--accent-soft); border-color: transparent; }
 .card.soft p { color: var(--text); }
+/* embedded Google Form (Virtual Office registration). The form is a fixed-height page, so the iframe
+   height follows its measured height at each width; the blank space below the last field is small. */
+.register { margin-top: 40px; scroll-margin-top: 90px; max-width: 780px; margin-inline: auto; }
+.register-head { margin-bottom: 18px; }
+.register-head h3 { font-size: clamp(24px, 3vw, 32px); font-weight: 800; }
+.register-head p { color: var(--muted); margin-top: 8px; max-width: 62ch; }
+.form-embed { background: #fff; border: 1px solid var(--line); border-radius: var(--r-lg); padding: 8px; overflow: hidden; }
+.form-embed iframe { display: block; width: 100%; height: 1700px; border: 0; border-radius: calc(var(--r-lg) - 6px); color-scheme: light; background: #fff; }
+@media (max-width: 700px) { .form-embed iframe { height: 1900px; } }
+@media (max-width: 520px) { .form-embed iframe { height: 2100px; } }
+@media (max-width: 420px) { .form-embed iframe { height: 2260px; } }
+@media (max-width: 380px) { .form-embed iframe { height: 2340px; } }
+.form-fallback { margin-top: 12px; color: var(--muted); font-size: 15px; }
+.form-fallback a { color: var(--accent); font-weight: 600; }
 .note { background: var(--accent-soft); border-radius: var(--r-md); padding: 18px 22px; font-size: 16px; }
 .sample { border: 1px dashed var(--line); }
 .list { list-style: none; margin: 0; padding: 0; display: grid; }
