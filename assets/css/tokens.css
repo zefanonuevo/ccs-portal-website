@@ -1,28 +1,33 @@
-/* CCS design tokens. One source for the portal, the Task Tracker and the Grant Support System.
-   Values come from CCS Portal Blueprint v2 (brand slide) and the Task Tracker. Green, black, white. */
+/* Portal palette. Loaded after ccs-design, so these values win on the portal only.
+   Ink for header and text, Forest for primary actions, Mint for soft panels,
+   Paper for the page, Amber for attention (used sparingly). */
 :root {
   /* palette */
-  --black: #111a15;
+  --ink: #111a15;
+  --black: var(--ink);
   --forest: #0b5d45;
   --forest-deep: #094a37;
   --mint: #dcebe2;
   --paper: #f4f7f3;
+  --amber: #8a5a00;
   --white: #ffffff;
 
   /* roles (light) */
   --bg: var(--paper);
   --surface: #ffffff;
-  --surface-2: #eef4f0;
-  --text: #14221b;
-  --muted: #4a5a52;
-  --line: #d3ddd6;
+  --surface-2: #e9f1ec;
+  --text: var(--ink);
+  --muted: #4d5d55;
+  --line: #cfdbd3;
   --accent: var(--forest);
   --accent-ink: #ffffff;
   --accent-soft: var(--mint);
-  --band: var(--black);
-  --band-text: #f4f7f3;
-  --band-muted: #b9cbc1;
-  --nav-bg: rgba(244, 247, 243, 0.78);
+  --attention: var(--amber);
+  --attention-soft: #f3e7cf;
+  --band: var(--ink);
+  --band-text: var(--paper);
+  --band-muted: #a9bdb2;
+  --nav-bg: rgba(244, 247, 243, 0.82);
 
   /* type: --f-display and --f-body (system font stack) come from ccs-design */
 
@@ -45,19 +50,21 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
-    --bg: #0b110e;
-    --surface: #121c17;
-    --surface-2: #17241d;
-    --text: #e6eee9;
-    --muted: #9db0a5;
+    --bg: #0b130f;
+    --surface: #121d17;
+    --surface-2: #17261e;
+    --text: var(--paper);
+    --muted: #9fb3a8;
     --line: #243529;
     --accent: #5fcfa5;
     --accent-ink: #06251a;
     --accent-soft: #183b2e;
-    --band: #050806;
-    --band-text: #f1f6f3;
-    --band-muted: #9db0a5;
-    --nav-bg: rgba(11, 17, 14, 0.78);
+    --attention: #e6b765;
+    --attention-soft: #3a2c12;
+    --band: #060c09;
+    --band-text: var(--paper);
+    --band-muted: #9fb3a8;
+    --nav-bg: rgba(11, 19, 15, 0.82);
     color-scheme: dark;
   }
 }
