@@ -210,8 +210,9 @@
       setMega(item, open);
     });
     if (canHover) {
-      item.addEventListener('mouseenter', function () { closeMega(item); setMega(item, true); });
-      item.addEventListener('mouseleave', function () { setMega(item, false); });
+      var closeTimer;
+      item.addEventListener('mouseenter', function () { clearTimeout(closeTimer); closeMega(item); setMega(item, true); });
+      item.addEventListener('mouseleave', function () { closeTimer = setTimeout(function () { setMega(item, false); }, 200); });
     }
     item.addEventListener('focusout', function (e) { if (!item.contains(e.relatedTarget)) { setMega(item, false); } });
   });
