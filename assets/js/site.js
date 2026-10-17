@@ -165,14 +165,43 @@
     a.href = m.url; a.target = '_blank'; a.rel = 'noopener';
   });
 
-  /* ---------- embedded forms: data-embed="register" sets the iframe source, data-link opens the same form ---------- */
-  Array.prototype.forEach.call(document.querySelectorAll('[data-embed]'), function (f) {
-    var m = C.modules[f.getAttribute('data-embed')]; if (!m) return;
-    f.src = m.url + (m.url.indexOf('?') < 0 ? '?' : '&') + 'embedded=true';
-  });
-  Array.prototype.forEach.call(document.querySelectorAll('[data-link]'), function (a) {
-    var m = C.modules[a.getAttribute('data-link')]; if (!m) return;
+  /* ---------- pop-up form: data-popup="register" opens that module's Google Form in a dialog ----------
+     The link keeps the form address as its href, so Ctrl/Cmd-click, middle-click, or no JavaScript opens it in a new tab. */
+  var formDlg = null, formKey = null, formTrigger = null;
+  function buildFormDialog() {
+    var d = document.createElement('dialog');
+    d.className = 'form-dialog';
+    d.setAttribute('aria-labelledby', 'fd-title');
+    d.innerHTML = '<div class="fd-bar"><strong id="fd-title"></strong><span class="fd-actions">' +
+      '<a class="fd-new" target="_blank" rel="noopener">Open in a new tab \u2197</a>' +
+      '<button type="button" class="fd-close" aria-label="Close">\u00D7</button></span></div>' +
+      '<div class="fd-body"><iframe loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>';
+    d.querySelector('.fd-close').addEventListener('click', function () { d.close(); });
+    d.addEventListener('click', function (e) { if (e.target === d) d.close(); });
+    d.addEventListener('close', function () { if (formTrigger) formTrigger.focus({ preventScroll: true }); });   // back to the card, for keyboard users
+    document.body.appendChild(d);
+    return d;
+  }
+  function openForm(key) {
+    var m = C.modules[key]; if (!m || typeof HTMLDialogElement === 'undefined') return false;
+    if (!formDlg) formDlg = buildFormDialog();
+    var frame = formDlg.querySelector('iframe');
+    formDlg.querySelector('#fd-title').textContent = m.name;
+    formDlg.querySelector('.fd-new').href = m.url;
+    frame.title = m.name + ' form';
+    if (formKey !== key) { frame.src = m.url + (m.url.indexOf('?') < 0 ? '?' : '&') + 'embedded=true'; formKey = key; }   // loads once, kept if closed by accident
+    formDlg.showModal();
+    formDlg.querySelector('.fd-close').focus();
+    return true;
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('[data-popup]'), function (a) {
+    var m = C.modules[a.getAttribute('data-popup')]; if (!m) return;
     a.href = m.url; a.target = '_blank'; a.rel = 'noopener';
+    a.addEventListener('click', function (e) {
+      if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;   // let the browser open a new tab
+      formTrigger = a;
+      if (openForm(a.getAttribute('data-popup'))) e.preventDefault();
+    });
   });
 
   /* ---------- role preview: data-access="grants" adds a badge ---------- */
