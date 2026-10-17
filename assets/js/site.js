@@ -42,6 +42,66 @@
     ['Connected systems', 'Home', 'index.html#systems']
   ];
 
+  /* Mega menu: sub-menus for each area, built from the area pages' sections and cards. */
+  var MEGA = [
+    { key: 'academics', href: 'academics.html', label: 'Academics', line: 'Study at CCS, plan your path and finish your degree.', groups: [
+      { title: 'Study', items: [
+        { href: 'academics.html#degree-programs', label: 'Degree programs', line: 'Each program and what it prepares you for' },
+        { href: 'academics.html#outcomes', label: 'What graduates can do', line: 'Graduate attributes and outcomes' },
+        { href: 'academics.html#curriculum', label: 'What you will study', line: 'Units and the list of courses' },
+        { href: 'academics.html#path', label: 'Your path, term by term', line: 'Course flowcharts for each program' },
+        { href: 'academics.html#course-guide', label: 'Course guide', line: 'Course descriptions and syllabi' }
+      ] },
+      { title: 'Apply and finish', items: [
+        { href: 'academics.html#how-to-apply', label: 'How to apply', line: 'Admission steps' },
+        { href: 'academics.html#finishing', label: 'Finishing your degree', line: 'Graduation requirements' }
+      ] },
+      { title: 'Tools', items: [
+        { href: 'academics.html#dashboard', label: 'Academic dashboard', line: 'Your progress and records' }
+      ] }
+    ] },
+    { key: 'community', href: 'community.html', label: 'Community', line: 'Belong at CCS: services, the Virtual Office and the people of the college.', groups: [
+      { title: 'Services', items: [
+        { href: 'community.html#request-service', label: 'Request a service', line: 'Submit a request and follow it' },
+        { href: 'community.html#grants', label: 'Student grants', line: 'Apply, track and claim reimbursement' }
+      ] },
+      { title: 'Virtual Office', items: [
+        { href: 'community.html#register', label: 'Register and join Zoom', line: 'Registration and your queue number' },
+        { href: 'community.html#knowledge-base', label: 'Knowledge base and chatbot', line: 'Answers to common questions' },
+        { href: 'community.html#usage', label: 'Usage dashboard', line: 'Who registered and who joined' }
+      ] },
+      { title: 'People and places', items: [
+        { href: 'community.html#spotlight', label: 'Spotlight', line: 'Awards and recognition' },
+        { href: 'community.html#committees', label: 'Committees', line: 'Committee involvement' },
+        { href: 'community.html#serving', label: 'Serving the community', line: 'Community engagement' },
+        { href: 'community.html#equipment', label: 'Equipment and inventory', line: 'Inventory for the college' }
+      ] }
+    ] },
+    { key: 'partnerships', href: 'partnerships.html', label: 'Partnerships', line: 'Collaborate with CCS: industry and community partners.', groups: [
+      { title: 'Partners', items: [
+        { href: 'partnerships.html#tracker', label: 'Partner activity tracker', line: 'Engagement activities over time' },
+        { href: 'partnerships.html#directory', label: 'Partner directory', line: 'Searchable by field and status' },
+        { href: 'partnerships.html#highlights', label: 'Partner highlights', line: 'Stories and results from partner work' }
+      ] },
+      { title: 'Agreements', items: [
+        { href: 'partnerships.html#agreements', label: 'Agreements', line: 'MOA and MOU, scope and duration' }
+      ] }
+    ] },
+    { key: 'research', href: 'research.html', label: 'Research & Innovation', line: 'Discover at CCS: publications, faculty work and projects.', groups: [
+      { title: 'Publications', items: [
+        { href: 'research.html#publication-highlights', label: 'Publication highlights', line: 'Recent faculty and student work' },
+        { href: 'research.html#faculty-records', label: 'Faculty records', line: 'Research profiles of faculty' },
+        { href: 'research.html#add', label: 'Add your publication', line: 'Submit a publication for listing' }
+      ] },
+      { title: 'Projects', items: [
+        { href: 'research.html#project-highlights', label: 'Project highlights', line: 'Current and completed projects' },
+        { href: 'research.html#grants-summary', label: 'Grants summary', line: 'Funding across projects' },
+        { href: 'research.html#project-status', label: 'Project status', line: 'Progress of active projects' }
+      ] }
+    ] }
+  ];
+  var CHEV = '<svg class="chev" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
   var ICON = {
     mark: '<svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 1l2.3 8.7L23 12l-8.7 2.3L12 23l-2.3-8.7L1 12l8.7-2.3z"/></svg>',
     search: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="9" r="6"/><path d="M14 14l4 4"/></svg>',
@@ -60,6 +120,23 @@
       '</select></label>';
   }
 
+  function megaItem(m) {
+    var id = 'mega-' + m.key;
+    return '<div class="mega-item" data-key="' + m.key + '">' +
+      '<button type="button" class="mega-trigger' + (m.href === page ? ' is-current' : '') + '" aria-expanded="false" aria-controls="' + id + '">' + m.label + CHEV + '</button>' +
+      '<div class="mega-panel" id="' + id + '" hidden><div class="wrap">' +
+      '<div class="mega-head"><div><p class="mega-title">' + m.label + '</p><p>' + m.line + '</p></div>' +
+      '<a href="' + m.href + '">Open ' + m.label + ' &rarr;</a></div>' +
+      '<div class="mega-cols">' + m.groups.map(function (g) {
+        return '<div class="mega-col"><p class="mega-group">' + g.title + '</p>' + g.items.map(function (it) {
+          return '<a href="' + it.href + '"><b>' + it.label + '</b><span>' + it.line + '</span></a>';
+        }).join('') + '</div>';
+      }).join('') + '</div>' +
+      '<div class="mega-strip"><span class="mega-group">Across the college</span>' +
+      SIDE.map(function (s) { return '<a href="' + s.href + '">' + s.label + '</a>'; }).join('') +
+      '</div></div></div></div>';
+  }
+
   /* ---------- chrome ---------- */
   var header = document.createElement('header');
   header.className = 'nav';
@@ -67,9 +144,7 @@
     '<div class="wrap">' +
     '<a class="brand" href="index.html" aria-label="' + C.name + ' home">' + ICON.mark + '<span>' + C.name + '</span></a>' +
     '<span class="tag">' + C.version + '</span>' +
-    '<nav class="nav-links" aria-label="Areas">' +
-    AREAS.map(function (a) { return '<a href="' + a.href + '"' + (a.href === page ? ' aria-current="page"' : '') + '>' + a.label + '</a>'; }).join('') +
-    '</nav>' +
+    '<nav class="nav-links" aria-label="Areas">' + MEGA.map(megaItem).join('') + '</nav>' +
     '<div class="nav-tools">' +
     roleSelect('role-top') +
     '<button class="icon-btn" id="open-search" aria-label="Search (press /)">' + ICON.search + '</button>' +
@@ -115,6 +190,38 @@
   document.body.prepend(skip);
   skip.after(header);
   document.body.append(sheet, dlg, foot);
+
+  /* ---------- mega menu ---------- */
+  var megaItems = header.querySelectorAll('.mega-item');
+  var canHover = !!(window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches);
+  function setMega(item, open) {
+    item.querySelector('.mega-panel').hidden = !open;
+    item.querySelector('.mega-trigger').setAttribute('aria-expanded', String(open));
+    item.classList.toggle('is-open', open);
+  }
+  function closeMega(except) {
+    megaItems.forEach(function (item) { if (item !== except && item.classList.contains('is-open')) { setMega(item, false); } });
+  }
+  megaItems.forEach(function (item) {
+    var btn = item.querySelector('.mega-trigger');
+    btn.addEventListener('click', function () {
+      var open = canHover || btn.getAttribute('aria-expanded') !== 'true';
+      closeMega(item);
+      setMega(item, open);
+    });
+    if (canHover) {
+      item.addEventListener('mouseenter', function () { closeMega(item); setMega(item, true); });
+      item.addEventListener('mouseleave', function () { setMega(item, false); });
+    }
+    item.addEventListener('focusout', function (e) { if (!item.contains(e.relatedTarget)) { setMega(item, false); } });
+  });
+  document.addEventListener('click', function (e) { if (!e.target.closest('.mega-item')) { closeMega(null); } });
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') { return; }
+    megaItems.forEach(function (item) {
+      if (item.classList.contains('is-open')) { setMega(item, false); item.querySelector('.mega-trigger').focus(); }
+    });
+  });
 
   /* ---------- side menu ---------- */
   var btnMenu = document.getElementById('open-menu');
