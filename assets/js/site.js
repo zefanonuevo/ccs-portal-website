@@ -172,9 +172,10 @@
     var d = document.createElement('dialog');
     d.className = 'form-dialog';
     d.setAttribute('aria-labelledby', 'fd-title');
-    d.innerHTML = '<div class="fd-bar"><strong id="fd-title"></strong><span class="fd-actions">' +
-      '<a class="fd-new" target="_blank" rel="noopener">Open in a new tab \u2197</a>' +
-      '<button type="button" class="fd-close" aria-label="Close">\u00D7</button></span></div>' +
+    d.innerHTML = '<div class="fd-bar">' + ICON.mark +
+      '<div class="fd-head"><strong id="fd-title"></strong><span class="fd-sub"></span></div>' +
+      '<button type="button" class="fd-close" aria-label="Close">\u00D7</button></div>' +
+      '<ol class="fd-steps"><li><b>1</b>Fill in the form</li><li><b>2</b>Get your queue number</li><li><b>3</b>Join Zoom when called</li></ol>' +
       '<div class="fd-body"><iframe loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>' +
       '<p class="fd-foot">Form not showing? <a class="fd-new" target="_blank" rel="noopener">Open it in a new tab \u2197</a></p>';
     d.querySelector('.fd-close').addEventListener('click', function () { d.close(); });
@@ -188,6 +189,7 @@
     if (!formDlg) formDlg = buildFormDialog();
     var frame = formDlg.querySelector('iframe');
     formDlg.querySelector('#fd-title').textContent = m.name;
+    formDlg.querySelector('.fd-sub').textContent = m.sub || '';
     Array.prototype.forEach.call(formDlg.querySelectorAll('.fd-new'), function (l) { l.href = m.url; });
     frame.title = m.name + ' form';
     if (formKey !== key) { frame.src = m.url + (m.url.indexOf('?') < 0 ? '?' : '&') + 'embedded=true'; formKey = key; }   // loads once, kept if closed by accident

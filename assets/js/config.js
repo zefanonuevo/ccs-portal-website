@@ -3,7 +3,7 @@
 window.CCS = {
   name: 'CCS Compass',
   version: 'Draft v1',
-  release: '0.5.1',   // single source for the release number shown in the footer; keep in step with CHANGELOG.md
+  release: '0.6.0',   // single source for the release number shown in the footer; keep in step with CHANGELOG.md
   modules: {
     tracker: {
       name: 'Request a Service',
@@ -31,6 +31,7 @@ window.CCS = {
     },
     register: {
       name: 'Virtual Office Registration',
+      sub: 'CCS Virtual Office waiting room',
       system: 'Google Form',
       blurb: 'Register to receive a queue number and be notified when it is your turn.',
       status: 'Live',

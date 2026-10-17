@@ -7,6 +7,11 @@ The release number shown in the footer of every page comes from `release` in
 `assets/js/config.js`. Change it together with this file when you cut a new release.
 (`version: 'Draft v1'` is the draft stage of the whole site, not the release number.)
 
+## 0.6.0 - Registration pop-up redesign (2026-10-17)
+- New look for the Register and join Zoom pop-up: forest-green header with the CCS mark,
+  a three-step strip (fill in the form, get your queue number, join Zoom when called),
+  and the form below. Same green, white and black palette; works in light and dark.
+
 ## 0.5.1 - Pop-up fallback and touch fixes (2026-10-17)
 - The registration pop-up always shows a *Form not showing? Open it in a new tab* link
   under the form, in case a browser blocks the embedded form.
