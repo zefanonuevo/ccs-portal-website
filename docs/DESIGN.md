@@ -20,7 +20,7 @@ System font stack (SF Pro on Apple devices, Segoe UI on Windows), from ccs-desig
 ## Motion thesis
 Calm and precise. Press feedback 160 ms (`scale(0.97)`), hover and color 200 ms, side menu 320 ms with a drawer curve, one scroll reveal (10 px rise and fade, 60 ms stagger, 420 ms). CSS only, no animation library. Only `transform`, `opacity` and color are animated.
 
-Allowed patterns: translucent blurred nav, bento tiles, dark Jubilee band, four-point compass mark, scroll reveal, sample-content dashed borders.
+Allowed patterns: translucent blurred nav, mega menu for the four areas (desktop only; phones use the side menu), bento tiles, dark Jubilee band, four-point compass mark, scroll reveal, sample-content dashed borders.
 
 Not animated on purpose: search opens instantly (keyboard-driven, used often). Reduced motion removes movement and keeps a short fade. Hover effects only apply on devices with a real pointer.
 

@@ -9,7 +9,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%230b5d45' d='M12 1l2.3 8.7L23 12l-8.7 2.3L12 23l-2.3-8.7L1 12l8.7-2.3z'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="https://zefanonuevo.github.io/ccs-design/ccs-tokens.css?v=2">
 <link rel="stylesheet" href="assets/css/tokens.css?v=0.6.1">
-<link rel="stylesheet" href="assets/css/site.css?v=0.6.1">
+<link rel="stylesheet" href="assets/css/site.css?v=0.6.2">
 </head>
 <body>
 <main>
@@ -25,8 +25,8 @@
     <div class="wrap">
       <div class="sec-head" data-reveal><h2>Services</h2><p>Opens the connected system in a new tab.</p></div>
       <div class="grid">
-        <a class="card" data-module="tracker" data-access="service" data-reveal style="--i:0"><span class="eyebrow">Request a Service</span><h3>Ask the office for help</h3><p>Submit a request, follow its progress, and rate the service. Powered by the CCS Task Tracker.</p></a>
-        <a class="card" data-module="scgss" data-access="grants" data-reveal style="--i:1"><span class="eyebrow">Student Grants</span><h3>Dean's Office conference grants</h3><p>Three steps: apply, track the approval, then claim reimbursement. Powered by the Grant Support System.</p></a>
+        <a id="request-service" class="card" data-module="tracker" data-access="service" data-reveal style="--i:0"><span class="eyebrow">Request a Service</span><h3>Ask the office for help</h3><p>Submit a request, follow its progress, and rate the service. Powered by the CCS Task Tracker.</p></a>
+        <a id="grants" class="card" data-module="scgss" data-access="grants" data-reveal style="--i:1"><span class="eyebrow">Student Grants</span><h3>Dean's Office conference grants</h3><p>Three steps: apply, track the approval, then claim reimbursement. Powered by the Grant Support System.</p></a>
       </div>
     </div>
   </section>
@@ -35,9 +35,9 @@
     <div class="wrap">
       <div class="sec-head" data-reveal><h2>Virtual Office</h2><p>Keeps its name because people already know it.</p></div>
       <div class="grid">
-        <a class="card" data-popup="register" aria-haspopup="dialog" data-access="virtual" data-reveal><h3>Register and join Zoom</h3><p>Open the registration form to get your queue number. You are notified when it is your turn to join the Zoom session.</p></a>
-        <div class="card" data-access="virtual" data-reveal style="--i:1"><h3>Knowledge base and chatbot</h3><p>Answers to common questions, any time.</p></div>
-        <a class="card" data-module="vo" data-access="dashboards" data-reveal style="--i:2"><h3>Usage dashboard</h3><p>Who registered, who joined, usage over time. Totals only. Opens the Virtual Office Dashboard.</p></a>
+        <a id="register" class="card" data-popup="register" aria-haspopup="dialog" data-access="virtual" data-reveal><h3>Register and join Zoom</h3><p>Open the registration form to get your queue number. You are notified when it is your turn to join the Zoom session.</p></a>
+        <div id="knowledge-base" class="card" data-access="virtual" data-reveal style="--i:1"><h3>Knowledge base and chatbot</h3><p>Answers to common questions, any time.</p></div>
+        <a id="usage" class="card" data-module="vo" data-access="dashboards" data-reveal style="--i:2"><h3>Usage dashboard</h3><p>Who registered, who joined, usage over time. Totals only. Opens the Virtual Office Dashboard.</p></a>
       </div>
 
     </div>
@@ -48,15 +48,15 @@
       <div class="sec-head" data-reveal><h2>People and places</h2><p>Recognition, service and the things the college keeps.</p></div>
       <div class="grid">
         <div class="card" data-access="news" data-reveal><h3>Spotlight</h3><p>Awards and recognition for faculty, staff and students.</p></div>
-        <div class="card" data-access="news" data-reveal style="--i:1"><h3>Committees</h3><p>Committee involvement of faculty and staff.</p></div>
-        <div class="card" data-access="news" data-reveal style="--i:2"><h3>Serving the community</h3><p>Community engagement activities.</p></div>
-        <div class="card" data-access="service" data-reveal style="--i:3"><h3>Equipment and inventory</h3><p>Inventory management for the college.</p></div>
+        <div id="committees" class="card" data-access="news" data-reveal style="--i:1"><h3>Committees</h3><p>Committee involvement of faculty and staff.</p></div>
+        <div id="serving" class="card" data-access="news" data-reveal style="--i:2"><h3>Serving the community</h3><p>Community engagement activities.</p></div>
+        <div id="equipment" class="card" data-access="service" data-reveal style="--i:3"><h3>Equipment and inventory</h3><p>Inventory management for the college.</p></div>
       </div>
     </div>
   </section>
 </main>
 <noscript><p style="padding:16px;text-align:center"><a href="index.html">Home</a></p></noscript>
 <script src="assets/js/config.js?v=0.6.1"></script>
-<script src="assets/js/site.js?v=0.6.1"></script>
+<script src="assets/js/site.js?v=0.6.2"></script>
 </body>
 </html>
