@@ -7,6 +7,14 @@ The release number shown in the footer of every page comes from `release` in
 `assets/js/config.js`. Change it together with this file when you cut a new release.
 (`version: 'Draft v1'` is the draft stage of the whole site, not the release number.)
 
+## 0.6.1 - New palette and cache refresh (2026-10-18)
+- New colour palette across the portal: Ink for headings and text, Forest for primary
+  actions, Mint for soft panels, Paper for the page background, and Amber for attention.
+  Dark mode is retuned to match. The shared design tokens are unchanged.
+- Amber marks the draft *Suggested* tags and the internal-only label on Partnerships.
+- Stylesheets and scripts carry the new release in their address, so returning visitors
+  get the new colours and this release number straight away.
+
 ## 0.6.0 - Registration pop-up redesign (2026-10-17)
 - New look for the Register and join Zoom pop-up: forest-green header with the CCS mark,
   a three-step strip (fill in the form, get your queue number, join Zoom when called),
