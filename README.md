@@ -62,6 +62,7 @@ what changed in each. The release number is shown in the footer of every page.
 | `v0.5.1` | Pop-up fallback link, touch tap sizes, menu scroll lock |
 | `v0.6.0` | Registration pop-up redesign |
 | `v0.6.1` | New colour palette, cache refresh |
+| `v0.7.0` | Research dashboard link |
 
 **Look at an old release.** Open `https://github.com/zefanonuevo/ccs-portal-website/tree/v0.3.0`
 (swap in any tag), or download its zip from the Releases page.

@@ -3,7 +3,7 @@
 window.CCS = {
   name: 'CCS Compass',
   version: 'Draft v1',
-  release: '0.6.1',   // single source for the release number shown in the footer; keep in step with CHANGELOG.md
+  release: '0.7.0',   // single source for the release number shown in the footer; keep in step with CHANGELOG.md
   modules: {
     tracker: {
       name: 'Request a Service',
@@ -28,6 +28,13 @@ window.CCS = {
       status: 'Live',
       repo: 'https://github.com/zefanonuevo/ccs-vo-dashboard',
       url: 'https://zefanonuevo.github.io/ccs-vo-dashboard/'
+    },
+    research: {
+      name: 'Research Dashboard',
+      system: 'CCS Research Dashboard',
+      blurb: 'Update data sources and add faculty ranks.',
+      status: 'Live',
+      url: 'https://zefanonuevo.github.io/ccs/'
     },
     register: {
       name: 'Virtual Office Registration',

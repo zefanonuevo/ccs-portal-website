@@ -7,6 +7,12 @@ The release number shown in the footer of every page comes from `release` in
 `assets/js/config.js`. Change it together with this file when you cut a new release.
 (`version: 'Draft v1'` is the draft stage of the whole site, not the release number.)
 
+## 0.7.0 - Research dashboard link (2026-10-18)
+- Research & Innovation now links to the Research dashboard (https://zefanonuevo.github.io/ccs/).
+  The Research dashboard card opens it in a new tab.
+- Stylesheets and scripts carry the new release in their address, so returning visitors
+  get this release straight away.
+
 ## 0.6.1 - New palette and cache refresh (2026-10-18)
 - New colour palette across the portal: Ink for headings and text, Forest for primary
   actions, Mint for soft panels, Paper for the page background, and Amber for attention.
