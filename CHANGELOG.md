@@ -7,6 +7,14 @@ The release number shown in the footer of every page comes from `release` in
 `assets/js/config.js`. Change it together with this file when you cut a new release.
 (`version: 'Draft v1'` is the draft stage of the whole site, not the release number.)
 
+## 0.10.0 - Program pop-ups (2026-10-18)
+- Each program on **Our degree programs** now opens a pop-up with its details: what you will study,
+  where it can lead, who can apply, the unit breakdown, graduation requirements and good-to-know notes.
+  Programs with majors (BS CS and BS IE) show a major picker. A program can be shared as a link,
+  for example `programs.html#ds`.
+- The "Official program page" links are removed. The details are summarized from the College's
+  program pages and marked to be confirmed with the program chairs.
+
 ## 0.9.0 - Our degree programs (2026-10-18)
 - New page, **Our degree programs** (`programs.html`), under Study. Seven undergraduate and seven
   graduate programs from the College's program pages, each with its majors, units where stated,

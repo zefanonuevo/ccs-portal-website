@@ -30,6 +30,7 @@ One-time setup: **Settings → Pages → Source: GitHub Actions**.
 | `assets/css/tokens.css` | Design tokens (green, black, white). Shared with the other CCS systems |
 | `assets/css/site.css` | Components and layout |
 | `assets/js/config.js` | **Module links and the access matrix. Edit here to wire a system in** |
+| `assets/js/programs.js` | Our degree programs: filter and the program pop-up |
 | `assets/js/site.js` | Nav, side menu, search, role preview, scroll reveal |
 | `docs/DESIGN.md` | Design and motion decisions |
 
@@ -68,6 +69,7 @@ what changed in each. The release number is shown in the footer of every page.
 | `v0.7.0` | Research dashboard link |
 | `v0.8.0` | Five doors, CCS Commons name, Jubilee Progress page |
 | `v0.9.0` | Our degree programs page |
+| `v0.10.0` | Program details in a pop-up |
 
 **Look at an old release.** Open `https://github.com/zefanonuevo/ccs-portal-website/tree/v0.3.0`
 (swap in any tag), or download its zip from the Releases page.
