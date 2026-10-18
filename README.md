@@ -1,6 +1,8 @@
 # ccs-portal-website
 
-CCS Commons: the portal for the College of Computer Studies. **Draft v1.**
+CCS Commons: the portal for the College of Computer Studies. **Release 0.12.0, a draft.** It is a public information site with links to separate prototype systems. It has no sign-in and no server, so it must not hold personal data.
+
+**Start here:** [AGENTS.md](AGENTS.md) (rules for changing the project) and the documents in [docs/](docs/): [PRD](docs/PRD.md), [Architecture](docs/Architecture.md), [Module specifications](docs/Module-Specifications.md), [UI/UX guidelines](docs/DESIGN.md) and [Implementation plan](docs/Implementation-Plan.md). Those documents are drafts awaiting owner approval; they label what exists and what is proposed.
 
 Built from *CCS Portal Blueprint v2*, revised by *CCS Commons Blueprint 1.2* (five doors, the CCS Commons name, a Jubilee Progress page). A static site (HTML, CSS, a little JavaScript, no build step), deployed to GitHub Pages.
 
@@ -28,17 +30,19 @@ One-time setup: **Settings → Pages → Source: GitHub Actions**.
 | `jubilee.html` | Jubilee Progress: approved highlights from every door |
 | `academics.html` `community.html` `partnerships.html` | Old addresses. They redirect to the pages above |
 | `resources.html` | Side menu: news, events, forms, policies, how things work |
-| `assets/css/tokens.css` | Design tokens (green, black, white). Shared with the other CCS systems |
+| `assets/css/tokens.css` | Portal design tokens (green, black, white, amber for attention), loaded after `ccs-design` |
 | `assets/css/site.css` | Components and layout |
 | `assets/js/config.js` | **Module links and the access matrix. Edit here to wire a system in** |
 | `assets/js/programs.js` | Our degree programs: filter and the program pop-up |
 | `assets/js/dots.js` | The interactive dot background |
 | `assets/js/site.js` | Nav, side menu, search, role preview, scroll reveal |
-| `docs/DESIGN.md` | Design and motion decisions |
+| `AGENTS.md` | Project rules for people and AI agents (proposed) |
+| `docs/PRD.md` `docs/Architecture.md` `docs/Module-Specifications.md` `docs/Implementation-Plan.md` | Requirements, architecture, modules and plan (drafts for approval) |
+| `docs/DESIGN.md` | UI/UX guidelines: color, type, motion, accessibility, content |
 
 ## Connected systems
 
-The portal links to, and later embeds, three sibling systems and one Google Form that opens in a pop-up. Both are set in `assets/js/config.js` under `modules`.
+The portal links (it does not embed them) to four sibling systems, plus one Google Form that opens in a pop-up and the shared design stylesheet. The addresses are set in `assets/js/config.js` under `modules`. All four systems are prototypes that keep demo data in the browser or read published Google Sheets; see [Module specifications](docs/Module-Specifications.md) before using any of them with real data.
 
 | Module | Portal label | Repo | Live |
 | --- | --- | --- | --- |
@@ -51,7 +55,7 @@ To point at a different deployment, change its `url` in `config.js`. Nothing els
 
 ## Same design everywhere
 
-Every page loads [ccs-design](https://github.com/zefanonuevo/ccs-design) (`ccs-tokens.css`, v2) first. Its palette is green, white and black, and the same file drives the Task Tracker and the Grant Support System. `assets/css/tokens.css` adds portal-only tokens (band, nav, motion timings) on top. To change the palette for all three sites, edit ccs-design.
+Every page loads [ccs-design](https://github.com/zefanonuevo/ccs-design) (`ccs-tokens.css`, v2) first. Its palette is green, white and black, and the same file is loaded by the Task Tracker, the Grant Support System and the Virtual Office dashboard. **The portal (and the grants system) currently override the palette on top of it** (`assets/css/tokens.css`, with amber added for attention), so editing `ccs-design` alone does not change every site. Moving the full palette into `ccs-design` is proposed in [docs/Architecture.md](docs/Architecture.md) section 9.
 
 ## Versions and restoring
 
@@ -106,6 +110,8 @@ To cut a new release: update `release` in `assets/js/config.js` and add an entry
 
 ## Draft status
 
+- There is no sign-in and no server. Do not collect personal data through the portal.
+- Content summarized from the old CCS site is marked *to be confirmed* until its owner confirms it.
 - Sample content is marked "Sample".
 - "Viewing as" previews the access matrix from the blueprint. It is **not enforced**. Real access control must be done on the server when sign-in is built.
 - Sign-in is a disabled placeholder.
