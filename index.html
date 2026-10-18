@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>CCS Compass | College of Computer Studies</title>
+<title>CCS Commons</title>
 <meta name="description" content="A central hub for the College of Computer Studies, built around the Jubilee strategy. Draft v1.">
 <meta name="theme-color" content="#0b5d45">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%230b5d45' d='M12 1l2.3 8.7L23 12l-8.7 2.3L12 23l-2.3-8.7L1 12l8.7-2.3z'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="https://zefanonuevo.github.io/ccs-design/ccs-tokens.css?v=2">
-<link rel="stylesheet" href="assets/css/tokens.css?v=0.7.0">
-<link rel="stylesheet" href="assets/css/site.css?v=0.6.2">
+<link rel="stylesheet" href="assets/css/tokens.css?v=0.8.0">
+<link rel="stylesheet" href="assets/css/site.css?v=0.8.0">
 </head>
 <body>
 <main>
@@ -17,8 +17,8 @@
   <section class="hero">
     <div class="wrap">
       <p class="eyebrow" data-reveal>College of Computer Studies</p>
-      <h1 data-reveal style="--i:1">Find your way around <em>CCS.</em></h1>
-      <p class="lede" data-reveal style="--i:2">One place to study, belong, collaborate and discover. Built around the Jubilee strategy.</p>
+      <h1 data-reveal style="--i:1">Where CCS <em>comes together.</em></h1>
+      <p class="lede" data-reveal style="--i:2">One place to study, get things done, discover, partner and meet the people of CCS. Built around the Jubilee strategy.</p>
       <button class="search-pill" type="button" data-open-search data-reveal style="--i:3">
         <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="9" r="6"/><path d="M14 14l4 4"/></svg>
         <span>Search services, forms and pages</span><kbd>/</kbd>
@@ -31,9 +31,21 @@
       <h2 id="qa" class="sr">Quick actions</h2>
       <div class="quick">
         <a class="q" data-module="tracker" data-access="service" data-reveal style="--i:0"><b>Request a Service</b><span class="sub">Ask the office for help and follow it.</span></a>
-        <a class="q" href="community.html#virtual-office" data-access="virtual" data-reveal style="--i:1"><b>Join a Zoom session</b><span class="sub">Virtual Office sessions and recordings.</span></a>
+        <a class="q" href="services.html#virtual-office" data-access="virtual" data-reveal style="--i:1"><b>Join a Zoom session</b><span class="sub">Virtual Office sessions and recordings.</span></a>
         <a class="q" data-module="scgss" data-access="grants" data-reveal style="--i:2"><b>Apply for a grant</b><span class="sub">Student conference grants, start to finish.</span></a>
         <a class="q" href="research.html#add" data-access="publish" data-reveal style="--i:3"><b>Add a publication</b><span class="sub">Add to your faculty research record.</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" style="padding-top:0" aria-labelledby="iam-h">
+    <div class="wrap">
+      <div class="iam" data-reveal>
+        <h2 id="iam-h">I&rsquo;m a&hellip;</h2>
+        <a href="study.html#apply">Prospective student</a>
+        <a href="study.html">Student</a>
+        <a href="services.html">Faculty or staff</a>
+        <a href="partners.html#start">Partner</a>
       </div>
     </div>
   </section>
@@ -41,31 +53,35 @@
   <section class="block" aria-labelledby="areas-h">
     <div class="wrap">
       <div class="sec-head" data-reveal>
-        <h2 id="areas-h">Four areas, one compass.</h2>
-        <p>Each point of the compass is an area of the college. Pick a direction.</p>
+        <h2 id="areas-h">Five doors, one Commons.</h2>
+        <p>Each door is a reason to visit the college. Pick the one you need.</p>
       </div>
       <div class="bento">
-        <a class="tile t-a" href="academics.html" data-reveal style="--i:0">
+        <a class="tile t-a" href="study.html" data-reveal style="--i:0">
           <svg class="glyph" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 1l2.3 8.7L23 12l-8.7 2.3L12 23l-2.3-8.7L1 12l8.7-2.3z"/></svg>
-          <span class="num">Area 1</span>
-          <div><h3>Academics</h3><p>Study at CCS. Programs, outcomes, courses and how to apply.</p></div>
-          <span class="go">Explore Academics &rarr;</span>
+          <span class="num">Door 1</span>
+          <div><h3>Study</h3><p>Study at CCS. Programs, outcomes, courses and how to apply.</p></div>
+          <span class="go">Explore Study &rarr;</span>
         </a>
-        <a class="tile t-b" href="community.html" data-reveal style="--i:1">
-          <span class="num">Area 2</span>
-          <div><h3>Community</h3><p>Belong at CCS.</p></div>
+        <a class="tile t-b" href="services.html" data-reveal style="--i:1">
+          <span class="num">Door 2</span>
+          <div><h3>Services</h3><p>Ask, apply, register.</p></div>
           <span class="go">Explore &rarr;</span>
         </a>
-        <a class="tile t-c" href="partnerships.html" data-reveal style="--i:2">
-          <span class="num">Area 3</span>
-          <div><h3>Partnerships</h3><p>Collaborate with CCS.</p></div>
+        <a class="tile t-c" href="research.html" data-reveal style="--i:2">
+          <span class="num">Door 3</span>
+          <div><h3>Research</h3><p>Discover at CCS.</p></div>
           <span class="go">Explore &rarr;</span>
         </a>
-        <a class="tile t-d" href="research.html" data-reveal style="--i:3">
-          <svg class="glyph" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 1l2.3 8.7L23 12l-8.7 2.3L12 23l-2.3-8.7L1 12l8.7-2.3z"/></svg>
-          <span class="num">Area 4</span>
-          <div><h3>Research &amp; Innovation</h3><p>Discover at CCS. Publications, projects and grants.</p></div>
-          <span class="go">Explore Research &amp; Innovation &rarr;</span>
+        <a class="tile t-d" href="partners.html" data-reveal style="--i:3">
+          <span class="num">Door 4</span>
+          <div><h3>Partners</h3><p>Work with CCS.</p></div>
+          <span class="go">Explore &rarr;</span>
+        </a>
+        <a class="tile t-e" href="people.html" data-reveal style="--i:4">
+          <span class="num">Door 5</span>
+          <div><h3>People</h3><p>Meet CCS.</p></div>
+          <span class="go">Explore &rarr;</span>
         </a>
       </div>
     </div>
@@ -75,13 +91,14 @@
     <div class="wrap">
       <div class="band" data-reveal>
         <p class="eyebrow">Jubilee strategy</p>
-        <h2 id="jub-h">The thread through the portal.</h2>
-        <p class="lead">Jubilee is not another menu item. It is how the college keeps offering quality degree programs through efficient, effective service to its community, partners and research.</p>
+        <h2 id="jub-h">The strategy, made visible.</h2>
+        <p class="lead">Jubilee is how the college keeps offering quality degree programs through efficient, effective service to its community, partners and research.</p>
         <div class="thread">
-          <div><b>On the home page</b><p>A short statement, with the four areas right below it.</p></div>
-          <div><b>In each area</b><p>A highlights strip fed by that area's dashboards and news.</p></div>
-          <div><b>In every story</b><p>News is tagged to an area, so progress is easy to follow.</p></div>
+          <div><b>On the home page</b><p>A short statement, with the five doors right above it.</p></div>
+          <div><b>On Jubilee Progress</b><p>Approved highlights from the dashboards of each door.</p></div>
+          <div><b>In every story</b><p>News is tagged to a door, so progress is easy to follow.</p></div>
         </div>
+        <p style="margin-top:32px"><a class="btn" href="jubilee.html">See Jubilee Progress</a></p>
       </div>
     </div>
   </section>
@@ -95,15 +112,15 @@
       <div class="two">
         <div data-reveal>
           <ul class="list sample" style="padding:0 22px;border-radius:var(--r-lg);border:1px dashed var(--line)">
-            <li><time>Sample</time><div><b>Thesis defense schedule posted</b><span>Academics &middot; sample story</span></div></li>
-            <li><time>Sample</time><div><b>Faculty colloquium, Friday</b><span>Research &amp; Innovation &middot; sample event</span></div></li>
-            <li><time>Sample</time><div><b>New partner agreement signed</b><span>Partnerships &middot; sample story</span></div></li>
+            <li><time>Sample</time><div><b>Thesis defense schedule posted</b><span>Study &middot; sample story</span></div></li>
+            <li><time>Sample</time><div><b>Faculty colloquium, Friday</b><span>Research &middot; sample event</span></div></li>
+            <li><time>Sample</time><div><b>New partner agreement signed</b><span>Partners &middot; sample story</span></div></li>
           </ul>
         </div>
         <div class="card soft" data-reveal style="--i:1">
           <span class="eyebrow">Dashboard highlight</span>
           <h3>Short insights, approved before posting.</h3>
-          <p>Admins review each highlight from the academic, Virtual Office and research dashboards before it reaches News. No named students, no small groups.</p>
+          <p>Admins review each highlight from the study, Virtual Office and research dashboards before it reaches News. No named students, no small groups.</p>
         </div>
       </div>
     </div>
@@ -124,8 +141,8 @@
   </section>
 
 </main>
-<noscript><p style="padding:16px;text-align:center">Navigation needs JavaScript in this draft. Pages: <a href="academics.html">Academics</a>, <a href="community.html">Community</a>, <a href="partnerships.html">Partnerships</a>, <a href="research.html">Research &amp; Innovation</a>, <a href="resources.html">Resources</a>.</p></noscript>
-<script src="assets/js/config.js?v=0.7.0"></script>
-<script src="assets/js/site.js?v=0.6.3"></script>
+<noscript><p style="padding:16px;text-align:center">Navigation needs JavaScript in this draft. Pages: <a href="study.html">Study</a>, <a href="services.html">Services</a>, <a href="research.html">Research</a>, <a href="partners.html">Partners</a>, <a href="people.html">People</a>, <a href="jubilee.html">Jubilee Progress</a>, <a href="resources.html">Resources</a>.</p></noscript>
+<script src="assets/js/config.js?v=0.8.0"></script>
+<script src="assets/js/site.js?v=0.8.0"></script>
 </body>
 </html>

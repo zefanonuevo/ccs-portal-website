@@ -7,7 +7,7 @@ Apple-style restraint in green, black and white: big quiet headlines, generous s
 | Token | Hex | Use |
 | --- | --- | --- |
 | Ink | `#111a15` | Dark band, text on light |
-| Forest | `#0b5d45` | Primary actions, area tile |
+| Forest | `#0b5d45` | Primary actions, Study tile |
 | Mint | `#dcebe2` | Soft panels |
 | Paper | `#f4f7f3` | Page background |
 | White | `#ffffff` | Cards |
@@ -20,7 +20,7 @@ System font stack (SF Pro on Apple devices, Segoe UI on Windows), from ccs-desig
 ## Motion thesis
 Calm and precise. Press feedback 160 ms (`scale(0.97)`), hover and color 200 ms, side menu 320 ms with a drawer curve, one scroll reveal (10 px rise and fade, 60 ms stagger, 420 ms). CSS only, no animation library. Only `transform`, `opacity` and color are animated.
 
-Allowed patterns: translucent blurred nav, mega menu for the four areas (desktop only; phones use the side menu), bento tiles, dark Jubilee band, four-point compass mark, scroll reveal, sample-content dashed borders.
+Allowed patterns: translucent blurred nav, mega menu for the five doors (desktop only; phones use the side menu), bento tiles, dark Jubilee band, four-point star mark, scroll reveal, sample-content dashed borders.
 
 Not animated on purpose: search opens instantly (keyboard-driven, used often). Reduced motion removes movement and keeps a short fade. Hover effects only apply on devices with a real pointer.
 
@@ -32,7 +32,7 @@ Not animated on purpose: search opens instantly (keyboard-driven, used often). R
 `data-access="key"` on any element adds a badge from the matrix in `config.js`. It is a preview of the blueprint's View, Use and Manage rules.
 
 ## Next
-1. Confirm area labels and portal name (blueprint decisions 1 and 2).
+1. Confirm the portal name CCS Commons with the communications office, and an owner for each door (Blueprint 1.2).
 2. Real sign-in and roles; move the access matrix to the server.
 3. Embed or deep-link Task Tracker and Grant Support System once each is deployed.
 4. News and events with the approval flow.

@@ -7,6 +7,19 @@ The release number shown in the footer of every page comes from `release` in
 `assets/js/config.js`. Change it together with this file when you cut a new release.
 (`version: 'Draft v1'` is the draft stage of the whole site, not the release number.)
 
+## 0.8.0 - Five doors, CCS Commons and Jubilee Progress (2026-10-18)
+Follows *CCS Commons Blueprint 1.2*.
+- The portal is now called **CCS Commons**. The tagline is "Where CCS comes together."
+- Five doors replace the four areas: **Study** (was Academics), **Services**, **Research**
+  (was Research & Innovation), **Partners** (was Partnerships) and **People**. Community is
+  split: Request a Service, Student Grants, the Virtual Office and equipment move to Services;
+  Spotlight, committees and community engagement move to People.
+- New **Jubilee Progress** page, linked from a band on the home page and from the menu.
+- New **I'm a...** entry points on the home page, and a **Start a partnership** card under Partners.
+- New addresses: `study.html`, `services.html`, `partners.html`, `people.html`, `jubilee.html`.
+  The old `academics.html`, `community.html` and `partnerships.html` redirect, and keep their anchors.
+- Menu, search and footer follow the new structure.
+
 ## 0.7.0 - Research dashboard link (2026-10-18)
 - Research & Innovation now links to the Research dashboard (https://zefanonuevo.github.io/ccs/).
   The Research dashboard card opens it in a new tab.

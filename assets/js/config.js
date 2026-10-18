@@ -1,9 +1,9 @@
 /* Single place to wire the portal to the other CCS systems.
    Swap a url when a module gets its own deployment; nothing else changes. */
 window.CCS = {
-  name: 'CCS Compass',
+  name: 'CCS Commons',
   version: 'Draft v1',
-  release: '0.7.0',   // single source for the release number shown in the footer; keep in step with CHANGELOG.md
+  release: '0.8.0',   // single source for the release number shown in the footer; keep in step with CHANGELOG.md
   modules: {
     tracker: {
       name: 'Request a Service',
@@ -54,7 +54,7 @@ window.CCS = {
       url: 'https://github.com/zefanonuevo/ccs-design'
     }
   },
-  /* Blueprint v2, "Who sees what". Order: guest, student, faculty, staff, admin. */
+  /* Blueprint v2, "Who sees what" (unchanged in Blueprint 1.2). Order: guest, student, faculty, staff, admin. */
   roles: ['Guest', 'Student', 'Faculty', 'Staff', 'Admin'],
   access: {
     program: ['View', 'View', 'View', 'View', 'Manage'],

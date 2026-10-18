@@ -1,8 +1,8 @@
 # ccs-portal-website
 
-CCS Compass: the portal for the College of Computer Studies. **Draft v1.**
+CCS Commons: the portal for the College of Computer Studies. **Draft v1.**
 
-Built from *CCS Portal Blueprint v2*. A static site (HTML, CSS, a little JavaScript, no build step), deployed to GitHub Pages.
+Built from *CCS Portal Blueprint v2*, revised by *CCS Commons Blueprint 1.2* (five doors, the CCS Commons name, a Jubilee Progress page). A static site (HTML, CSS, a little JavaScript, no build step), deployed to GitHub Pages.
 
 ## Run it locally
 
@@ -21,8 +21,10 @@ One-time setup: **Settings → Pages → Source: GitHub Actions**.
 
 | Path | What |
 | --- | --- |
-| `index.html` | Home: search, quick actions, four areas, Jubilee thread, news, connected systems |
-| `academics.html` `community.html` `partnerships.html` `research.html` | The four areas |
+| `index.html` | Home: search, quick actions, I'm a... entry points, five doors, Jubilee band, news, connected systems |
+| `study.html` `services.html` `research.html` `partners.html` `people.html` | The five doors |
+| `jubilee.html` | Jubilee Progress: approved highlights from every door |
+| `academics.html` `community.html` `partnerships.html` | Old addresses. They redirect to the pages above |
 | `resources.html` | Side menu: news, events, forms, policies, how things work |
 | `assets/css/tokens.css` | Design tokens (green, black, white). Shared with the other CCS systems |
 | `assets/css/site.css` | Components and layout |
@@ -38,8 +40,8 @@ The portal links to, and later embeds, three sibling systems and one Google Form
 | --- | --- | --- | --- |
 | CCS Task Tracker | Request a Service | [ccs-task-tracker](https://github.com/zefanonuevo/ccs-task-tracker) | https://zefanonuevo.github.io/ccs-task-tracker/ |
 | CCS Student Conference Grant Support System | Student Grants | [ccs-scgss](https://github.com/zefanonuevo/ccs-scgss) | https://zefanonuevo.github.io/ccs-scgss/ |
-| CCS Virtual Office Registration | Register form (Community, Virtual Office) | Google Form, opens in a pop-up | https://docs.google.com/forms/d/e/1FAIpQLScxxeeRJRwj0GbZBP6ahK0fUJOmgXz0ASjOI8aDNTrTBWj4QQ/viewform |
-| CCS Virtual Office Dashboard | Usage dashboard (Community, Virtual Office) | [ccs-vo-dashboard](https://github.com/zefanonuevo/ccs-vo-dashboard) | https://zefanonuevo.github.io/ccs-vo-dashboard/ |
+| CCS Virtual Office Registration | Register form (Services, Virtual Office) | Google Form, opens in a pop-up | https://docs.google.com/forms/d/e/1FAIpQLScxxeeRJRwj0GbZBP6ahK0fUJOmgXz0ASjOI8aDNTrTBWj4QQ/viewform |
+| CCS Virtual Office Dashboard | Usage dashboard (Services, Virtual Office) | [ccs-vo-dashboard](https://github.com/zefanonuevo/ccs-vo-dashboard) | https://zefanonuevo.github.io/ccs-vo-dashboard/ |
 
 To point at a different deployment, change its `url` in `config.js`. Nothing else moves.
 
@@ -63,6 +65,7 @@ what changed in each. The release number is shown in the footer of every page.
 | `v0.6.0` | Registration pop-up redesign |
 | `v0.6.1` | New colour palette, cache refresh |
 | `v0.7.0` | Research dashboard link |
+| `v0.8.0` | Five doors, CCS Commons name, Jubilee Progress page |
 
 **Look at an old release.** Open `https://github.com/zefanonuevo/ccs-portal-website/tree/v0.3.0`
 (swap in any tag), or download its zip from the Releases page.
@@ -98,4 +101,4 @@ To cut a new release: update `release` in `assets/js/config.js` and add an entry
 - Sample content is marked "Sample".
 - "Viewing as" previews the access matrix from the blueprint. It is **not enforced**. Real access control must be done on the server when sign-in is built.
 - Sign-in is a disabled placeholder.
-- Open decisions are listed on the last slide of the blueprint (area labels, portal name, student list source, public syllabi, guest access, publication consent).
+- Open decisions are listed on the last slide of the blueprint (student list source, public syllabi, guest access, publication consent).

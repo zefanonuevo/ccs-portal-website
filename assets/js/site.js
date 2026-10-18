@@ -1,4 +1,4 @@
-/* CCS Compass: shared chrome (nav, side menu, search, footer), role preview and reveal. No dependencies. */
+/* CCS Commons: shared chrome (nav, side menu, search, footer), role preview and reveal. No dependencies. */
 (function () {
   'use strict';
   var C = window.CCS;
@@ -6,88 +6,82 @@
   root.classList.add('js');
 
   var AREAS = [
-    { href: 'academics.html', label: 'Academics', line: 'Study at CCS' },
-    { href: 'community.html', label: 'Community', line: 'Belong at CCS' },
-    { href: 'partnerships.html', label: 'Partnerships', line: 'Collaborate with CCS' },
-    { href: 'research.html', label: 'Research & Innovation', line: 'Discover at CCS' }
+    { href: 'study.html', label: 'Study', line: 'Study at CCS' },
+    { href: 'services.html', label: 'Services', line: 'Ask, apply, register' },
+    { href: 'research.html', label: 'Research', line: 'Discover at CCS' },
+    { href: 'partners.html', label: 'Partners', line: 'Work with CCS' },
+    { href: 'people.html', label: 'People', line: 'Meet CCS' }
   ];
   var SIDE = [
-    { href: 'resources.html#news', label: 'News and updates', line: 'Stories tagged to an area' },
+    { href: 'jubilee.html', label: 'Jubilee Progress', line: 'Approved highlights from every door' },
+    { href: 'resources.html#news', label: 'News and updates', line: 'Stories tagged to a door' },
     { href: 'resources.html#events', label: 'Events', line: 'Post and browse events' },
     { href: 'resources.html#forms', label: 'Forms and downloads', line: 'Faculty and staff forms' },
     { href: 'resources.html#policies', label: 'Policies and guidelines', line: 'College policies' },
     { href: 'resources.html#how', label: 'How things work', line: 'Process workflows' }
   ];
   var INDEX = [
-    ['Our degree programs', 'Academics', 'academics.html#programs'],
-    ['What graduates can do', 'Academics: outcomes', 'academics.html#programs'],
-    ['What you will study', 'Academics: courses and units', 'academics.html#programs'],
-    ['How to apply', 'Academics: admission', 'academics.html#apply'],
-    ['Finishing your degree', 'Academics: graduation', 'academics.html#apply'],
-    ['Spotlight', 'Community: awards and recognition', 'community.html#spotlight'],
-    ['Virtual Office', 'Community: register, join Zoom, knowledge base', 'community.html#virtual-office'],
-    ['Student Grants', 'Community: apply, track, reimburse', 'community.html#services'],
-    ['Request a Service', 'Community: Task Tracker', 'community.html#services'],
-    ['Partner activity tracker', 'Partnerships', 'partnerships.html#tracker'],
-    ['Agreements (MOA, MOU)', 'Partnerships', 'partnerships.html#agreements'],
-    ['Publication highlights', 'Research & Innovation', 'research.html#publications'],
-    ['Add your publication', 'Research & Innovation', 'research.html#add'],
-    ['Grants summary and project status', 'Research & Innovation', 'research.html#projects'],
-    ['News and updates', 'Side menu', 'resources.html#news'],
-    ['Events', 'Side menu', 'resources.html#events'],
-    ['Forms and downloads', 'Side menu', 'resources.html#forms'],
-    ['Policies and guidelines', 'Side menu', 'resources.html#policies'],
-    ['How things work', 'Side menu', 'resources.html#how'],
-    ['Jubilee strategy', 'Home', 'index.html#jubilee'],
+    ['Our degree programs', 'Study', 'study.html#programs'],
+    ['What graduates can do', 'Study: outcomes', 'study.html#programs'],
+    ['What you will study', 'Study: courses and units', 'study.html#programs'],
+    ['How to apply', 'Study: admission', 'study.html#apply'],
+    ['Finishing your degree', 'Study: graduation', 'study.html#apply'],
+    ['Request a Service', 'Services: Task Tracker', 'services.html#services'],
+    ['Student Grants', 'Services: apply, track, reimburse', 'services.html#services'],
+    ['Virtual Office', 'Services: register, join Zoom, knowledge base', 'services.html#virtual-office'],
+    ['Equipment and inventory', 'Services', 'services.html#more'],
+    ['Publication highlights', 'Research', 'research.html#publications'],
+    ['Add your publication', 'Research', 'research.html#add'],
+    ['Grants summary and project status', 'Research', 'research.html#projects'],
+    ['Start a partnership', 'Partners', 'partners.html#start'],
+    ['Partner activity tracker', 'Partners', 'partners.html#tracker'],
+    ['Agreements (MOA, MOU)', 'Partners', 'partners.html#agreements'],
+    ['Spotlight', 'People: awards and recognition', 'people.html#spotlight'],
+    ['Faculty and staff directory', 'People', 'people.html#directory'],
+    ['Committees', 'People', 'people.html#committees'],
+    ['Jubilee Progress', 'Jubilee strategy', 'jubilee.html'],
+    ['News and updates', 'Across the college', 'resources.html#news'],
+    ['Events', 'Across the college', 'resources.html#events'],
+    ['Forms and downloads', 'Across the college', 'resources.html#forms'],
+    ['Policies and guidelines', 'Across the college', 'resources.html#policies'],
+    ['How things work', 'Across the college', 'resources.html#how'],
     ['Connected systems', 'Home', 'index.html#systems']
   ];
 
   /* Mega menu: sub-menus for each area, built from the area pages' sections and cards. */
   var MEGA = [
-    { key: 'academics', href: 'academics.html', label: 'Academics', line: 'Study at CCS, plan your path and finish your degree.', groups: [
-      { title: 'Study', items: [
-        { href: 'academics.html#degree-programs', label: 'Degree programs', line: 'Each program and what it prepares you for' },
-        { href: 'academics.html#outcomes', label: 'What graduates can do', line: 'Graduate attributes and outcomes' },
-        { href: 'academics.html#curriculum', label: 'What you will study', line: 'Units and the list of courses' },
-        { href: 'academics.html#path', label: 'Your path, term by term', line: 'Course flowcharts for each program' },
-        { href: 'academics.html#course-guide', label: 'Course guide', line: 'Course descriptions and syllabi' }
+    { key: 'study', href: 'study.html', label: 'Study', line: 'Study at CCS, plan your path and finish your degree.', groups: [
+      { title: 'Your program', items: [
+        { href: 'study.html#degree-programs', label: 'Degree programs', line: 'Each program and what it prepares you for' },
+        { href: 'study.html#outcomes', label: 'What graduates can do', line: 'Graduate attributes and outcomes' },
+        { href: 'study.html#curriculum', label: 'What you will study', line: 'Units and the list of courses' },
+        { href: 'study.html#path', label: 'Your path, term by term', line: 'Course flowcharts for each program' },
+        { href: 'study.html#course-guide', label: 'Course guide', line: 'Course descriptions and syllabi' }
       ] },
       { title: 'Apply and finish', items: [
-        { href: 'academics.html#how-to-apply', label: 'How to apply', line: 'Admission steps' },
-        { href: 'academics.html#finishing', label: 'Finishing your degree', line: 'Graduation requirements' }
+        { href: 'study.html#how-to-apply', label: 'How to apply', line: 'Admission steps' },
+        { href: 'study.html#finishing', label: 'Finishing your degree', line: 'Graduation requirements' }
       ] },
       { title: 'Tools', items: [
-        { href: 'academics.html#dashboard', label: 'Academic dashboard', line: 'Your progress and records' }
+        { href: 'study.html#dashboard', label: 'Academic dashboard', line: 'Your progress and records' }
       ] }
     ] },
-    { key: 'community', href: 'community.html', label: 'Community', line: 'Belong at CCS: services, the Virtual Office and the people of the college.', groups: [
-      { title: 'Services', items: [
-        { href: 'community.html#request-service', label: 'Request a service', line: 'Submit a request and follow it' },
-        { href: 'community.html#grants', label: 'Student grants', line: 'Apply, track and claim reimbursement' }
+    { key: 'services', href: 'services.html', label: 'Services', line: 'Ask, apply, register: everything here is something you do.', groups: [
+      { title: 'Ask and apply', items: [
+        { href: 'services.html#request-service', label: 'Request a service', line: 'Submit a request and follow it' },
+        { href: 'services.html#grants', label: 'Student grants', line: 'Apply, track and claim reimbursement' }
       ] },
       { title: 'Virtual Office', items: [
-        { href: 'community.html#register', label: 'Register and join Zoom', line: 'Registration and your queue number' },
-        { href: 'community.html#knowledge-base', label: 'Knowledge base and chatbot', line: 'Answers to common questions' },
-        { href: 'community.html#usage', label: 'Usage dashboard', line: 'Who registered and who joined' }
+        { href: 'services.html#register', label: 'Register and join Zoom', line: 'Registration and your queue number' },
+        { href: 'services.html#knowledge-base', label: 'Knowledge base and chatbot', line: 'Answers to common questions' },
+        { href: 'services.html#usage', label: 'Usage dashboard', line: 'Who registered and who joined' }
       ] },
-      { title: 'People and places', items: [
-        { href: 'community.html#spotlight', label: 'Spotlight', line: 'Awards and recognition' },
-        { href: 'community.html#committees', label: 'Committees', line: 'Committee involvement' },
-        { href: 'community.html#serving', label: 'Serving the community', line: 'Community engagement' },
-        { href: 'community.html#equipment', label: 'Equipment and inventory', line: 'Inventory for the college' }
+      { title: 'Equipment and forms', items: [
+        { href: 'services.html#equipment', label: 'Equipment and inventory', line: 'Inventory for the college' },
+        { href: 'services.html#forms-link', label: 'Forms and downloads', line: 'Faculty and staff forms' }
       ] }
     ] },
-    { key: 'partnerships', href: 'partnerships.html', label: 'Partnerships', line: 'Collaborate with CCS: industry and community partners.', groups: [
-      { title: 'Partners', items: [
-        { href: 'partnerships.html#tracker', label: 'Partner activity tracker', line: 'Engagement activities over time' },
-        { href: 'partnerships.html#directory', label: 'Partner directory', line: 'Searchable by field and status' },
-        { href: 'partnerships.html#highlights', label: 'Partner highlights', line: 'Stories and results from partner work' }
-      ] },
-      { title: 'Agreements', items: [
-        { href: 'partnerships.html#agreements', label: 'Agreements', line: 'MOA and MOU, scope and duration' }
-      ] }
-    ] },
-    { key: 'research', href: 'research.html', label: 'Research & Innovation', line: 'Discover at CCS: publications, faculty work and projects.', groups: [
+    { key: 'research', href: 'research.html', label: 'Research', line: 'Discover at CCS: publications, faculty work and projects.', groups: [
       { title: 'Publications', items: [
         { href: 'research.html#publication-highlights', label: 'Publication highlights', line: 'Recent faculty and student work' },
         { href: 'research.html#faculty-records', label: 'Faculty records', line: 'Research profiles of faculty' },
@@ -97,6 +91,25 @@
         { href: 'research.html#project-highlights', label: 'Project highlights', line: 'Current and completed projects' },
         { href: 'research.html#grants-summary', label: 'Grants summary', line: 'Funding across projects' },
         { href: 'research.html#project-status', label: 'Project status', line: 'Progress of active projects' }
+      ] }
+    ] },
+    { key: 'partners', href: 'partners.html', label: 'Partners', line: 'Work with CCS: industry and community partners.', groups: [
+      { title: 'Work with us', items: [
+        { href: 'partners.html#start', label: 'Start a partnership', line: 'Who to talk to and what CCS offers' },
+        { href: 'partners.html#directory', label: 'Partner directory', line: 'Searchable by field and status' },
+        { href: 'partners.html#highlights', label: 'Partner highlights', line: 'Stories and results from partner work' }
+      ] },
+      { title: 'Internal', items: [
+        { href: 'partners.html#tracker', label: 'Partner activity tracker', line: 'Engagement activities over time' },
+        { href: 'partners.html#agreements', label: 'Agreements', line: 'MOA and MOU, scope and duration' }
+      ] }
+    ] },
+    { key: 'people', href: 'people.html', label: 'People', line: 'Meet CCS: the people and the stories of the college.', groups: [
+      { title: 'People and stories', items: [
+        { href: 'people.html#spotlight', label: 'Spotlight', line: 'Awards and recognition' },
+        { href: 'people.html#directory', label: 'Faculty and staff directory', line: 'Who is who at CCS' },
+        { href: 'people.html#committees', label: 'Committees', line: 'Committee involvement' },
+        { href: 'people.html#serving', label: 'Serving the community', line: 'Community engagement' }
       ] }
     ] }
   ];
@@ -144,7 +157,7 @@
     '<div class="wrap">' +
     '<a class="brand" href="index.html" aria-label="' + C.name + ' home">' + ICON.mark + '<span>' + C.name + '</span></a>' +
     '<span class="tag">' + C.version + '</span>' +
-    '<nav class="nav-links" aria-label="Areas">' + MEGA.map(megaItem).join('') + '</nav>' +
+    '<nav class="nav-links" aria-label="Doors">' + MEGA.map(megaItem).join('') + '</nav>' +
     '<div class="nav-tools">' +
     roleSelect('role-top') +
     '<button class="icon-btn" id="open-search" aria-label="Search (press /)">' + ICON.search + '</button>' +
@@ -157,7 +170,7 @@
     '<div class="scrim" id="scrim"></div>' +
     '<aside class="sheet" id="sheet" aria-label="Menu" aria-hidden="true">' +
     '<div class="sheet-head"><b>Menu</b><button class="icon-btn" id="close-menu" aria-label="Close menu">' + ICON.close + '</button></div>' +
-    '<nav aria-label="Menu"><div class="group">Areas</div>' +
+    '<nav aria-label="Menu"><div class="group">Doors</div>' +
     AREAS.map(function (a) { return '<a href="' + a.href + '"><b>' + a.label + '</b><span>' + a.line + '</span></a>'; }).join('') +
     '<div class="group">Across the college</div>' +
     SIDE.map(function (a) { return '<a href="' + a.href + '"><b>' + a.label + '</b><span>' + a.line + '</span></a>'; }).join('') +
@@ -174,7 +187,7 @@
   foot.innerHTML =
     '<div class="wrap"><div><a class="brand" href="index.html">' + ICON.mark + '<span>' + C.name + '</span></a>' +
     '<p style="margin-top:12px;max-width:34ch">A central hub for the College of Computer Studies, built around the Jubilee strategy.</p></div>' +
-    '<div><h4>Areas</h4>' + AREAS.map(function (a) { return '<a href="' + a.href + '">' + a.label + '</a>'; }).join('') + '</div>' +
+    '<div><h4>Doors</h4>' + AREAS.map(function (a) { return '<a href="' + a.href + '">' + a.label + '</a>'; }).join('') + '</div>' +
     '<div><h4>Across the college</h4>' + SIDE.map(function (a) { return '<a href="' + a.href + '">' + a.label + '</a>'; }).join('') + '</div>' +
     '<div><h4>Systems</h4><a href="' + mods.tracker.url + '" target="_blank" rel="noopener">' + mods.tracker.name + '</a>' +
     '<a href="' + mods.scgss.url + '" target="_blank" rel="noopener">' + mods.scgss.name + '</a>' +

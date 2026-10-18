@@ -1,4 +1,4 @@
-/* CCS Compass: site styles. Tokens live in tokens.css. */
+/* CCS Commons: site styles. Tokens live in tokens.css. */
 *,
 *::before,
 *::after { box-sizing: border-box; }
@@ -142,6 +142,13 @@ section.block { padding: clamp(40px, 6vw, 80px) 0; }
 .q span.sub { color: var(--muted); font-size: 14.5px; line-height: 1.4; }
 .q .chip { margin-top: auto; align-self: flex-start; }
 
+/* I'm a... entry points */
+.iam { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.iam h2 { font-size: 20px; font-weight: 700; margin-right: 6px; }
+.iam a { padding: 10px 16px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--line); color: var(--text); text-decoration: none; font-weight: 600; font-size: 15px; transition: transform var(--t-press) var(--ease-out), border-color var(--t-ui) ease; }
+.iam a:active { transform: scale(0.97); }
+@media (hover: hover) and (pointer: fine) { .iam a:hover { border-color: var(--accent); } }
+
 /* bento */
 .bento { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; }
 .tile {
@@ -158,7 +165,7 @@ section.block { padding: clamp(40px, 6vw, 80px) 0; }
 .tile.t-a { grid-column: span 4; background: var(--accent); color: var(--accent-ink); border-color: transparent; }
 .tile.t-b { grid-column: span 2; background: var(--band); color: var(--band-text); border-color: transparent; }
 .tile.t-c { grid-column: span 2; background: var(--accent-soft); color: var(--text); border-color: transparent; }
-.tile.t-d { grid-column: span 4; }
+.tile.t-d, .tile.t-e { grid-column: span 2; }
 .tile .glyph { position: absolute; right: -30px; top: -30px; width: 220px; height: 220px; opacity: .12; pointer-events: none; }
 .tile.t-d .glyph { color: var(--accent); opacity: .1; }
 
@@ -301,8 +308,8 @@ dialog.search::backdrop { background: rgba(5, 8, 6, .42); }
   .nav-tools { margin-left: auto; }
   .quick { grid-template-columns: repeat(2, 1fr); }
   .bento { grid-template-columns: 1fr 1fr; }
-  .tile.t-a, .tile.t-d { grid-column: span 2; }
-  .tile.t-b, .tile.t-c { grid-column: span 1; }
+  .tile.t-a { grid-column: span 2; }
+  .tile.t-b, .tile.t-c, .tile.t-d, .tile.t-e { grid-column: span 1; }
   .thread { grid-template-columns: 1fr; }
   .foot .wrap { grid-template-columns: 1fr 1fr; }
 }
@@ -312,7 +319,7 @@ dialog.search::backdrop { background: rgba(5, 8, 6, .42); }
   .quick { grid-template-columns: 1fr; }
   .q { min-height: 0; }
   .bento { grid-template-columns: 1fr; }
-  .tile.t-a, .tile.t-b, .tile.t-c, .tile.t-d { grid-column: span 1; min-height: 220px; }
+  .tile.t-a, .tile.t-b, .tile.t-c, .tile.t-d, .tile.t-e { grid-column: span 1; min-height: 220px; }
   .two { grid-template-columns: 1fr; }
   .list li { grid-template-columns: 1fr; gap: 2px; }
   .foot .wrap { grid-template-columns: 1fr; }
