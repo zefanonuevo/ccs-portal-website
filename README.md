@@ -24,6 +24,7 @@ One-time setup: **Settings → Pages → Source: GitHub Actions**.
 | `index.html` | Home: search, quick actions, I'm a... entry points, five doors, Jubilee band, news, connected systems |
 | `study.html` `services.html` `research.html` `partners.html` `people.html` | The five doors |
 | `programs.html` | Our degree programs (under Study): undergraduate and graduate, with the filter |
+| `about.html` `departments.html` | About the College; Leadership and departments (under People) |
 | `jubilee.html` | Jubilee Progress: approved highlights from every door |
 | `academics.html` `community.html` `partnerships.html` | Old addresses. They redirect to the pages above |
 | `resources.html` | Side menu: news, events, forms, policies, how things work |
@@ -70,6 +71,7 @@ what changed in each. The release number is shown in the footer of every page.
 | `v0.8.0` | Five doors, CCS Commons name, Jubilee Progress page |
 | `v0.9.0` | Our degree programs page |
 | `v0.10.0` | Program details in a pop-up |
+| `v0.11.0` | College content from the old CCS site |
 
 **Look at an old release.** Open `https://github.com/zefanonuevo/ccs-portal-website/tree/v0.3.0`
 (swap in any tag), or download its zip from the Releases page.

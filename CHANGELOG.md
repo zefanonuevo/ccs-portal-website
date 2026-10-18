@@ -7,6 +7,21 @@ The release number shown in the footer of every page comes from `release` in
 `assets/js/config.js`. Change it together with this file when you cut a new release.
 (`version: 'Draft v1'` is the draft stage of the whole site, not the release number.)
 
+## 0.11.0 - College content from the old CCS site (2026-10-18)
+Content summarized from old.dlsu.edu.ph/colleges/ccs and marked to be confirmed with the Office of the Dean.
+- New **About the College** page (`about.html`): vision, mission, accreditation (PAASCU, CHED Center of
+  Excellence) and the College office address and phone. The address and phone also appear in the footer.
+- New **Leadership and departments** page (`departments.html`): the Office of the Dean, the three
+  departments, their chairs and their practicum, thesis and graduate studies coordinators.
+- **Student groups** on People: Student Research and Development Program, Peer Tutors, SPRINT.
+- **Research centers** on Research: the ten AdRIC centers and labs, with focus and lead.
+- The five **strategic goals** on Jubilee Progress.
+- **Latest from CCS**: 16 recent College stories on Resources, tagged to a door, replacing the sample
+  stories on the home page.
+- Study gets a "Behind the programs" section (recognition and departments). Menu and search follow.
+- Not migrated: the faculty list (needs faculty consent), quick links, and the College's empty
+  Equipment and Facilities page.
+
 ## 0.10.0 - Program pop-ups (2026-10-18)
 - Each program on **Our degree programs** now opens a pop-up with its details: what you will study,
   where it can lead, who can apply, the unit breakdown, graduation requirements and good-to-know notes.

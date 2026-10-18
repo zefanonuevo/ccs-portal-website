@@ -42,6 +42,15 @@
     ['Faculty and staff directory', 'People', 'people.html#directory'],
     ['Committees', 'People', 'people.html#committees'],
     ['Jubilee Progress', 'Jubilee strategy', 'jubilee.html'],
+    ['Strategic goals', 'Jubilee Progress', 'jubilee.html#goals'],
+    ['About the College', 'People: vision, mission, recognition', 'about.html'],
+    ['Accreditation', 'PAASCU and CHED Center of Excellence', 'about.html#recognition'],
+    ['Contact the College office', 'Address and phone', 'about.html#contact'],
+    ['Leadership and departments', 'People: Office of the Dean', 'departments.html'],
+    ['Department chairs and coordinators', 'Practicum, thesis, graduate studies', 'departments.html#departments'],
+    ['Student groups', 'People: SRDP, Peer Tutors, SPRINT', 'people.html#student-groups'],
+    ['AdRIC research centers', 'Research: ten centers and labs', 'research.html#research-centers'],
+    ['Latest from CCS', 'Recent stories', 'resources.html#news-feed'],
     ['News and updates', 'Across the college', 'resources.html#news'],
     ['Events', 'Across the college', 'resources.html#events'],
     ['Forms and downloads', 'Across the college', 'resources.html#forms'],
@@ -65,7 +74,8 @@
         { href: 'study.html#finishing', label: 'Finishing your degree', line: 'Graduation requirements' }
       ] },
       { title: 'Tools', items: [
-        { href: 'study.html#dashboard', label: 'Academic dashboard', line: 'Your progress and records' }
+        { href: 'study.html#dashboard', label: 'Academic dashboard', line: 'Your progress and records' },
+        { href: 'study.html#behind', label: 'Departments and who to ask', line: 'Chairs and coordinators' }
       ] }
     ] },
     { key: 'services', href: 'services.html', label: 'Services', line: 'Ask, apply, register: everything here is something you do.', groups: [
@@ -93,6 +103,9 @@
         { href: 'research.html#project-highlights', label: 'Project highlights', line: 'Current and completed projects' },
         { href: 'research.html#grants-summary', label: 'Grants summary', line: 'Funding across projects' },
         { href: 'research.html#project-status', label: 'Project status', line: 'Progress of active projects' }
+      ] },
+      { title: 'Research centers', items: [
+        { href: 'research.html#research-centers', label: 'AdRIC research centers', line: 'Ten centers and labs' }
       ] }
     ] },
     { key: 'partners', href: 'partners.html', label: 'Partners', line: 'Work with CCS: industry and community partners.', groups: [
@@ -107,6 +120,11 @@
       ] }
     ] },
     { key: 'people', href: 'people.html', label: 'People', line: 'Meet CCS: the people and the stories of the college.', groups: [
+      { title: 'The College', items: [
+        { href: 'about.html', label: 'About the College', line: 'Vision, mission, recognition, contact' },
+        { href: 'departments.html', label: 'Leadership and departments', line: 'Dean\'s office, chairs and coordinators' },
+        { href: 'people.html#student-groups', label: 'Student groups', line: 'Research program, peer tutors, SPRINT' }
+      ] },
       { title: 'People and stories', items: [
         { href: 'people.html#spotlight', label: 'Spotlight', line: 'Awards and recognition' },
         { href: 'people.html#directory', label: 'Faculty and staff directory', line: 'Who is who at CCS' },
@@ -188,7 +206,8 @@
   var mods = C.modules;
   foot.innerHTML =
     '<div class="wrap"><div><a class="brand" href="index.html">' + ICON.mark + '<span>' + C.name + '</span></a>' +
-    '<p style="margin-top:12px;max-width:34ch">A central hub for the College of Computer Studies, built around the Jubilee strategy.</p></div>' +
+    '<p style="margin-top:12px;max-width:34ch">A central hub for the College of Computer Studies, built around the Jubilee strategy.</p>' +
+    '<p style="margin-top:12px;max-width:34ch">10th Floor, Br. Andrew Gonzalez Hall, 2401 Taft Avenue, Manila<br>(632) 8524-4611 loc. 300</p></div>' +
     '<div><h4>Doors</h4>' + AREAS.map(function (a) { return '<a href="' + a.href + '">' + a.label + '</a>'; }).join('') + '</div>' +
     '<div><h4>Across the college</h4>' + SIDE.map(function (a) { return '<a href="' + a.href + '">' + a.label + '</a>'; }).join('') + '</div>' +
     '<div><h4>Systems</h4><a href="' + mods.tracker.url + '" target="_blank" rel="noopener">' + mods.tracker.name + '</a>' +

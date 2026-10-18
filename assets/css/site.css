@@ -142,6 +142,16 @@ section.block { padding: clamp(40px, 6vw, 80px) 0; }
 .q span.sub { color: var(--muted); font-size: 14.5px; line-height: 1.4; }
 .q .chip { margin-top: auto; align-self: flex-start; }
 
+/* migrated College content */
+.plain { margin: 12px 0 0; padding-left: 20px; display: grid; gap: 8px; color: var(--text); font-size: 16px; line-height: 1.45; }
+.card .chair { display: flex; gap: 8px; align-items: baseline; margin-top: 4px; font-size: 15px; }
+.card .chair span { color: var(--muted); }
+.who { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 0; }
+.who li { display: flex; flex-direction: column; gap: 1px; padding: 9px 0; border-top: 1px solid var(--line); font-size: 15px; }
+.who li span { color: var(--muted); }
+.list a { color: inherit; text-decoration: none; }
+@media (hover: hover) and (pointer: fine) { .list a:hover { text-decoration: underline; } }
+
 /* degree programs */
 .seg { display: inline-flex; gap: 4px; padding: 4px; margin-top: 28px; background: var(--surface-2); border: 1px solid var(--line); border-radius: 999px; }
 .seg button { appearance: none; border: 0; background: none; color: var(--muted); font: 600 15px var(--f-body); padding: 9px 16px; border-radius: 999px; cursor: pointer; min-height: 40px; transition: transform var(--t-press) var(--ease-out), background-color var(--t-ui) ease, color var(--t-ui) ease; }
