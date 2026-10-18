@@ -21,7 +21,9 @@
     { href: 'resources.html#how', label: 'How things work', line: 'Process workflows' }
   ];
   var INDEX = [
-    ['Our degree programs', 'Study', 'study.html#programs'],
+    ['Our degree programs', 'Study: undergraduate and graduate', 'programs.html'],
+    ['Undergraduate programs', 'Study: BS CS, DS, InfoSec, IS, IT, IE', 'programs.html#undergraduate'],
+    ['Graduate programs', 'Study: MSCS, MSDS, MSIT, MIT, MINFSEC, PhD, DIT', 'programs.html#graduate'],
     ['What graduates can do', 'Study: outcomes', 'study.html#programs'],
     ['What you will study', 'Study: courses and units', 'study.html#programs'],
     ['How to apply', 'Study: admission', 'study.html#apply'],
@@ -52,7 +54,7 @@
   var MEGA = [
     { key: 'study', href: 'study.html', label: 'Study', line: 'Study at CCS, plan your path and finish your degree.', groups: [
       { title: 'Your program', items: [
-        { href: 'study.html#degree-programs', label: 'Degree programs', line: 'Each program and what it prepares you for' },
+        { href: 'programs.html', label: 'Our degree programs', line: 'Undergraduate and graduate programs' },
         { href: 'study.html#outcomes', label: 'What graduates can do', line: 'Graduate attributes and outcomes' },
         { href: 'study.html#curriculum', label: 'What you will study', line: 'Units and the list of courses' },
         { href: 'study.html#path', label: 'Your path, term by term', line: 'Course flowcharts for each program' },

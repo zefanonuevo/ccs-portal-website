@@ -7,6 +7,13 @@ The release number shown in the footer of every page comes from `release` in
 `assets/js/config.js`. Change it together with this file when you cut a new release.
 (`version: 'Draft v1'` is the draft stage of the whole site, not the release number.)
 
+## 0.9.0 - Our degree programs (2026-10-18)
+- New page, **Our degree programs** (`programs.html`), under Study. Seven undergraduate and seven
+  graduate programs from the College's program pages, each with its majors, units where stated,
+  and a link to the official page. A filter switches between All, Undergraduate and Graduate.
+- The Study page, the Study menu and search now point to it.
+- Details come from old.dlsu.edu.ph and are marked to be confirmed with the program chairs.
+
 ## 0.8.0 - Five doors, CCS Commons and Jubilee Progress (2026-10-18)
 Follows *CCS Commons Blueprint 1.2*.
 - The portal is now called **CCS Commons**. The tagline is "Where CCS comes together."

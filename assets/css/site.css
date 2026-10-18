@@ -142,6 +142,30 @@ section.block { padding: clamp(40px, 6vw, 80px) 0; }
 .q span.sub { color: var(--muted); font-size: 14.5px; line-height: 1.4; }
 .q .chip { margin-top: auto; align-self: flex-start; }
 
+/* degree programs */
+.seg { display: inline-flex; gap: 4px; padding: 4px; margin-top: 28px; background: var(--surface-2); border: 1px solid var(--line); border-radius: 999px; }
+.seg button { appearance: none; border: 0; background: none; color: var(--muted); font: 600 15px var(--f-body); padding: 9px 16px; border-radius: 999px; cursor: pointer; min-height: 40px; transition: transform var(--t-press) var(--ease-out), background-color var(--t-ui) ease, color var(--t-ui) ease; }
+.seg button span { opacity: .7; margin-left: 4px; font-variant-numeric: tabular-nums; }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+.seg button:active { transform: scale(0.97); }
+.progs { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 14px; }
+.prog { display: flex; flex-direction: column; gap: 10px; padding: 24px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); }
+.prog header { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.prog .abbr { font: 800 30px/1 var(--f-display); letter-spacing: -0.02em; color: var(--accent); }
+.prog h3 { font-size: 19px; font-weight: 700; line-height: 1.25; }
+.prog p { color: var(--muted); font-size: 16px; line-height: 1.45; }
+.prog .majors { list-style: none; margin: 4px 0 0; padding: 0; display: grid; gap: 8px; }
+.prog .majors li { display: flex; flex-direction: column; gap: 1px; padding: 10px 12px; background: var(--surface-2); border-radius: var(--r-sm); }
+.prog .majors a { color: var(--text); font-weight: 600; text-decoration: none; }
+.prog .majors span { color: var(--muted); font-size: 14px; }
+.prog .facts { display: grid; gap: 6px; margin: 4px 0 0; }
+.prog .facts div { display: flex; gap: 10px; font-size: 15px; }
+.prog .facts dt { flex: none; width: 84px; color: var(--muted); }
+.prog .facts dd { margin: 0; min-width: 0; }
+.prog .plink { margin-top: auto; padding-top: 6px; color: var(--accent); font-weight: 600; text-decoration: none; }
+@media (hover: hover) and (pointer: fine) { .prog .majors a:hover, .prog .plink:hover { text-decoration: underline; } .prog { transition: border-color var(--t-ui) ease; } .prog:hover { border-color: var(--accent); } }
+[data-level][hidden] { display: none; }
+
 /* I'm a... entry points */
 .iam { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
 .iam h2 { font-size: 20px; font-weight: 700; margin-right: 6px; }
