@@ -22,6 +22,8 @@ Calm and precise. Press feedback 160 ms (`scale(0.97)`), hover and color 200 ms,
 
 Allowed patterns: translucent blurred nav, mega menu for the five doors (desktop only; phones use the side menu), bento tiles, dark Jubilee band, four-point star mark, scroll reveal, sample-content dashed borders.
 
+Dot field: a decorative grid behind every page (`assets/js/dots.js`). Dots part around a mouse or pen pointer and return on a slightly underdamped spring (stiffness 220, damping 20), light up fast and fade slower. Still for touch and reduced motion. The frame loop stops when nothing moves. Resting dots stay at 20% opacity so text keeps its contrast.
+
 Not animated on purpose: search opens instantly (keyboard-driven, used often). Reduced motion removes movement and keeps a short fade. Hover effects only apply on devices with a real pointer.
 
 ## Easing

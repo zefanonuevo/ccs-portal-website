@@ -7,6 +7,13 @@ The release number shown in the footer of every page comes from `release` in
 `assets/js/config.js`. Change it together with this file when you cut a new release.
 (`version: 'Draft v1'` is the draft stage of the whole site, not the release number.)
 
+## 0.12.0 - Interactive dot background (2026-10-18)
+- A quiet grid of dots sits behind every page. Near the pointer the dots part, light up in the accent
+  color and settle back on a spring when the pointer moves on.
+- Mouse and pen only. Touch screens and people who prefer reduced motion get a still grid. It never
+  blocks a click, and it follows light and dark mode. The animation runs only while something moves.
+- New file `assets/js/dots.js`, loaded by `site.js`.
+
 ## 0.11.0 - College content from the old CCS site (2026-10-18)
 Content summarized from old.dlsu.edu.ph/colleges/ccs and marked to be confirmed with the Office of the Dean.
 - New **About the College** page (`about.html`): vision, mission, accreditation (PAASCU, CHED Center of

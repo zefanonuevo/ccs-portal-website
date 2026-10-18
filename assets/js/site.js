@@ -225,6 +225,12 @@
   skip.after(header);
   document.body.append(sheet, dlg, foot);
 
+  /* ---------- decorative dot field (assets/js/dots.js), loaded after the page is usable ---------- */
+  var dots = document.createElement('script');
+  dots.src = 'assets/js/dots.js?v=' + C.release;
+  dots.defer = true;
+  document.head.appendChild(dots);
+
   /* ---------- mega menu ---------- */
   var megaItems = header.querySelectorAll('.mega-item');
   var canHover = !!(window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches);
