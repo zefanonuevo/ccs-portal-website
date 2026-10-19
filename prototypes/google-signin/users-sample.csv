@@ -1,0 +1,6 @@
+email,role,name,program,active
+your.name@dlsu.edu.ph,admin,Your Name,,TRUE
+faculty.sample@example.test,faculty,Sample Faculty,,TRUE
+staff.sample@example.test,staff,Sample Staff,,TRUE
+student.sample@example.test,student,Sample Student,BS CS,TRUE
+former.student@example.test,student,Former Student,BS IT,FALSE
