@@ -55,6 +55,23 @@ button, input, select { font: inherit; color: inherit; }
 .icon-btn svg { width: 20px; height: 20px; }
 .role-select { appearance: none; background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; font-size: 13px; cursor: pointer; }
 .nav-signin { margin-left: 4px; white-space: nowrap; }
+.nav-who { font-size: 13px; color: var(--muted); max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+@media (max-width: 640px) { .nav-who { display: none; } }
+.role-select:disabled { cursor: default; opacity: 1; color: var(--text); }
+/* sign-in prototype dialog */
+dialog.signin-dialog { width: min(440px, calc(100% - 32px)); margin: 12vh auto 0; padding: 0; border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--surface); color: var(--text); }
+dialog.signin-dialog::backdrop { background: rgba(5, 8, 6, .42); }
+.si-head { display: flex; align-items: center; justify-content: space-between; padding: 12px 12px 0 20px; }
+.si-head h2 { margin: 0; font-size: 20px; }
+.si-body { padding: 8px 20px 20px; display: grid; gap: 12px; }
+.si-list { border: 0; margin: 0 0 12px; padding: 0; display: grid; gap: 8px; }
+.si-option { display: flex; gap: 12px; align-items: center; min-height: 44px; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--r-lg); cursor: pointer; }
+.si-option:has(input:checked) { border-color: var(--accent); background: var(--surface-2); }
+.si-option input { accent-color: var(--accent); width: 18px; height: 18px; }
+.si-option em { font-style: normal; font-size: 12px; border: 1px solid var(--line); border-radius: 999px; padding: 1px 8px; margin-left: 4px; color: var(--muted); }
+.si-option small { color: var(--muted); }
+.si-error { margin: 0; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--r-lg); font-weight: 600; }
+
 .nav .brand span, .nav .tag { white-space: nowrap; }
 .nav-links { flex-shrink: 0; }
 

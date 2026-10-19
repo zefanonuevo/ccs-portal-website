@@ -7,6 +7,16 @@ The release number shown in the footer of every page comes from `release` in
 `assets/js/config.js`. Change it together with this file when you cut a new release.
 (`version: 'Draft v1'` is the draft stage of the whole site, not the release number.)
 
+## 0.13.0 - Sign-in prototype (2026-10-19, branch google-signin-prototype)
+- **Proposed, not for `main` until approved.** The "Sign in" button now opens a pop-up. By default it offers
+  **sample accounts** (fictional) so reviewers can see each role. Nothing is checked and nothing is protected.
+- When `signin.clientId` and `signin.apiUrl` are set in `assets/js/config.js`, the pop-up uses Google sign-in
+  and a Google Apps Script backend that checks the token and reads a Users sheet. Setup and gaps:
+  `prototypes/google-signin/README.md`. Real mode has not been run against Google.
+- Signed in, the "Viewing as" switch is locked to the signed-in role. Signed out, it is still a preview.
+- Needs decisions before merge: Google script loaded from `accounts.google.com` (rule 1), who owns the user
+  list (D5), guest rights (D7), DLSU IT and data privacy approval.
+
 ## 0.12.0 - Interactive dot background (2026-10-18)
 - A quiet grid of dots sits behind every page. Near the pointer the dots part, light up in the accent
   color and settle back on a spring when the pointer moves on.

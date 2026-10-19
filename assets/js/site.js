@@ -145,11 +145,20 @@
   var page = (location.pathname.split('/').pop() || 'index.html');
   var role = 0;
   try { role = Math.min(4, Math.max(0, parseInt(localStorage.getItem('ccs-role') || '0', 10) || 0)); } catch (e) {}
+  /* Sign-in prototype session (tab only). When present it sets the role and the preview switch is locked. */
+  var session = null;
+  try { session = JSON.parse(sessionStorage.getItem('ccs-session')); } catch (e) {}
+  function esc(t) { return String(t == null ? '' : t).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function roleIndex(name) {
+    var i = C.roles.map(function (r) { return r.toLowerCase(); }).indexOf(String(name || '').toLowerCase());
+    return i < 0 ? 0 : i;
+  }
+  if (session) role = roleIndex(session.role);
 
   function roleSelect(id) {
     return '<label style="display:contents"><span class="sr">Preview the portal as</span>' +
-      '<select class="role-select" id="' + id + '" aria-label="Preview the portal as">' +
-      C.roles.map(function (r, i) { return '<option value="' + i + '"' + (i === role ? ' selected' : '') + '>Viewing as ' + r + '</option>'; }).join('') +
+      '<select class="role-select" id="' + id + '" aria-label="Preview the portal as"' + (session ? ' disabled title="Your role comes from signing in"' : '') + '>' +
+      C.roles.map(function (r, i) { return '<option value="' + i + '"' + (i === role ? ' selected' : '') + '>' + (session ? 'Signed in as ' : 'Viewing as ') + r + '</option>'; }).join('') +
       '</select></label>';
   }
 
@@ -182,7 +191,8 @@
     roleSelect('role-top') +
     '<button class="icon-btn" id="open-search" aria-label="Search (press /)">' + ICON.search + '</button>' +
     '<button class="icon-btn" id="open-menu" aria-label="Open menu" aria-expanded="false" aria-controls="sheet">' + ICON.menu + '</button>' +
-    '<button class="btn small nav-signin" disabled title="Sign-in arrives with the roles build (blueprint step 2)">Sign in</button>' +
+    (session ? '<span class="nav-who">' + esc(session.name || session.email) + '</span>' : '') +
+    '<button class="btn small nav-signin" id="signin-btn" type="button">' + (session ? 'Sign out' : 'Sign in') + '</button>' +
     '</div></div>';
 
   var sheet = document.createElement('div');
@@ -374,6 +384,69 @@
   }
   ['role-top', 'role-sheet'].forEach(function (id) { document.getElementById(id).addEventListener('change', function (e) { setRole(parseInt(e.target.value, 10)); }); });
   applyRole();
+
+  /* ---------- sign-in PROTOTYPE: sample accounts, or Google plus the Apps Script backend when configured ---------- */
+  (function () {
+    var S = C.signin || {};
+    var real = !!(S.clientId && S.apiUrl);
+    var btn = document.getElementById('signin-btn');
+    if (!btn) return;
+    function saveSession(o) {
+      try { sessionStorage.setItem('ccs-session', JSON.stringify(o)); } catch (e) {}
+      location.reload();
+    }
+    if (session) {
+      btn.addEventListener('click', function () {
+        try { sessionStorage.removeItem('ccs-session'); } catch (e) {}
+        try { if (window.google && google.accounts) google.accounts.id.disableAutoSelect(); } catch (e) {}
+        location.reload();
+      });
+      return;
+    }
+    var d = document.createElement('dialog');
+    d.className = 'signin-dialog';
+    d.setAttribute('aria-labelledby', 'si-title');
+    d.innerHTML =
+      '<form method="dialog" class="si-head"><h2 id="si-title">Sign in</h2><button class="icon-btn" aria-label="Close sign-in">' + ICON.close + '</button></form>' +
+      '<div class="si-body" id="si-body"></div>';
+    document.body.appendChild(d);
+    var body = d.querySelector('#si-body');
+    function fail(msg) { var e = body.querySelector('.si-error') || body.insertAdjacentElement('afterbegin', document.createElement('p')); e.className = 'si-error'; e.setAttribute('role', 'alert'); e.textContent = msg; }
+    function sampleView() {
+      body.innerHTML =
+        '<p class="fine">Prototype. These are <b>sample accounts</b> to show how each role sees the portal. Nothing is checked and nothing is protected.</p>' +
+        '<form id="si-form"><fieldset class="si-list"><legend class="sr">Choose a sample account</legend>' +
+        (S.sample || []).map(function (u, i) {
+          return '<label class="si-option"><input type="radio" name="si" value="' + i + '"' + (i === 0 ? ' checked' : '') + '><span><b>' + esc(u.name) + '</b> <em>Sample</em><br><small>Becomes ' + esc(u.role) + '</small></span></label>';
+        }).join('') + '</fieldset><button class="btn" type="submit">Continue</button></form>';
+      body.querySelector('#si-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        var u = S.sample[parseInt(e.target.si.value, 10)];
+        saveSession({ name: u.name, email: u.email, role: u.role, mode: 'sample' });
+      });
+    }
+    function realView() {
+      body.innerHTML = '<p class="fine">Use your DLSU Google account. Your role comes from the CCS user list.</p><div id="si-g"></div>';
+      var s = document.createElement('script');
+      s.src = 'https://accounts.google.com/gsi/client'; s.async = true;
+      s.onerror = function () { fail('Could not load Google sign-in. Check your connection.'); };
+      s.onload = function () {
+        google.accounts.id.initialize({ client_id: S.clientId, callback: function (r) {
+          fetch(S.apiUrl, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'login', idToken: r.credential }) })
+            .then(function (x) { return x.json(); })
+            .then(function (o) { if (!o.ok) throw new Error(o.error || 'Sign-in was refused'); saveSession({ name: o.name, email: o.email, role: o.role, mode: 'google' }); })
+            .catch(function (err) { fail(err.message); });
+        } });
+        google.accounts.id.renderButton(body.querySelector('#si-g'), { theme: 'outline', size: 'large', width: 280 });
+      };
+      document.head.appendChild(s);
+    }
+    btn.addEventListener('click', function () {
+      if (!body.firstChild) (real ? realView : sampleView)();
+      d.showModal();
+    });
+    d.addEventListener('click', function (e) { if (e.target === d) d.close(); });
+  })();
 
   /* ---------- scroll reveal ---------- */
   var els = document.querySelectorAll('[data-reveal]');

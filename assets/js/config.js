@@ -3,7 +3,7 @@
 window.CCS = {
   name: 'CCS Commons',
   version: 'Draft v1',
-  release: '0.12.0',   // single source for the release number shown in the footer; keep in step with CHANGELOG.md
+  release: '0.13.0',   // single source for the release number shown in the footer; keep in step with CHANGELOG.md
   modules: {
     tracker: {
       name: 'Request a Service',
@@ -53,6 +53,20 @@ window.CCS = {
       css: 'https://zefanonuevo.github.io/ccs-design/ccs-tokens.css',
       url: 'https://github.com/zefanonuevo/ccs-design'
     }
+  },
+  /* Sign-in PROTOTYPE (off by default). With clientId and apiUrl empty, "Sign in" opens SAMPLE accounts only:
+     it proves nothing about who someone is and enforces nothing. Real mode is described in prototypes/google-signin/README.md.
+     The client ID is public by design; never put a secret here. Sample people are fictional. */
+  signin: {
+    clientId: '',
+    apiUrl: '',
+    sample: [
+      { name: 'Sample Admin', email: 'admin.sample@example.test', role: 'Admin' },
+      { name: 'Sample Faculty', email: 'faculty.sample@example.test', role: 'Faculty' },
+      { name: 'Sample Staff', email: 'staff.sample@example.test', role: 'Staff' },
+      { name: 'Sample Student', email: 'student.sample@example.test', role: 'Student' },
+      { name: 'Not on the list', email: 'unlisted.sample@example.test', role: 'Guest' }
+    ]
   },
   /* Blueprint v2, "Who sees what" (unchanged in Blueprint 1.2). Order: guest, student, faculty, staff, admin. */
   roles: ['Guest', 'Student', 'Faculty', 'Staff', 'Admin'],
