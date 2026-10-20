@@ -96,5 +96,5 @@ Run locally: `python -m http.server 8080`, then open http://localhost:8080.
 ## Security reminders
 
 The portal has **no sign-in and no server**. Anything in this repo is public. Do not describe the "Viewing as" switch
-as access control. It is a preview only. Real access control must be enforced on a server
+as access control. It hides content marked No, but only in the browser: the content is still in the public source. It is a preview only. Real access control must be enforced on a server
 ([docs/Architecture.md](docs/Architecture.md)).

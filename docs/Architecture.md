@@ -168,6 +168,7 @@ None of these controls exists yet. They become requirements for any phase that s
 | W4 | Apps Script is deployed as "Anyone" with a shared token (by its own setup comments). | `ccs-scgss/google/Code.gs` |
 | W5 | All sites share the origin `zefanonuevo.github.io`, so a script flaw in one site can read the browser storage of the others. | URL structure |
 | W6 | No CSP on any page. | Search of the 14 pages |
+| W7 | The portal's "Viewing as" preview hides content marked No, but the hidden content is still in the HTML and the public repository. It must never be used to hide anything sensitive. | `applyRole()` in `assets/js/site.js`; the repository is public |
 
 ## 8. Module independence and the module contract (Proposed)
 

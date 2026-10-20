@@ -133,6 +133,28 @@
       ] }
     ] }
   ];
+  /* Links that lead to content governed by an access row. Mirrors the data-access tags on the pages.
+     A link is hidden when its row is No for the current role. Keep both in step (see docs/PRD.md section 2.1). */
+  var LINK_ACCESS = {
+    'What graduates can do': 'outcomes', 'Your path, term by term': 'flowcharts', 'Course guide': 'courses',
+    'How to apply': 'admission', 'Finishing your degree': 'graduation',
+    'Academic dashboard': 'dashboards', 'Usage dashboard': 'dashboards',
+    'Departments and who to ask': 'leadership', 'Department chairs and coordinators': 'leadership',
+    'Request a Service': 'service', 'Request a service': 'service',
+    'Student Grants': 'grants', 'Student grants': 'grants',
+    'Virtual Office': 'virtual', 'Register and join Zoom': 'virtual', 'Knowledge base and chatbot': 'virtual',
+    'Publication highlights': 'research', 'Faculty records': 'research', 'Project highlights': 'research',
+    'Grants summary': 'research', 'Grants summary and project status': 'research', 'Project status': 'research',
+    'Add your publication': 'publish',
+    'Partner directory': 'research', 'Partner highlights': 'research', 'Faculty and staff directory': 'research',
+    'Agreements': 'agreements', 'Agreements (MOA, MOU)': 'agreements', 'Partner activity tracker': 'agreements',
+    'Forms and downloads': 'forms', 'Policies and guidelines': 'forms', 'How things work': 'forms',
+    'News and updates': 'news', 'Events': 'news', 'Spotlight': 'news', 'Committees': 'news', 'Serving the community': 'news'
+  };
+  function levelFor(key) { return (C.access[key] || [])[role] || 'View'; }
+  function linkHidden(label) { var k = LINK_ACCESS[label]; return !!k && levelFor(k) === 'No'; }
+  function accAttr(label) { var k = LINK_ACCESS[label]; return k ? ' data-acc="' + k + '"' : ''; }
+
   var CHEV = '<svg class="chev" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
   var ICON = {
@@ -171,11 +193,11 @@
       '<a href="' + m.href + '">Open ' + m.label + ' &rarr;</a></div>' +
       '<div class="mega-cols">' + m.groups.map(function (g) {
         return '<div class="mega-col"><p class="mega-group">' + g.title + '</p>' + g.items.map(function (it) {
-          return '<a href="' + it.href + '"><b>' + it.label + '</b><span>' + it.line + '</span></a>';
+          return '<a href="' + it.href + '"' + accAttr(it.label) + '><b>' + it.label + '</b><span>' + it.line + '</span></a>';
         }).join('') + '</div>';
       }).join('') + '</div>' +
       '<div class="mega-strip"><span class="mega-group">Across the college</span>' +
-      SIDE.map(function (s) { return '<a href="' + s.href + '">' + s.label + '</a>'; }).join('') +
+      SIDE.map(function (s) { return '<a href="' + s.href + '"' + accAttr(s.label) + '>' + s.label + '</a>'; }).join('') +
       '</div></div></div></div>';
   }
 
@@ -203,7 +225,7 @@
     '<nav aria-label="Menu"><div class="group">Doors</div>' +
     AREAS.map(function (a) { return '<a href="' + a.href + '"><b>' + a.label + '</b><span>' + a.line + '</span></a>'; }).join('') +
     '<div class="group">Across the college</div>' +
-    SIDE.map(function (a) { return '<a href="' + a.href + '"><b>' + a.label + '</b><span>' + a.line + '</span></a>'; }).join('') +
+    SIDE.map(function (a) { return '<a href="' + a.href + '"' + accAttr(a.label) + '><b>' + a.label + '</b><span>' + a.line + '</span></a>'; }).join('') +
     '</nav><div class="role-row"><span>Preview access</span>' + roleSelect('role-sheet') + '</div></aside>';
 
   var dlg = document.createElement('dialog');
@@ -219,7 +241,7 @@
     '<p style="margin-top:12px;max-width:34ch">A central hub for the College of Computer Studies, built around the Jubilee strategy.</p>' +
     '<p style="margin-top:12px;max-width:34ch">10th Floor, Br. Andrew Gonzalez Hall, 2401 Taft Avenue, Manila<br>(632) 8524-4611 loc. 300</p></div>' +
     '<div><h4>Doors</h4>' + AREAS.map(function (a) { return '<a href="' + a.href + '">' + a.label + '</a>'; }).join('') + '</div>' +
-    '<div><h4>Across the college</h4>' + SIDE.map(function (a) { return '<a href="' + a.href + '">' + a.label + '</a>'; }).join('') + '</div>' +
+    '<div><h4>Across the college</h4>' + SIDE.map(function (a) { return '<a href="' + a.href + '"' + accAttr(a.label) + '>' + a.label + '</a>'; }).join('') + '</div>' +
     '<div><h4>Systems</h4><a href="' + mods.tracker.url + '" target="_blank" rel="noopener">' + mods.tracker.name + '</a>' +
     '<a href="' + mods.scgss.url + '" target="_blank" rel="noopener">' + mods.scgss.name + '</a>' +
     '<a href="' + mods.design.url + '" target="_blank" rel="noopener">Design system</a>' +
@@ -292,7 +314,7 @@
   var input = dlg.querySelector('#q'), list = dlg.querySelector('#results'), sel = 0, shown = [];
   function render() {
     var term = input.value.trim().toLowerCase();
-    shown = INDEX.filter(function (r) { return !term || (r[0] + ' ' + r[1]).toLowerCase().indexOf(term) > -1; }).slice(0, 8);
+    shown = INDEX.filter(function (r) { return !linkHidden(r[0]) && (!term || (r[0] + ' ' + r[1]).toLowerCase().indexOf(term) > -1); }).slice(0, 8);
     sel = 0;
     list.innerHTML = shown.length
       ? shown.map(function (r, i) { return '<li><a role="option" href="' + r[2] + '" aria-selected="' + (i === 0) + '">' + r[0] + '<span>' + r[1] + '</span></a></li>'; }).join('')
@@ -367,14 +389,55 @@
 
   /* ---------- role preview: data-access="grants" adds a badge ---------- */
   var TEXT = { View: 'You can view', Use: 'You can use', Manage: 'You can manage' };
+  var CONTAINERS = '.grid, .two, .quick, .bento, .mega-col';
   function applyRole() {
+    var hiddenCount = 0;
+    /* 1. tagged content: hide when the row is No, otherwise show a badge */
     Array.prototype.forEach.call(document.querySelectorAll('[data-access]'), function (el) {
-      var lvl = (C.access[el.getAttribute('data-access')] || [])[role] || 'View';
+      var lvl = levelFor(el.getAttribute('data-access'));
       var chip = el.querySelector('.access-chip');
+      if (lvl === 'No') {
+        el.hidden = true; hiddenCount++;
+        if (chip) { chip.remove(); }
+        return;
+      }
+      el.hidden = false;
       if (!chip) { chip = document.createElement('span'); el.appendChild(chip); }
-      chip.className = 'chip access-chip' + (lvl === 'No' ? ' no' : '');
-      chip.textContent = lvl === 'No' ? (role === 0 ? 'Sign in required' : 'Not available for your role') : TEXT[lvl];
+      chip.className = 'chip access-chip';
+      chip.textContent = TEXT[lvl];
     });
+    /* 2. menu, search and footer links */
+    Array.prototype.forEach.call(document.querySelectorAll('[data-acc]'), function (a) {
+      a.hidden = levelFor(a.getAttribute('data-acc')) === 'No';
+    });
+    /* 3. groups that lost all their items */
+    Array.prototype.forEach.call(document.querySelectorAll(CONTAINERS), function (c) {
+      var kids = Array.prototype.slice.call(c.children).filter(function (k) { return k.tagName !== 'P'; });
+      var gated = kids.some(function (k) { return k.hasAttribute('data-access') || k.hasAttribute('data-acc'); });
+      var anyShown = kids.some(function (k) { return !k.hidden; });
+      if (gated && !anyShown) { c.hidden = true; c.setAttribute('data-noaccess-empty', ''); }
+      else if (c.hasAttribute('data-noaccess-empty')) { c.hidden = false; c.removeAttribute('data-noaccess-empty'); }
+    });
+    /* 4. page sections left with nothing to show (their heading goes too) */
+    Array.prototype.forEach.call(document.querySelectorAll('main section.block'), function (sec) {
+      var wrap = sec.querySelector('.wrap') || sec;
+      var hasGated = sec.querySelector('[data-access]');
+      var anyShown = Array.prototype.some.call(wrap.children, function (k) { return !k.hidden && !k.classList.contains('sec-head'); });
+      if (hasGated && !anyShown) { sec.hidden = true; sec.setAttribute('data-noaccess-empty', ''); }
+      else if (sec.hasAttribute('data-noaccess-empty')) { sec.hidden = false; sec.removeAttribute('data-noaccess-empty'); }
+    });
+    /* 5. one quiet line, so people know something is hidden and why */
+    var main = document.querySelector('main'), note = document.getElementById('access-note');
+    if (main && hiddenCount) {
+      if (!note) {
+        note = document.createElement('div'); note.id = 'access-note'; note.className = 'wrap';
+        note.innerHTML = '<p class="note"></p>'; main.appendChild(note);
+      }
+      note.querySelector('p').textContent = role === 0
+        ? 'Some items are hidden because they need you to sign in. Use Sign in, or the Viewing as menu, to see what your role can open.'
+        : 'Some items are hidden because they are not available to your role (' + C.roles[role] + ').';
+      note.hidden = false;
+    } else if (note) { note.hidden = true; }
   }
   function setRole(v) {
     role = v;

@@ -113,6 +113,6 @@ To cut a new release: update `release` in `assets/js/config.js` and add an entry
 - There is no sign-in and no server. Do not collect personal data through the portal.
 - Content summarized from the old CCS site is marked *to be confirmed* until its owner confirms it.
 - Sample content is marked "Sample".
-- "Viewing as" previews the access matrix from the owner's table of 2026-10-20 ([docs/PRD.md](docs/PRD.md) section 2.1). It is **not enforced**. Real access control must be done on the server when sign-in is built.
+- "Viewing as" hides content that is No for the chosen role and shows View, Use or Manage badges on the rest, using the access matrix from the owner's table of 2026-10-20 ([docs/PRD.md](docs/PRD.md) section 2.1). It is a preview only: hidden content is still in the public page source and **nothing is protected**. Real access control must be done on the server when sign-in is built.
 - Sign-in is a disabled placeholder.
 - Open decisions are listed on the last slide of the blueprint (student list source, public syllabi, guest access, publication consent).

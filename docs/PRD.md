@@ -87,6 +87,9 @@ is only a working assumption, not a decision.
 | Faculty and staff directory | currently tagged `research` | TBD | TBD | TBD | TBD | TBD |
 | Add your publication | `publish`, kept from Blueprint v2: Admin Manage, Faculty Use, others No (to confirm) | Manage | No | Use | No | No |
 
+**Hide behaviour (2026-10-20).** In the portal's preview, content whose level is **No** for the chosen role is hidden (with the menu, search and footer links to it, and any
+empty section), at the owner's request. This is not protection: the content is still in the public page source (Architecture.md W7). Real enforcement is Phase 3.
+
 **Applied in the portal on 2026-10-20:** the keys above exist in `config.js`; Academics cards use them; the Course guide card was split into *Course guide*
 (descriptions) and *Course syllabi* so each has its own badge; the "Departments and who to ask" card carries the `leadership` badge. The portal's Leadership
 and departments page itself is not tagged.
