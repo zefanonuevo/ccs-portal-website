@@ -68,19 +68,25 @@ window.CCS = {
       { name: 'Not on the list', email: 'unlisted.sample@example.test', role: 'Guest' }
     ]
   },
-  /* Blueprint v2, "Who sees what" (unchanged in Blueprint 1.2). Order: guest, student, faculty, staff, admin. */
+  /* "Who sees what": owner-supplied table of 2026-10-20 (supersedes Blueprint v2). Order here: guest, student, faculty, staff, admin. */
   roles: ['Guest', 'Student', 'Faculty', 'Staff', 'Admin'],
   access: {
-    program: ['View', 'View', 'View', 'View', 'Manage'],
-    syllabi: ['No', 'View', 'View', 'View', 'Manage'],
-    news: ['View', 'View', 'Use', 'Use', 'Manage'],
+    program: ['View', 'View', 'View', 'View', 'Manage'],       // Degree programs (undergraduate and graduate)
+    outcomes: ['No', 'View', 'View', 'View', 'Manage'],        // Graduate attributes and outcomes (PEOs, PLOs, PIs)
+    flowcharts: ['No', 'View', 'View', 'View', 'Manage'],      // Course flowcharts and checklists
+    courses: ['No', 'View', 'View', 'View', 'Manage'],         // Course descriptions
+    syllabi: ['No', 'No', 'View', 'View', 'Manage'],           // Course syllabi and syllabi links
+    admission: ['View', 'View', 'View', 'View', 'Manage'],     // Application requirements
+    graduation: ['View', 'View', 'View', 'View', 'Manage'],    // Graduation requirements
+    leadership: ['No', 'View', 'View', 'View', 'Manage'],      // Administrators: administrators, chairs, coordinators (not yet tagged on pages)
+    news: ['View', 'View', 'Use', 'Use', 'Manage'],            // News, events, spotlight
     virtual: ['View', 'Use', 'Use', 'Use', 'Manage'],
     grants: ['No', 'Use', 'View', 'No', 'Manage'],
     service: ['No', 'Use', 'Use', 'Manage', 'Manage'],
-    research: ['View', 'View', 'Use', 'View', 'Manage'],
-    publish: ['No', 'No', 'Use', 'No', 'Manage'],
-    agreements: ['No', 'No', 'View', 'View', 'Manage'],
-    forms: ['No', 'View', 'Use', 'Use', 'Manage'],
-    dashboards: ['No', 'No', 'No', 'No', 'Manage']
+    research: ['View', 'View', 'Use', 'View', 'Manage'],       // Research and faculty records
+    publish: ['No', 'No', 'Use', 'No', 'Manage'],              // Not in the 2026-10-20 table; kept from Blueprint v2
+    agreements: ['No', 'No', 'View', 'View', 'Manage'],        // Partnership agreements
+    forms: ['No', 'View', 'Use', 'Use', 'Manage'],             // Forms and policies
+    dashboards: ['No', 'No', 'No', 'No', 'Manage']             // Statistics dashboards
   }
 };

@@ -126,7 +126,7 @@ domain, then looks up the person in the directory.
 
 | Level | Values | Where it is used |
 | --- | --- | --- |
-| Coarse role | Guest, Student, Faculty, Staff, Admin | Portal visibility, the v2 access matrix |
+| Coarse role | Guest, Student, Faculty, Staff, Admin | Portal visibility, the access matrix (PRD.md section 2.1) |
 | Module role | Tracker: requester, office assistant, office coordinator, unit head. Grants: student, thesis adviser, department chair, associate dean, dean, administrative assistant, secretary, system administrator. Dashboards: designated admin per dashboard. | Actions inside a module |
 
 A person can hold one coarse role and several module roles. Module roles are assigned by a designated administrator, and every

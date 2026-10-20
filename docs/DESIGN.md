@@ -142,8 +142,9 @@ back to the portal. The portal never embeds another module in an iframe (the reg
 
 ## 11. Access preview *(Existing)*
 
-`data-access="key"` on any element adds a badge from the matrix in `config.js`. It is a preview of the blueprint's View, Use and Manage
-rules and is **not access control**.
+`data-access="key"` on any element adds a badge from the matrix in `config.js`. The matrix is the owner's table of 2026-10-20 (PRD.md section 2.1),
+which supersedes the Blueprint v2 slide. The badge is a preview of View, Use and Manage and is **not access control**. Only tag content that the
+row actually governs; do not tag content that is publicly readable today if the row says Guest No (see PRD D20).
 
 ## 12. Next steps
 

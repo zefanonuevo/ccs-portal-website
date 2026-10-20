@@ -39,8 +39,45 @@ Design targets (Approved, Blueprint v2; the two-click figure is itself marked as
 | Office coordinator, assistants, Dean, approvers | Run the Task Tracker and Grant Support workflows | Services |
 | Guest | Public information only | any |
 
-Roles in the access matrix are Guest, Student, Faculty, Staff, Admin (Approved, Blueprint v2). The modules use
+Roles in the access matrix are Guest, Student, Faculty, Staff, Admin (Approved, Blueprint v2; matrix revised by the owner on 2026-10-20, section 2.1). The modules use
 richer roles of their own (see Module-Specifications.md). A single role model is **Proposed** (Architecture.md section 6).
+
+### 2.1 Access matrix (owner-supplied 2026-10-20, **Approved**)
+
+Supplied by the owner as a table (two screenshots) on 2026-10-20. It **supersedes** the Blueprint v2 slide "Who sees what". Levels: **View** read only,
+**Use** submit or take part, **Manage** edit and approve. Columns follow the owner's table (Admin first). It is **not enforced** anywhere yet
+(see Architecture.md section 6); the portal only previews it as badges, using the keys in `assets/js/config.js`.
+
+| Content | Config key | Admin | Staff | Faculty | Student | Guest |
+| --- | --- | --- | --- | --- | --- | --- |
+| Degree programs (undergraduate and graduate) | `program` | Manage | View | View | View | View |
+| Graduate attributes and outcomes (expected Lasallian graduate attributes, PLOs, PIs) | `outcomes` | Manage | View | View | View | No |
+| Course flowcharts and checklists | `flowcharts` | Manage | View | View | View | No |
+| Course descriptions | `courses` | Manage | View | View | View | No |
+| Course syllabi, and course syllabi links | `syllabi` | Manage | View | View | **No** | No |
+| Application requirements | `admission` | Manage | View | View | View | View |
+| Graduation requirements | `graduation` | Manage | View | View | View | View |
+| Administrators (college administrators, department chairs, program coordinators) | `leadership` | Manage | View | View | View | No |
+| News, events, spotlight | `news` | Manage | Use | Use | View | View |
+| Virtual Office | `virtual` | Manage | Use | Use | Use | View |
+| Student Grants | `grants` | Manage | No | View | Use | No |
+| Request a Service | `service` | Manage | Manage | Use | Use | No |
+| Research and faculty records | `research` | Manage | View | Use | View | View |
+| Partnership agreements | `agreements` | Manage | View | View | No | No |
+| Forms and policies | `forms` | Manage | Use | Use | View | No |
+| Statistics dashboards | `dashboards` | Manage | No | No | No | No |
+
+**What changed from Blueprint v2.** One value: students can no longer view course syllabi (v2: View, now No). The v2 single row "Program information" is
+split into six finer rows (programs, outcomes, flowcharts, descriptions, application and graduation requirements, administrators); two of
+them hide content from guests that v2 showed (outcomes, flowcharts and descriptions: Guest No; administrators: Guest No). All other values match v2.
+
+**Not in the owner's table, kept from Blueprint v2 and marked as such in `config.js`:** `publish` (Add your publication: Faculty Use, Admin Manage, others No).
+Jubilee Progress, partner highlights and directory, equipment and inventory, and the Virtual Office usage dashboard have no row; they fall under
+`dashboards` or the nearest row until the owner says otherwise (**Decision needed, D21**).
+
+**Applied in the portal on 2026-10-20 (uncommitted at the time of writing):** the keys above exist in `config.js`; Study cards use them; the Course
+guide card was split into *Course guide* (descriptions) and *Course syllabi* so each has its own badge. Curriculum mapping and "What you will study"
+keep the `program` key because the table has no row for them (D21). The Administrators row is **not yet tagged on any page** (see C12).
 
 ## 3. Scope
 
@@ -158,6 +195,9 @@ Decisions carried over from the blueprints plus those raised by this review. "Re
 | D15 | Who approves Jubilee highlights | 1.2 #8 | The Dean's office delegate | Decision needed |
 | D16 | Small-group threshold for dashboards | v2 guardrail ("hide very small groups"), no number | A minimum group size, for example 5, confirmed with the Data Protection Officer | Decision needed |
 | D17 | Data retention periods | Review | Set per data type with the DPO | Decision needed |
+| D19 | The owner's table reads "Study - change to Academics". Blueprint 1.2 renamed Academics to Study and the portal uses Study. Rename back, or was the note about something else? | 2026-10-20 table | Keep Study until the owner confirms; renaming touches the nav, URLs (`study.html`), search and redirects | Decision needed |
+| D20 | The matrix says Administrators are hidden from Guests, but the portal's Leadership and departments page and the Study page list the Dean, chairs and coordinators publicly (summarized from the old public CCS site) | 2026-10-20 table | Owner decides: hide from Guests (needs sign-in first) or change the row to View | Decision needed |
+| D21 | Content with no row in the table: curriculum mapping, "What you will study", Jubilee Progress, partner highlights and directory, equipment and inventory, publish | 2026-10-20 table | Extend the table; until then the nearest existing row applies | Decision needed |
 | D18 | Theme policy: portal is forced light today, modules offer System/Light/Dark | Review | One policy for all. Either keep light-only everywhere or let all follow the system setting. | Decision needed |
 
 ## 7. Conflicts and inconsistencies found
@@ -173,6 +213,8 @@ Decisions carried over from the blueprints plus those raised by this review. "Re
 | C7 | Release practice differs: portal and VO tag releases; tracker and grants have changelogs but no tags | `git ls-remote --tags` | One release practice (AGENTS.md rule 14 to 16). |
 | C8 | Portal README said "Draft v1" while the release is 0.12.0 | README, `config.js` | README refreshed this round. |
 | C9 | Portal is forced to the light theme (`data-theme="light"`), while modules offer a theme switch and DESIGN.md said the portal follows the system | `index.html`, commit `f112eb8` | DESIGN.md corrected; policy is D18. |
+| C11 | The owner's table lists "News, events, spotlight" twice with identical values, and has an empty "Our Programs" header row | 2026-10-20 table | Treated as one row; no action unless the second row was meant to be different | Noted |
+| C12 | Matrix row "Administrators" (Guest No) conflicts with the public Leadership and departments page | `departments.html` | D20. Not tagged with a badge yet so visitors are not told "sign in required" on content they can already read. | Decision needed |
 | C10 | Two commits after v0.12.0 (`fbda912`, `f112eb8`: theme-color and forced light theme) have no CHANGELOG entry, so the footer release number (0.12.0) does not describe the deployed site exactly | `git log`, `CHANGELOG.md` | Add a changelog entry or release when the owner next cuts a release. Not edited in this round because it describes code changes. |
 
 ## 8. Risks
