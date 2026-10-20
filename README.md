@@ -24,11 +24,11 @@ One-time setup: **Settings → Pages → Source: GitHub Actions**.
 | Path | What |
 | --- | --- |
 | `index.html` | Home: search, quick actions, I'm a... entry points, five doors, Jubilee band, news, connected systems |
-| `study.html` `services.html` `research.html` `partners.html` `people.html` | The five doors |
-| `programs.html` | Our degree programs (under Study): undergraduate and graduate, with the filter |
+| `academics.html` `services.html` `research.html` `partners.html` `people.html` | The five doors |
+| `programs.html` | Our degree programs (under Academics): undergraduate and graduate, with the filter |
 | `about.html` `departments.html` | About the College; Leadership and departments (under People) |
 | `jubilee.html` | Jubilee Progress: approved highlights from every door |
-| `academics.html` `community.html` `partnerships.html` | Old addresses. They redirect to the pages above |
+| `study.html` `community.html` `partnerships.html` | Old addresses. They redirect to the pages above |
 | `resources.html` | Side menu: news, events, forms, policies, how things work |
 | `assets/css/tokens.css` | Portal design tokens (green, black, white, amber for attention), loaded after `ccs-design` |
 | `assets/css/site.css` | Components and layout |

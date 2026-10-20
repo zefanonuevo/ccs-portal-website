@@ -7,6 +7,14 @@ The release number shown in the footer of every page comes from `release` in
 `assets/js/config.js`. Change it together with this file when you cut a new release.
 (`version: 'Draft v1'` is the draft stage of the whole site, not the release number.)
 
+## Unreleased (2026-10-20)
+- **The first door is named Academics again** (line: "Study at CCS"), at the owner's request. `academics.html` is the page; the old
+  `study.html` address now redirects to it. Menu, search, home page and links follow. This reverses the Study name from Blueprint 1.2.
+- **Access matrix updated** to the owner's table of 2026-10-20: finer rows for outcomes, flowcharts, course descriptions, syllabi (students: No),
+  application and graduation requirements, and administrators (guests: View). The Course guide card is split into Course guide and Course syllabi.
+  Rows for content the table does not yet cover are listed in `docs/PRD.md` with values left to be decided.
+- Documentation set added: `AGENTS.md` and `docs/` (PRD, Architecture, Module-Specifications, Implementation-Plan, DESIGN as the UI/UX guidelines).
+
 ## 0.13.0 - Sign-in prototype (2026-10-19, branch google-signin-prototype)
 - **Proposed, not for `main` until approved.** The "Sign in" button now opens a pop-up. By default it offers
   **sample accounts** (fictional) so reviewers can see each role. Nothing is checked and nothing is protected.

@@ -78,7 +78,7 @@ window.CCS = {
     syllabi: ['No', 'No', 'View', 'View', 'Manage'],           // Course syllabi and syllabi links
     admission: ['View', 'View', 'View', 'View', 'Manage'],     // Application requirements
     graduation: ['View', 'View', 'View', 'View', 'Manage'],    // Graduation requirements
-    leadership: ['No', 'View', 'View', 'View', 'Manage'],      // Administrators: administrators, chairs, coordinators (not yet tagged on pages)
+    leadership: ['View', 'View', 'View', 'View', 'Manage'],    // Administrators: administrators, chairs, coordinators (owner set Guest to View on 2026-10-20)
     news: ['View', 'View', 'Use', 'Use', 'Manage'],            // News, events, spotlight
     virtual: ['View', 'Use', 'Use', 'Use', 'Manage'],
     grants: ['No', 'Use', 'View', 'No', 'Manage'],
@@ -88,5 +88,8 @@ window.CCS = {
     agreements: ['No', 'No', 'View', 'View', 'Manage'],        // Partnership agreements
     forms: ['No', 'View', 'Use', 'Use', 'Manage'],             // Forms and policies
     dashboards: ['No', 'No', 'No', 'No', 'Manage']             // Statistics dashboards
+    // Rows added to the table on 2026-10-20 with data still to be decided (PRD.md section 2.1, 'pending rows'):
+    // curriculum mapping, what you will study, Jubilee Progress, partner highlights, partner directory,
+    // start a partnership, equipment and inventory, faculty and staff directory. They have no key here on purpose.
   }
 };

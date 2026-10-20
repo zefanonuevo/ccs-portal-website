@@ -30,8 +30,8 @@ Design targets (Approved, Blueprint v2; the two-click figure is itself marked as
 
 | User | Needs | Door they start from |
 | --- | --- | --- |
-| Prospective student | Programs, how to apply, what graduates can do | Study |
-| Student | Courses, grants, requests, Virtual Office | Study, Services |
+| Prospective student | Programs, how to apply, what graduates can do | Academics |
+| Student | Courses, grants, requests, Virtual Office | Academics, Services |
 | Faculty | Research records, forms, grants (view), requests | Services, Research |
 | Staff | Handle requests, forms, internal agreements | Services, Partners |
 | Partner (industry, community) | Who to contact, what CCS offers | Partners |
@@ -57,7 +57,7 @@ Supplied by the owner as a table (two screenshots) on 2026-10-20. It **supersede
 | Course syllabi, and course syllabi links | `syllabi` | Manage | View | View | **No** | No |
 | Application requirements | `admission` | Manage | View | View | View | View |
 | Graduation requirements | `graduation` | Manage | View | View | View | View |
-| Administrators (college administrators, department chairs, program coordinators) | `leadership` | Manage | View | View | View | No |
+| Administrators (college administrators, department chairs, program coordinators) | `leadership` | Manage | View | View | View | **View** |
 | News, events, spotlight | `news` | Manage | Use | Use | View | View |
 | Virtual Office | `virtual` | Manage | Use | Use | Use | View |
 | Student Grants | `grants` | Manage | No | View | Use | No |
@@ -68,16 +68,28 @@ Supplied by the owner as a table (two screenshots) on 2026-10-20. It **supersede
 | Statistics dashboards | `dashboards` | Manage | No | No | No | No |
 
 **What changed from Blueprint v2.** One value: students can no longer view course syllabi (v2: View, now No). The v2 single row "Program information" is
-split into six finer rows (programs, outcomes, flowcharts, descriptions, application and graduation requirements, administrators); two of
-them hide content from guests that v2 showed (outcomes, flowcharts and descriptions: Guest No; administrators: Guest No). All other values match v2.
+split into six finer rows (programs, outcomes, flowcharts, descriptions, application and graduation requirements, administrators); three of
+them hide content from guests that v2 showed (outcomes, flowcharts and descriptions: Guest No). Administrators was Guest No in the table and was changed to **View** by the owner on 2026-10-20 (D20). All other values match v2.
 
-**Not in the owner's table, kept from Blueprint v2 and marked as such in `config.js`:** `publish` (Add your publication: Faculty Use, Admin Manage, others No).
-Jubilee Progress, partner highlights and directory, equipment and inventory, and the Virtual Office usage dashboard have no row; they fall under
-`dashboards` or the nearest row until the owner says otherwise (**Decision needed, D21**).
+**Pending rows (added 2026-10-20, data still to be decided).** The owner asked for rows to be added for content the table does not yet cover and to
+leave their values for later. Until values are set, these have **no key in `config.js`**, so the portal shows no badge for them, and the nearest existing row
+is only a working assumption, not a decision.
 
-**Applied in the portal on 2026-10-20 (uncommitted at the time of writing):** the keys above exist in `config.js`; Study cards use them; the Course
-guide card was split into *Course guide* (descriptions) and *Course syllabi* so each has its own badge. Curriculum mapping and "What you will study"
-keep the `program` key because the table has no row for them (D21). The Administrators row is **not yet tagged on any page** (see C12).
+| Content | Working assumption until decided | Admin | Staff | Faculty | Student | Guest |
+| --- | --- | --- | --- | --- | --- | --- |
+| Curriculum mapping (How courses build the outcomes) | currently tagged `program` | TBD | TBD | TBD | TBD | TBD |
+| What you will study (units and list of courses) | currently tagged `program` | TBD | TBD | TBD | TBD | TBD |
+| Jubilee Progress | not tagged | TBD | TBD | TBD | TBD | TBD |
+| Partner highlights | currently tagged `research` | TBD | TBD | TBD | TBD | TBD |
+| Partner directory | currently tagged `research` | TBD | TBD | TBD | TBD | TBD |
+| Start a partnership | not tagged | TBD | TBD | TBD | TBD | TBD |
+| Equipment and inventory | not tagged | TBD | TBD | TBD | TBD | TBD |
+| Faculty and staff directory | currently tagged `research` | TBD | TBD | TBD | TBD | TBD |
+| Add your publication | `publish`, kept from Blueprint v2: Admin Manage, Faculty Use, others No (to confirm) | Manage | No | Use | No | No |
+
+**Applied in the portal on 2026-10-20:** the keys above exist in `config.js`; Academics cards use them; the Course guide card was split into *Course guide*
+(descriptions) and *Course syllabi* so each has its own badge; the "Departments and who to ask" card carries the `leadership` badge. The portal's Leadership
+and departments page itself is not tagged.
 
 ## 3. Scope
 
@@ -195,16 +207,16 @@ Decisions carried over from the blueprints plus those raised by this review. "Re
 | D15 | Who approves Jubilee highlights | 1.2 #8 | The Dean's office delegate | Decision needed |
 | D16 | Small-group threshold for dashboards | v2 guardrail ("hide very small groups"), no number | A minimum group size, for example 5, confirmed with the Data Protection Officer | Decision needed |
 | D17 | Data retention periods | Review | Set per data type with the DPO | Decision needed |
-| D19 | The owner's table reads "Study - change to Academics". Blueprint 1.2 renamed Academics to Study and the portal uses Study. Rename back, or was the note about something else? | 2026-10-20 table | Keep Study until the owner confirms; renaming touches the nav, URLs (`study.html`), search and redirects | Decision needed |
-| D20 | The matrix says Administrators are hidden from Guests, but the portal's Leadership and departments page and the Study page list the Dean, chairs and coordinators publicly (summarized from the old public CCS site) | 2026-10-20 table | Owner decides: hide from Guests (needs sign-in first) or change the row to View | Decision needed |
-| D21 | Content with no row in the table: curriculum mapping, "What you will study", Jubilee Progress, partner highlights and directory, equipment and inventory, publish | 2026-10-20 table | Extend the table; until then the nearest existing row applies | Decision needed |
+| D19 | Door name: the owner's table said "Study - change to Academics" | 2026-10-20 table | **Resolved by the owner on 2026-10-20: the door is named Academics** (line: "Study at CCS"). This reverses Blueprint 1.2, which named it Study. `academics.html` is the page again; `study.html` redirects to it. | Resolved |
+| D20 | Administrators: Guest No in the table, but the Leadership and departments page is public | 2026-10-20 table | **Resolved by the owner on 2026-10-20: Guest is View.** The matrix and `config.js` now say View. | Resolved |
+| D21 | Content with no row in the table | 2026-10-20 table | **Rows added (pending rows above). Values left TBD by the owner's instruction.** | Open (values) |
 | D18 | Theme policy: portal is forced light today, modules offer System/Light/Dark | Review | One policy for all. Either keep light-only everywhere or let all follow the system setting. | Decision needed |
 
 ## 7. Conflicts and inconsistencies found
 
 | # | Finding | Evidence | Proposed resolution |
 | --- | --- | --- | --- |
-| C1 | Blueprint v2 (Compass, four areas) vs Blueprint 1.2 (Commons, five doors) | Both artifacts | 1.2 is implemented in the portal. Treat 1.2 as the approved structure; keep v2's matrix, guardrails and decisions that 1.2 says carry over. |
+| C1 | Blueprint v2 (Compass, four areas) vs Blueprint 1.2 (Commons, five doors) | Both artifacts | 1.2 is implemented in the portal, with one owner override: the first door is named Academics, not Study (D19). Treat 1.2 as the approved structure; keep v2's matrix, guardrails and decisions that 1.2 says carry over. |
 | C2 | Access matrix says statistics dashboards are Admin only | v2 "Who sees what" | The Research dashboard has no login and the VO dashboard's login is client-side with a publicly served user file. See Architecture.md section 7 and D4. |
 | C3 | `docs/DESIGN.md` says "No amber in v1" and lists no amber, but tokens and Blueprint v2 use amber | `assets/css/tokens.css`, v2 brand slide | Corrected in DESIGN.md (this round). |
 | C4 | README says editing `ccs-design` changes the palette on every site, but the portal and grants override it | README, `tokens.css` | Single token source (Architecture.md section 9; DESIGN.md). |
@@ -214,7 +226,7 @@ Decisions carried over from the blueprints plus those raised by this review. "Re
 | C8 | Portal README said "Draft v1" while the release is 0.12.0 | README, `config.js` | README refreshed this round. |
 | C9 | Portal is forced to the light theme (`data-theme="light"`), while modules offer a theme switch and DESIGN.md said the portal follows the system | `index.html`, commit `f112eb8` | DESIGN.md corrected; policy is D18. |
 | C11 | The owner's table lists "News, events, spotlight" twice with identical values, and has an empty "Our Programs" header row | 2026-10-20 table | Treated as one row; no action unless the second row was meant to be different | Noted |
-| C12 | Matrix row "Administrators" (Guest No) conflicts with the public Leadership and departments page | `departments.html` | D20. Not tagged with a badge yet so visitors are not told "sign in required" on content they can already read. | Decision needed |
+| C12 | Matrix row "Administrators" (Guest No) conflicted with the public Leadership and departments page | `departments.html` | Resolved by D20: Guest View. | Resolved |
 | C10 | Two commits after v0.12.0 (`fbda912`, `f112eb8`: theme-color and forced light theme) have no CHANGELOG entry, so the footer release number (0.12.0) does not describe the deployed site exactly | `git log`, `CHANGELOG.md` | Add a changelog entry or release when the owner next cuts a release. Not edited in this round because it describes code changes. |
 
 ## 8. Risks

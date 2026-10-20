@@ -25,7 +25,7 @@ Defined in `assets/css/tokens.css` (portal) on top of `ccs-design` v2. *(Existin
 | Token | Hex | Use |
 | --- | --- | --- |
 | Ink | `#111a15` | Text on light, dark band |
-| Forest | `#0b5d45` | Primary actions, Study tile |
+| Forest | `#0b5d45` | Primary actions, Academics tile |
 | Mint | `#dcebe2` | Soft panels |
 | Paper | `#f4f7f3` | Page background |
 | White | `#ffffff` | Cards |
@@ -131,7 +131,7 @@ Clear, warm and direct. Say "you". Replace jargon with plain labels, for example
 | Graduation Requirements | Finishing your degree |
 | Process Workflows | How things work |
 
-Door lines: Study, Services ("Ask, apply, register"), Research, Partners ("Work with CCS"), People ("Meet CCS").
+Door lines: Academics ("Study at CCS"), Services ("Ask, apply, register"), Research, Partners ("Work with CCS"), People ("Meet CCS").
 The name "CCS Commons" still needs sign-off from the communications office (D8).
 
 ## 10. Modules and the shared look *(Proposed)*

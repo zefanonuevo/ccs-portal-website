@@ -8,7 +8,7 @@ Instructions for people and AI agents changing this repository. Read this first,
 ## What this project is
 
 CCS Commons is the public front door of the College of Computer Studies (CCS): a static website that
-organizes the college into five doors (Study, Services, Research, Partners, People), shows Jubilee
+organizes the college into five doors (Academics, Services, Research, Partners, People), shows Jubilee
 strategy progress, and links to separate CCS systems (Task Tracker, Student Grants, dashboards).
 *(existing)*
 
@@ -44,8 +44,8 @@ Plain HTML, CSS and JavaScript. No framework, no bundler, no package manager, no
 (`.github/workflows/pages.yml` publishes the repo root on every push to `main`).
 
 ```
-*.html                 pages (study, services, research, partners, people, programs, about, departments, jubilee, resources, index)
-academics|community|partnerships.html   old addresses that redirect
+*.html                 pages (academics, services, research, partners, people, programs, about, departments, jubilee, resources, index)
+study|community|partnerships.html   old addresses that redirect
 assets/css/tokens.css  portal tokens, loaded after ccs-design
 assets/css/site.css    components and layout
 assets/js/config.js    module links, release number, access matrix (preview only)

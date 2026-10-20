@@ -6,7 +6,7 @@
   root.classList.add('js');
 
   var AREAS = [
-    { href: 'study.html', label: 'Study', line: 'Study at CCS' },
+    { href: 'academics.html', label: 'Academics', line: 'Study at CCS' },
     { href: 'services.html', label: 'Services', line: 'Ask, apply, register' },
     { href: 'research.html', label: 'Research', line: 'Discover at CCS' },
     { href: 'partners.html', label: 'Partners', line: 'Work with CCS' },
@@ -21,13 +21,13 @@
     { href: 'resources.html#how', label: 'How things work', line: 'Process workflows' }
   ];
   var INDEX = [
-    ['Our degree programs', 'Study: undergraduate and graduate', 'programs.html'],
-    ['Undergraduate programs', 'Study: BS CS, DS, InfoSec, IS, IT, IE', 'programs.html#undergraduate'],
-    ['Graduate programs', 'Study: MSCS, MSDS, MSIT, MIT, MINFSEC, PhD, DIT', 'programs.html#graduate'],
-    ['What graduates can do', 'Study: outcomes', 'study.html#programs'],
-    ['What you will study', 'Study: courses and units', 'study.html#programs'],
-    ['How to apply', 'Study: admission', 'study.html#apply'],
-    ['Finishing your degree', 'Study: graduation', 'study.html#apply'],
+    ['Our degree programs', 'Academics: undergraduate and graduate', 'programs.html'],
+    ['Undergraduate programs', 'Academics: BS CS, DS, InfoSec, IS, IT, IE', 'programs.html#undergraduate'],
+    ['Graduate programs', 'Academics: MSCS, MSDS, MSIT, MIT, MINFSEC, PhD, DIT', 'programs.html#graduate'],
+    ['What graduates can do', 'Academics: outcomes', 'academics.html#programs'],
+    ['What you will study', 'Academics: courses and units', 'academics.html#programs'],
+    ['How to apply', 'Academics: admission', 'academics.html#apply'],
+    ['Finishing your degree', 'Academics: graduation', 'academics.html#apply'],
     ['Request a Service', 'Services: Task Tracker', 'services.html#services'],
     ['Student Grants', 'Services: apply, track, reimburse', 'services.html#services'],
     ['Virtual Office', 'Services: register, join Zoom, knowledge base', 'services.html#virtual-office'],
@@ -61,21 +61,21 @@
 
   /* Mega menu: sub-menus for each area, built from the area pages' sections and cards. */
   var MEGA = [
-    { key: 'study', href: 'study.html', label: 'Study', line: 'Study at CCS, plan your path and finish your degree.', groups: [
+    { key: 'academics', href: 'academics.html', label: 'Academics', line: 'Study at CCS, plan your path and finish your degree.', groups: [
       { title: 'Your program', items: [
         { href: 'programs.html', label: 'Our degree programs', line: 'Undergraduate and graduate programs' },
-        { href: 'study.html#outcomes', label: 'What graduates can do', line: 'Graduate attributes and outcomes' },
-        { href: 'study.html#curriculum', label: 'What you will study', line: 'Units and the list of courses' },
-        { href: 'study.html#path', label: 'Your path, term by term', line: 'Course flowcharts for each program' },
-        { href: 'study.html#course-guide', label: 'Course guide', line: 'Course descriptions and syllabi' }
+        { href: 'academics.html#outcomes', label: 'What graduates can do', line: 'Graduate attributes and outcomes' },
+        { href: 'academics.html#curriculum', label: 'What you will study', line: 'Units and the list of courses' },
+        { href: 'academics.html#path', label: 'Your path, term by term', line: 'Course flowcharts for each program' },
+        { href: 'academics.html#course-guide', label: 'Course guide', line: 'Course descriptions and syllabi' }
       ] },
       { title: 'Apply and finish', items: [
-        { href: 'study.html#how-to-apply', label: 'How to apply', line: 'Admission steps' },
-        { href: 'study.html#finishing', label: 'Finishing your degree', line: 'Graduation requirements' }
+        { href: 'academics.html#how-to-apply', label: 'How to apply', line: 'Admission steps' },
+        { href: 'academics.html#finishing', label: 'Finishing your degree', line: 'Graduation requirements' }
       ] },
       { title: 'Tools', items: [
-        { href: 'study.html#dashboard', label: 'Academic dashboard', line: 'Your progress and records' },
-        { href: 'study.html#behind', label: 'Departments and who to ask', line: 'Chairs and coordinators' }
+        { href: 'academics.html#dashboard', label: 'Academic dashboard', line: 'Your progress and records' },
+        { href: 'academics.html#behind', label: 'Departments and who to ask', line: 'Chairs and coordinators' }
       ] }
     ] },
     { key: 'services', href: 'services.html', label: 'Services', line: 'Ask, apply, register: everything here is something you do.', groups: [

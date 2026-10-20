@@ -15,7 +15,7 @@ follows is in [Architecture.md](Architecture.md) section 8.
 | Virtual Office dashboard | `ccs-vo-dashboard` | Services (admin) | Static dashboards on published sheets | 2.2.0 | **Unknown.** Sheet contents not inspected. |
 | Research (publications) dashboard | `ccs` | Research | Static dashboard on a published sheet | not versioned | **Unknown.** Sheet contents not inspected. |
 | Design system | `ccs-design` | all | One CSS file | v2 | n/a |
-| Academic dashboard | none | Study (admin) | Not built | n/a | n/a |
+| Academic dashboard | none | Academics (admin) | Not built | n/a | n/a |
 | News and events with approval | none | People, Resources | Not built | n/a | n/a |
 | Partners (agreements, tracker, directory) | none | Partners | Not built | n/a | n/a |
 | Research records, Add publication | none | Research | Not built (links exist) | n/a | n/a |
