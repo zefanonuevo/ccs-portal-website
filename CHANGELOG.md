@@ -16,6 +16,8 @@ The release number shown in the footer of every page comes from `release` in
 - **Content that is No for the chosen role is now hidden** (cards, quick actions, tiles), together with the matching menu, side-menu, search and footer links,
   any group or section left empty, and a short note saying items are hidden and why. Guests, who see the least, can use Sign in or the Viewing as menu to see more.
   This is a preview in the browser only: the hidden content is still in the page source, so it is **not** protection (see docs/PRD.md section 2.1 and Architecture.md W7).
+- **Access matrix replaced by the owner's detailed table** (grouped by door; 31 keys). Examples: Students can no longer open Request a Service; Staff and Faculty can use Student
+  Grants; Guests can register for the Virtual Office and see Forms; Staff can view the Virtual Office dashboard. Pages and menu links follow the new keys. See docs/PRD.md section 2.1.
 - Documentation set added: `AGENTS.md` and `docs/` (PRD, Architecture, Module-Specifications, Implementation-Plan, DESIGN as the UI/UX guidelines).
 
 ## 0.13.0 - Sign-in prototype (2026-10-19, branch google-signin-prototype)

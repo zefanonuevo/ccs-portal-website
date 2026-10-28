@@ -138,18 +138,20 @@
   var LINK_ACCESS = {
     'What graduates can do': 'outcomes', 'Your path, term by term': 'flowcharts', 'Course guide': 'courses',
     'How to apply': 'admission', 'Finishing your degree': 'graduation',
-    'Academic dashboard': 'dashboards', 'Usage dashboard': 'dashboards',
+    'Academic dashboard': 'dashboards', 'Usage dashboard': 'vodash',
     'Departments and who to ask': 'leadership', 'Department chairs and coordinators': 'leadership',
     'Request a Service': 'service', 'Request a service': 'service',
     'Student Grants': 'grants', 'Student grants': 'grants',
-    'Virtual Office': 'virtual', 'Register and join Zoom': 'virtual', 'Knowledge base and chatbot': 'virtual',
-    'Publication highlights': 'research', 'Faculty records': 'research', 'Project highlights': 'research',
-    'Grants summary': 'research', 'Grants summary and project status': 'research', 'Project status': 'research',
-    'Add your publication': 'publish',
-    'Partner directory': 'research', 'Partner highlights': 'research', 'Faculty and staff directory': 'research',
-    'Agreements': 'agreements', 'Agreements (MOA, MOU)': 'agreements', 'Partner activity tracker': 'agreements',
+    'Virtual Office': 'virtual', 'Register and join Zoom': 'virtual', 'Knowledge base and chatbot': 'kb',
+    'Equipment and inventory': 'inventory',
+    'Publication highlights': 'pubhighlights', 'Faculty records': 'pubrecords', 'Project highlights': 'projhighlights',
+    'Grants summary': 'grantsum', 'Grants summary and project status': 'grantsum', 'Project status': 'projstatus',
+    'AdRIC research centers': 'centers', 'Add your publication': 'publish',
+    'Partner directory': 'partnerdir', 'Partner highlights': 'partnerhl', 'Start a partnership': 'partnerstart',
+    'Agreements': 'agreements', 'Agreements (MOA, MOU)': 'agreements', 'Partner activity tracker': 'partnertracker',
+    'Faculty and staff directory': 'directory', 'Spotlight': 'spotlight',
     'Forms and downloads': 'forms', 'Policies and guidelines': 'forms', 'How things work': 'forms',
-    'News and updates': 'news', 'Events': 'news', 'Spotlight': 'news', 'Committees': 'news', 'Serving the community': 'news'
+    'News and updates': 'news', 'Events': 'news', 'Committees': 'news', 'Serving the community': 'news'
   };
   function levelFor(key) { return (C.access[key] || [])[role] || 'View'; }
   function linkHidden(label) { var k = LINK_ACCESS[label]; return !!k && levelFor(k) === 'No'; }
@@ -402,6 +404,7 @@
         return;
       }
       el.hidden = false;
+      if (el.tagName === 'SECTION') { return; }
       if (!chip) { chip = document.createElement('span'); el.appendChild(chip); }
       chip.className = 'chip access-chip';
       chip.textContent = TEXT[lvl];

@@ -42,57 +42,61 @@ Design targets (Approved, Blueprint v2; the two-click figure is itself marked as
 Roles in the access matrix are Guest, Student, Faculty, Staff, Admin (Approved, Blueprint v2; matrix revised by the owner on 2026-10-20, section 2.1). The modules use
 richer roles of their own (see Module-Specifications.md). A single role model is **Proposed** (Architecture.md section 6).
 
-### 2.1 Access matrix (owner-supplied 2026-10-20, **Approved**)
+### 2.1 Access matrix (owner-supplied, detailed table dated 2026-10-20, received 2026-10-28; **Approved**)
 
-Supplied by the owner as a table (two screenshots) on 2026-10-20. It **supersedes** the Blueprint v2 slide "Who sees what". Levels: **View** read only,
-**Use** submit or take part, **Manage** edit and approve. Columns follow the owner's table (Admin first). It is **not enforced** anywhere yet
-(see Architecture.md section 6); the portal only previews it as badges, using the keys in `assets/js/config.js`.
+The owner supplied a detailed table, grouped by door (Academics, Services, Research, Partners, People). It **replaces** the shorter summary table of
+2026-10-20 and the Blueprint v2 slide. Levels: **View** read only, **Use** submit or take part, **Manage** edit and approve. Columns follow the owner's table (Admin first).
+It is **not enforced** anywhere (Architecture.md section 6). The portal only previews it: content that is **No** for the chosen role is hidden, the rest gets a badge,
+using the keys in `assets/js/config.js`. Hidden content is still in the page source (Architecture.md W7).
 
 | Content | Config key | Admin | Staff | Faculty | Student | Guest |
 | --- | --- | --- | --- | --- | --- | --- |
 | Degree programs (undergraduate and graduate) | `program` | Manage | View | View | View | View |
-| Graduate attributes and outcomes (expected Lasallian graduate attributes, PLOs, PIs) | `outcomes` | Manage | View | View | View | No |
+| Graduate attributes and outcomes | `outcomes` | Manage | View | View | View | No |
 | Course flowcharts and checklists | `flowcharts` | Manage | View | View | View | No |
 | Course descriptions | `courses` | Manage | View | View | View | No |
-| Course syllabi, and course syllabi links | `syllabi` | Manage | View | View | **No** | No |
+| Course syllabi | `syllabi` | Manage | View | View | No | No |
 | Application requirements | `admission` | Manage | View | View | View | View |
 | Graduation requirements | `graduation` | Manage | View | View | View | View |
-| Administrators (college administrators, department chairs, program coordinators) | `leadership` | Manage | View | View | View | **View** |
-| News, events, spotlight | `news` | Manage | Use | Use | View | View |
-| Virtual Office | `virtual` | Manage | Use | Use | Use | View |
-| Student Grants | `grants` | Manage | No | View | Use | No |
-| Request a Service | `service` | Manage | Manage | Use | Use | No |
-| Research and faculty records | `research` | Manage | View | Use | View | View |
-| Partnership agreements | `agreements` | Manage | View | View | No | No |
-| Forms and policies | `forms` | Manage | Use | Use | View | No |
-| Statistics dashboards | `dashboards` | Manage | No | No | No | No |
+| Administrators (college administrators, department chairs, program coordinators) | `leadership` | Manage | View | View | View | View |
+| Request a Service or Task (task assignment tracker) | `service` | Manage | Use | Use | No | No |
+| Request Student Conference Grant (apply, track, post-activity reports, reimbursement) | `grants` | Manage | Use | Use | Use | No |
+| CCS Virtual Office: register, join Zoom session | `virtual` | Manage | Use | Use | Use | Use |
+| CCS Virtual Office: dashboard | `vodash` | Manage | View | No | No | No |
+| CCS Virtual Office: knowledge base | `kb` | Manage | Use | Use | No | No |
+| CCS Inventory Tracker (monitoring, assigned equipment, fixed assets) | `inventory` | Manage | Use | Use | No | No |
+| Forms and downloads | `forms` | Manage | Use | Use | Use | View |
+| Publication highlights | `pubhighlights` | Manage | View | View | View | View |
+| Publication records | `pubrecords` | Manage | Use | Use | No | No |
+| Submit a publication | `publish` | Manage | Use | Use | No | No |
+| Project highlights | `projhighlights` | Manage | View | View | View | View |
+| Project status | `projstatus` | Manage | Use | View | No | No |
+| Grants summary | `grantsum` | Manage | Use | View | No | No |
+| AdRIC research centers | `centers` | Manage | Use | View | View | No |
+| Partner highlights | `partnerhl` | Manage | View | View | View | View |
+| Partner directory (duration, type, status, contact, MOA/MOU) | `partnerdir` | Manage | Use | View | No | No |
+| Partner activities tracker (engagement activities, faculty involvement) | `partnertracker` | Manage | Use | Use | No | No |
+| Start a partnership | `partnerstart` | Manage | Use | Use | View | View |
+| Awards and recognition | `spotlight` | Manage | Use | Use | View | View |
+| News and updates | `news` | Manage | Use | View | View | View |
+| Faculty and staff directory | `directory` | Manage | Use | Use | View | View |
 
-**What changed from Blueprint v2.** One value: students can no longer view course syllabi (v2: View, now No). The v2 single row "Program information" is
-split into six finer rows (programs, outcomes, flowcharts, descriptions, application and graduation requirements, administrators); three of
-them hide content from guests that v2 showed (outcomes, flowcharts and descriptions: Guest No). Administrators was Guest No in the table and was changed to **View** by the owner on 2026-10-20 (D20). All other values match v2.
+**Also kept in `config.js`:** `agreements` (Agreements card; same values as Partner directory, which carries MOA/MOU) and `dashboards` (Academic and Research
+statistics dashboards: Admin only, from the shorter 2026-10-20 table; the detailed table has no row for them).
 
-**Pending rows (added 2026-10-20, data still to be decided).** The owner asked for rows to be added for content the table does not yet cover and to
-leave their values for later. Until values are set, these have **no key in `config.js`**, so the portal shows no badge for them, and the nearest existing row
-is only a working assumption, not a decision.
+**Changes from the 2026-10-20 summary table** (values that moved): Request a Service: Staff Manage to Use, Student Use to No. Student grants: Staff No to Use,
+Faculty View to Use. Virtual Office registration: Guest View to Use. Virtual Office dashboard now has its own row (Staff View). Forms: Guest No to View, Student View to Use.
+Submit a publication: Staff No to Use. Faculty and staff directory, partner and research rows are now split into the finer rows above.
 
-| Content | Working assumption until decided | Admin | Staff | Faculty | Student | Guest |
-| --- | --- | --- | --- | --- | --- | --- |
-| Curriculum mapping (How courses build the outcomes) | currently tagged `program` | TBD | TBD | TBD | TBD | TBD |
-| What you will study (units and list of courses) | currently tagged `program` | TBD | TBD | TBD | TBD | TBD |
-| Jubilee Progress | not tagged | TBD | TBD | TBD | TBD | TBD |
-| Partner highlights | currently tagged `research` | TBD | TBD | TBD | TBD | TBD |
-| Partner directory | currently tagged `research` | TBD | TBD | TBD | TBD | TBD |
-| Start a partnership | not tagged | TBD | TBD | TBD | TBD | TBD |
-| Equipment and inventory | not tagged | TBD | TBD | TBD | TBD | TBD |
-| Faculty and staff directory | currently tagged `research` | TBD | TBD | TBD | TBD | TBD |
-| Add your publication | `publish`, kept from Blueprint v2: Admin Manage, Faculty Use, others No (to confirm) | Manage | No | Use | No | No |
+**Not covered by the detailed table (no key, so no hiding or badge):** curriculum mapping, "What you will study", Jubilee Progress, About the College, CCS Administration and
+Student Groups (all View for everyone in the table; left untagged), equipment requests. The table's section header row "Study - change to Academics"
+(Manage, View, View, View, No) is treated as a section label, not a content row.
 
-**Hide behaviour (2026-10-20).** In the portal's preview, content whose level is **No** for the chosen role is hidden (with the menu, search and footer links to it, and any
-empty section), at the owner's request. This is not protection: the content is still in the public page source (Architecture.md W7). Real enforcement is Phase 3.
+**One conflict, decided in favour of the owner's chat instruction:** the detailed table shows Administrators with Guest **No**, but on 2026-10-20 the owner said
+to change it to **View**, and the table's own "CCS Administration" row is View for Guest. `leadership` stays Guest View (D20). If the table is right, change one value in `config.js`.
 
-**Applied in the portal on 2026-10-20:** the keys above exist in `config.js`; Academics cards use them; the Course guide card was split into *Course guide*
-(descriptions) and *Course syllabi* so each has its own badge; the "Departments and who to ask" card carries the `leadership` badge. The portal's Leadership
-and departments page itself is not tagged.
+**Applied in the portal:** keys in `config.js`; page tags and the menu/search link map (`LINK_ACCESS` in `site.js`) follow the keys; the AdRIC research centers section is
+tagged as a whole.
 
 ## 3. Scope
 
@@ -212,7 +216,7 @@ Decisions carried over from the blueprints plus those raised by this review. "Re
 | D17 | Data retention periods | Review | Set per data type with the DPO | Decision needed |
 | D19 | Door name: the owner's table said "Study - change to Academics" | 2026-10-20 table | **Resolved by the owner on 2026-10-20: the door is named Academics** (line: "Study at CCS"). This reverses Blueprint 1.2, which named it Study. `academics.html` is the page again; `study.html` redirects to it. | Resolved |
 | D20 | Administrators: Guest No in the table, but the Leadership and departments page is public | 2026-10-20 table | **Resolved by the owner on 2026-10-20: Guest is View.** The matrix and `config.js` now say View. | Resolved |
-| D21 | Content with no row in the table | 2026-10-20 table | **Rows added (pending rows above). Values left TBD by the owner's instruction.** | Open (values) |
+| D21 | Content with no row in the table | 2026-10-20 table | Most rows now exist in the detailed table (see 2.1). Still without a row: curriculum mapping, what you will study, equipment requests. | Open (values) |
 | D18 | Theme policy: portal is forced light today, modules offer System/Light/Dark | Review | One policy for all. Either keep light-only everywhere or let all follow the system setting. | Decision needed |
 
 ## 7. Conflicts and inconsistencies found

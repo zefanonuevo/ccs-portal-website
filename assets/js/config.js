@@ -71,25 +71,38 @@ window.CCS = {
   /* "Who sees what": owner-supplied table of 2026-10-20 (supersedes Blueprint v2). Order here: guest, student, faculty, staff, admin. */
   roles: ['Guest', 'Student', 'Faculty', 'Staff', 'Admin'],
   access: {
-    program: ['View', 'View', 'View', 'View', 'Manage'],       // Degree programs (undergraduate and graduate)
-    outcomes: ['No', 'View', 'View', 'View', 'Manage'],        // Graduate attributes and outcomes (PEOs, PLOs, PIs)
-    flowcharts: ['No', 'View', 'View', 'View', 'Manage'],      // Course flowcharts and checklists
-    courses: ['No', 'View', 'View', 'View', 'Manage'],         // Course descriptions
-    syllabi: ['No', 'No', 'View', 'View', 'Manage'],           // Course syllabi and syllabi links
-    admission: ['View', 'View', 'View', 'View', 'Manage'],     // Application requirements
-    graduation: ['View', 'View', 'View', 'View', 'Manage'],    // Graduation requirements
-    leadership: ['View', 'View', 'View', 'View', 'Manage'],    // Administrators: administrators, chairs, coordinators (owner set Guest to View on 2026-10-20)
-    news: ['View', 'View', 'Use', 'Use', 'Manage'],            // News, events, spotlight
-    virtual: ['View', 'Use', 'Use', 'Use', 'Manage'],
-    grants: ['No', 'Use', 'View', 'No', 'Manage'],
-    service: ['No', 'Use', 'Use', 'Manage', 'Manage'],
-    research: ['View', 'View', 'Use', 'View', 'Manage'],       // Research and faculty records
-    publish: ['No', 'No', 'Use', 'No', 'Manage'],              // Not in the 2026-10-20 table; kept from Blueprint v2
-    agreements: ['No', 'No', 'View', 'View', 'Manage'],        // Partnership agreements
-    forms: ['No', 'View', 'Use', 'Use', 'Manage'],             // Forms and policies
-    dashboards: ['No', 'No', 'No', 'No', 'Manage']             // Statistics dashboards
-    // Rows added to the table on 2026-10-20 with data still to be decided (PRD.md section 2.1, 'pending rows'):
-    // curriculum mapping, what you will study, Jubilee Progress, partner highlights, partner directory,
-    // start a partnership, equipment and inventory, faculty and staff directory. They have no key here on purpose.
+    program: ['View', 'View', 'View', 'View', 'Manage'],
+    outcomes: ['No', 'View', 'View', 'View', 'Manage'],
+    flowcharts: ['No', 'View', 'View', 'View', 'Manage'],
+    courses: ['No', 'View', 'View', 'View', 'Manage'],
+    syllabi: ['No', 'No', 'View', 'View', 'Manage'],
+    admission: ['View', 'View', 'View', 'View', 'Manage'],
+    graduation: ['View', 'View', 'View', 'View', 'Manage'],
+    leadership: ['View', 'View', 'View', 'View', 'Manage'],
+    service: ['No', 'No', 'Use', 'Use', 'Manage'],
+    grants: ['No', 'Use', 'Use', 'Use', 'Manage'],
+    virtual: ['Use', 'Use', 'Use', 'Use', 'Manage'],
+    vodash: ['No', 'No', 'No', 'View', 'Manage'],
+    kb: ['No', 'No', 'Use', 'Use', 'Manage'],
+    inventory: ['No', 'No', 'Use', 'Use', 'Manage'],
+    forms: ['View', 'Use', 'Use', 'Use', 'Manage'],
+    pubhighlights: ['View', 'View', 'View', 'View', 'Manage'],
+    pubrecords: ['No', 'No', 'Use', 'Use', 'Manage'],
+    publish: ['No', 'No', 'Use', 'Use', 'Manage'],
+    projhighlights: ['View', 'View', 'View', 'View', 'Manage'],
+    projstatus: ['No', 'No', 'View', 'Use', 'Manage'],
+    grantsum: ['No', 'No', 'View', 'Use', 'Manage'],
+    centers: ['No', 'View', 'View', 'Use', 'Manage'],
+    partnerhl: ['View', 'View', 'View', 'View', 'Manage'],
+    partnerdir: ['No', 'No', 'View', 'Use', 'Manage'],
+    partnertracker: ['No', 'No', 'Use', 'Use', 'Manage'],
+    partnerstart: ['View', 'View', 'Use', 'Use', 'Manage'],
+    spotlight: ['View', 'View', 'Use', 'Use', 'Manage'],
+    news: ['View', 'View', 'View', 'Use', 'Manage'],
+    directory: ['View', 'View', 'Use', 'Use', 'Manage'],
+    agreements: ['No', 'No', 'View', 'Use', 'Manage'],
+    dashboards: ['No', 'No', 'No', 'No', 'Manage']
+    // Source: owner's detailed table (dated 2026-10-20, received 2026-10-28). See docs/PRD.md section 2.1.
+    // No row yet (values pending, so no key): curriculum mapping, what you will study, equipment requests, Jubilee Progress.
   }
 };
