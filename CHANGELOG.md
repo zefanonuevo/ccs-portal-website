@@ -7,6 +7,13 @@ The release number shown in the footer of every page comes from `release` in
 `assets/js/config.js`. Change it together with this file when you cut a new release.
 (`version: 'Draft v1'` is the draft stage of the whole site, not the release number.)
 
+## 0.14.2 - Production look: preview switch, hidden-items note and Draft v1 removed (2026-10-30)
+- **The "Viewing as" preview switch is removed** (top bar and side menu), and so is the note "Some items are hidden because...", on every page.
+  Signed out, a visitor is a Guest. Signed in, the role comes from the server. The header shows the signed-in name and role.
+- **"Draft v1" is removed** from the top bar and from the footer, so the site looks like production while parts are still being fixed.
+  The footer still says that sample content is marked. `version` in `config.js` is kept but no longer shown.
+- Release number raised to 0.14.2 so cached copies are replaced. Not tagged.
+
 ## 0.14.1 - Home page: Connected systems section removed (2026-10-30)
 - **The "Connected systems" section is removed from the home page**, at the owner's request, together with its search entry. The Task Tracker and Student Grants
   are still linked from the home quick actions and from Services. The card linking to the shared design system is gone from the home page.

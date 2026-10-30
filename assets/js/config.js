@@ -3,7 +3,7 @@
 window.CCS = {
   name: 'CCS Commons',
   version: 'Draft v1',
-  release: '0.14.1',   // single source for the release number shown in the footer; keep in step with CHANGELOG.md
+  release: '0.14.2',   // single source for the release number shown in the footer; keep in step with CHANGELOG.md
   modules: {
     tracker: {
       name: 'Request a Service',
