@@ -461,11 +461,31 @@
       try { sessionStorage.setItem('ccs-session', JSON.stringify(o)); } catch (e) {}
       location.reload();
     }
+    /* Server mode (the CCS VM sets signin.server): the server's cookie is the truth, this tab only mirrors it for display.
+       Check it on every page load so a sign-out, a switched-off account or a role change shows up here. */
+    if (S.server) {
+      fetch('/api/me', { credentials: 'same-origin', cache: 'no-store' })
+        .then(function (r) { return r.json(); })
+        .then(function (m) {
+          if (m && m.signedIn) {
+            if (!session || session.email !== m.email || String(session.role).toLowerCase() !== String(m.role).toLowerCase()) saveSession({ name: m.name, email: m.email, role: m.role, mode: 'google' });
+          } else if (session && session.mode === 'google') {
+            try { sessionStorage.removeItem('ccs-session'); } catch (e) {}
+            location.reload();
+          }
+        })
+        .catch(function () { /* server unreachable: keep what the page shows; the server still enforces access */ });
+    }
     if (session) {
       btn.addEventListener('click', function () {
-        try { sessionStorage.removeItem('ccs-session'); } catch (e) {}
-        try { if (window.google && google.accounts) google.accounts.id.disableAutoSelect(); } catch (e) {}
-        location.reload();
+        function done() {
+          try { sessionStorage.removeItem('ccs-session'); } catch (e) {}
+          try { if (window.google && google.accounts) google.accounts.id.disableAutoSelect(); } catch (e) {}
+          location.reload();
+        }
+        if (S.server && session.mode === 'google') {
+          fetch('/auth/logout', { method: 'POST', credentials: 'same-origin' }).then(done, done);
+        } else done();
       });
       return;
     }
@@ -498,7 +518,7 @@
       s.onerror = function () { fail('Could not load Google sign-in. Check your connection.'); };
       s.onload = function () {
         google.accounts.id.initialize({ client_id: S.clientId, callback: function (r) {
-          fetch(S.apiUrl, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'login', idToken: r.credential }) })
+          fetch(S.apiUrl, { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'login', idToken: r.credential }) })
             .then(function (x) { return x.json(); })
             .then(function (o) { if (!o.ok) throw new Error(o.error || 'Sign-in was refused'); saveSession({ name: o.name, email: o.email, role: o.role, mode: 'google' }); })
             .catch(function (err) { fail(err.message); });
