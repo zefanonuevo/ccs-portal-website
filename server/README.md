@@ -59,6 +59,32 @@ anything if the download looks wrong). It applies to every site on that Apache. 
 Check: sign in, then `sudo -u ccsportal node users.js audit` (from `server/`) should show your own public address, not a Cloudflare one.
 Status: Proposed. The script was tested only with sample lists, not against Cloudflare's real list or a real Apache.
 
+## Checks on the live site (Decision needed: run and record the result)
+Status: **Proposed.** The steps below have been written but **not yet run**. Record the date and result here when they are.
+
+### A. Cloudflare: never cache the dynamic paths
+The server already sends `Cache-Control: no-store` on `/api/*`, `/auth/*` and `/protected/*`, and Cloudflare normally respects it. A rule makes that certain,
+because a cached `/api/me` or protected file would show one person's data to another.
+1. Cloudflare dashboard, the `dlsu.edu.ph` zone (needs DLSU IT access), **Caching > Cache Rules > Create rule**.
+2. Name: `ccs-no-cache-dynamic`. When incoming requests match: **Custom filter expression**, edit as expression:
+   `(http.host eq "ccs.dlsu.edu.ph" and (starts_with(http.request.uri.path, "/api/") or starts_with(http.request.uri.path, "/auth/") or starts_with(http.request.uri.path, "/protected/")))`
+3. Then: **Bypass cache**. Deploy. If this is not the plan's setup, the same can be done with a Page Rule (Cache Level: Bypass).
+4. Check with `bash server/deploy/check-live.sh https://ccs.dlsu.edu.ph`. For `/api/me`, `/auth/google` and `/protected/` the CF-CACHE column must not say `HIT`.
+Do not bypass the cache for the whole site: the pages and `assets/` rely on it, and their `?v=` release number already prevents stale copies.
+
+### B. Real Google: refusals
+Run each in a private window at https://ccs.dlsu.edu.ph, press Sign in, then look at `sudo -u ccsportal node users.js audit 10` (from `server/`).
+| Account used | Expected on screen | Expected in the audit log |
+| --- | --- | --- |
+| Listed DLSU account | Signed in, header shows your name and role | `login_ok` with that role |
+| DLSU account **not** in the table | Signed in as Guest | `login_ok role=guest` |
+| DLSU account switched off (`users.js disable`) | Refused or Guest, per the tool's behaviour: note what you see | `login_refused` or similar |
+| Personal Gmail (not dlsu.edu.ph) | Refused: "Please use your @dlsu.edu.ph account" | `login_refused wrong_domain` |
+| Any account after **Sign out** | Signed out; reloading stays signed out | `logout` |
+Also check the Google project: **Google Auth Platform > Audience**. *Internal* means only the DLSU Google Workspace can sign in at all (a personal Gmail
+is stopped by Google before it reaches the server). *External / Testing* limits sign-in to the listed test users. Write down which one is set. If Google stops the account
+itself, the server never sees the attempt, so no audit row appears. That is also a pass, but note it.
+
 ## Updating
 ```
 git pull

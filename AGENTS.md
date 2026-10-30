@@ -135,7 +135,7 @@ docs/                  project documentation
 - **Verified on the CCS VM on 2026-10-30:** the owner signed in with their DLSU Google account and the server's audit log recorded `login_ok role=admin`;
   the live `config.js` carries the client ID; the 13 server tests pass locally and on the VM (they cover refused sign-ins with a stubbed Google check,
   `/protected` returning 401 or 403, and which files are public); the audit log shows the visitor's own address after the Cloudflare address fix.
-- **Not verified:** that non-DLSU and unlisted accounts are refused by real Google (only the stubbed tests cover this); requests to `/protected/` and `/docs/` on the live address;
+- **Not verified** (steps and a checklist are in [server/README.md](server/README.md), "Checks on the live site"): that non-DLSU and unlisted accounts are refused by real Google (only the stubbed tests cover this); requests to `/protected/` and `/docs/` on the live address;
   the sign-in pop-up and the "Signed in as" header at phone width and by keyboard;
   the audience setting of the Google project (Internal or External in Testing).
 - **What the server enforces today:** sign-in, roles, and files under `protected/`. There are no rules yet, so nothing is protected. Role-restricted cards on the public pages
