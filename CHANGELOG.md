@@ -16,6 +16,8 @@ The release number shown in the footer of every page comes from `release` in
   Only the pages and `assets/` are public. `site.js` in server mode asks the server who is signed in (`/api/me`) and signs out on the server.
   Tested with a stubbed Google check only (13 tests); **not** run on the VM or against real Google. Setup: `server/README.md`.
   `.gitignore` now also ignores `server/data/` and database files.
+- **Real visitor addresses behind Cloudflare (Proposed).** `server/deploy/cloudflare-remoteip.sh` builds an Apache `mod_remoteip` config from Cloudflare's published ranges, so
+  the sign-in rate limit and audit log see each visitor's address instead of Cloudflare's. Tested only with sample lists. Steps: `server/README.md`.
 - **The first door is named Academics again** (line: "Study at CCS"), at the owner's request. `academics.html` is the page; the old
   `study.html` address now redirects to it. Menu, search, home page and links follow. This reverses the Study name from Blueprint 1.2.
 - **Access matrix updated** to the owner's table of 2026-10-20: finer rows for outcomes, flowcharts, course descriptions, syllabi (students: No),

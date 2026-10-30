@@ -44,6 +44,21 @@ To really protect something, move it into `protected/<area>/` and add a rule in 
 8. **Try it.** Open the site, press Sign in, use the listed account. The top bar should say "Signed in as Admin".
    Then try an unlisted DLSU account (should be Guest) and a non-DLSU account (should be refused).
 
+## Behind Cloudflare: real visitor addresses
+If the domain goes through Cloudflare (check: `curl -sI https://<domain> | grep -i server` shows `cloudflare`), the server would see Cloudflare's
+addresses instead of the visitors'. That breaks the sign-in rate limit (20 tries per 10 minutes per address, shared by everyone behind one Cloudflare address)
+and makes the audit log record Cloudflare's addresses. To fix it, run on the VM:
+```
+cd /var/www/ccs-portal
+sudo bash server/deploy/cloudflare-remoteip.sh
+sudo a2enmod remoteip && sudo a2enconf cloudflare-remoteip
+sudo apache2ctl configtest && sudo systemctl reload apache2
+```
+Apache then trusts the `CF-Connecting-IP` header only for connections coming from Cloudflare's published ranges (the script downloads them and refuses to write
+anything if the download looks wrong). It applies to every site on that Apache. Re-run the script every few months, because Cloudflare can change its ranges.
+Check: sign in, then `sudo -u ccsportal node users.js audit` (from `server/`) should show your own public address, not a Cloudflare one.
+Status: Proposed. The script was tested only with sample lists, not against Cloudflare's real list or a real Apache.
+
 ## Updating
 ```
 git pull
