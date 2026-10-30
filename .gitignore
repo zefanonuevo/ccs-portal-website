@@ -3,3 +3,9 @@ node_modules/
 Thumbs.db
 .env
 .claude/
+
+# CCS Commons server (VM): the user database, sessions and audit log are never committed
+server/data/
+*.db
+*.db-wal
+*.db-shm

@@ -1,0 +1,19 @@
+# /etc/systemd/system/ccs-portal.service
+# Change User and WorkingDirectory to match this VM. The user must be able to read the repo and write server/data.
+[Unit]
+Description=CCS Commons portal server
+After=network.target
+
+[Service]
+Type=simple
+User=ccsportal
+WorkingDirectory=/var/www/ccs-portal-website/server
+ExecStart=/usr/bin/node index.js
+Restart=on-failure
+RestartSec=3
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+
+[Install]
+WantedBy=multi-user.target

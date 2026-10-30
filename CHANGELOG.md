@@ -7,7 +7,17 @@ The release number shown in the footer of every page comes from `release` in
 `assets/js/config.js`. Change it together with this file when you cut a new release.
 (`version: 'Draft v1'` is the draft stage of the whole site, not the release number.)
 
-## Unreleased (2026-10-20)
+## 0.14.0 - Sign-in server and release number (2026-10-30)
+- **Release number raised from 0.13.0 to 0.14.0** so browsers and Cloudflare fetch the new `config.js` and `site.js`. The CCS domain is behind Cloudflare,
+  which kept serving the old 0.13.0 copies (a 7-day cache) and so kept showing the sample sign-in instead of Google sign-in.
+  The 0.14.0 section also covers the changes listed below that were on `main` as Unreleased (2026-10-20). Not tagged: tag only when the owner asks.
+- **Server for the CCS VM (Proposed, branch `google-auth-server`).** New `server/` folder: a Node.js and Express server that verifies Google sign-in
+  (DLSU accounts only), keeps roles, sessions and an audit log in SQLite, and refuses files under `protected/` unless a rule allows the role.
+  Only the pages and `assets/` are public. `site.js` in server mode asks the server who is signed in (`/api/me`) and signs out on the server.
+  Tested with a stubbed Google check only (13 tests); **not** run on the VM or against real Google. Setup: `server/README.md`.
+  `.gitignore` now also ignores `server/data/` and database files.
+- **Real visitor addresses behind Cloudflare (Proposed).** `server/deploy/cloudflare-remoteip.sh` builds an Apache `mod_remoteip` config from Cloudflare's published ranges, so
+  the sign-in rate limit and audit log see each visitor's address instead of Cloudflare's. Tested only with sample lists. Steps: `server/README.md`.
 - **The first door is named Academics again** (line: "Study at CCS"), at the owner's request. `academics.html` is the page; the old
   `study.html` address now redirects to it. Menu, search, home page and links follow. This reverses the Study name from Blueprint 1.2.
 - **Access matrix updated** to the owner's table of 2026-10-20: finer rows for outcomes, flowcharts, course descriptions, syllabi (students: No),
