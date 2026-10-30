@@ -7,6 +7,11 @@ The release number shown in the footer of every page comes from `release` in
 `assets/js/config.js`. Change it together with this file when you cut a new release.
 (`version: 'Draft v1'` is the draft stage of the whole site, not the release number.)
 
+## 0.14.1 - Home page: Connected systems section removed (2026-10-30)
+- **The "Connected systems" section is removed from the home page**, at the owner's request, together with its search entry. The Task Tracker and Student Grants
+  are still linked from the home quick actions and from Services. The card linking to the shared design system is gone from the home page.
+  Release number raised to 0.14.1 so cached copies of `site.js` and the pages are replaced. Not tagged.
+
 ## 0.14.0 - Sign-in server and release number (2026-10-30)
 - **Release number raised from 0.13.0 to 0.14.0** so browsers and Cloudflare fetch the new `config.js` and `site.js`. The CCS domain is behind Cloudflare,
   which kept serving the old 0.13.0 copies (a 7-day cache) and so kept showing the sample sign-in instead of Google sign-in.

@@ -55,8 +55,7 @@
     ['Events', 'Across the college', 'resources.html#events'],
     ['Forms and downloads', 'Across the college', 'resources.html#forms'],
     ['Policies and guidelines', 'Across the college', 'resources.html#policies'],
-    ['How things work', 'Across the college', 'resources.html#how'],
-    ['Connected systems', 'Home', 'index.html#systems']
+    ['How things work', 'Across the college', 'resources.html#how']
   ];
 
   /* Mega menu: sub-menus for each area, built from the area pages' sections and cards. */
