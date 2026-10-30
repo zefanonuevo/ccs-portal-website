@@ -51,7 +51,7 @@ flowchart LR
 
 ### 2.3 What is not true today
 
-- There is no server-side access control, so no role restriction is enforced anywhere.
+- The server on the CCS VM checks Google sign-in, keeps roles and sessions, and denies files under `protected/` by default. **No rule exists yet, so no role restriction is enforced on any content.** The GitHub Pages copy has no server.
 - There is no database, audit trail or backup for module data.
 - Nothing here has been security-reviewed.
 
@@ -168,7 +168,7 @@ None of these controls exists yet. They become requirements for any phase that s
 | W4 | Apps Script is deployed as "Anyone" with a shared token (by its own setup comments). | `ccs-scgss/google/Code.gs` |
 | W5 | All sites share the origin `zefanonuevo.github.io`, so a script flaw in one site can read the browser storage of the others. | URL structure |
 | W6 | No CSP on any page. | Search of the 14 pages |
-| W7 | The portal's "Viewing as" preview hides content marked No, but the hidden content is still in the HTML and the public repository. It must never be used to hide anything sensitive. | `applyRole()` in `assets/js/site.js`; the repository is public |
+| W7 | Role-based hiding in the browser (`applyRole()`) hides content marked No, but the hidden content is still in the HTML and the public repository. It must never be used to hide anything sensitive. | `applyRole()` in `assets/js/site.js`; the repository is public |
 
 ## 8. Module independence and the module contract (Proposed)
 

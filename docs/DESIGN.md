@@ -143,10 +143,10 @@ back to the portal. The portal never embeds another module in an iframe (the reg
 ## 11. Access preview *(Existing)*
 
 `data-access="key"` on any element reads the matrix in `config.js` (the owner's table of 2026-10-20, PRD.md section 2.1, which supersedes the Blueprint v2 slide).
-For the role chosen in "Viewing as":
+For the visitor's role (signed out is Guest; signed in comes from the server):
 - **No** hides the element, plus any group or section left empty, plus the menu, side-menu, search and footer links that lead to it (links are mapped in `LINK_ACCESS` in `site.js`).
 - **View, Use, Manage** show a badge ("You can view", and so on).
-- When anything is hidden, a short note at the bottom of the page says so and why.
+- No note is shown about hidden items.
 
 This is a **display preview, not access control**. Hidden content is still delivered in the page and visible in the page source. Only tag content that the row
 actually governs. When you add a tagged card or a new link to a governed page, add the same key to `LINK_ACCESS` so the two stay in step (a single source for both is proposed in Architecture.md).

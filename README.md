@@ -1,6 +1,6 @@
 # ccs-portal-website
 
-CCS Commons: the portal for the College of Computer Studies. **Release 0.12.0, a draft.** It is a public information site with links to separate prototype systems. It has no sign-in and no server, so it must not hold personal data.
+CCS Commons: the portal for the College of Computer Studies. **Release 0.14.2.** The pages are public and static. A small Node.js server on the CCS VM (see [server/README.md](server/README.md)) adds Google sign-in for DLSU accounts, roles and an audit log, but **no content is protected yet**: everything in the pages is still public, so do not put personal data in them. Separate prototype systems are linked, not embedded.
 
 **Start here:** [AGENTS.md](AGENTS.md) (rules for changing the project) and the documents in [docs/](docs/): [PRD](docs/PRD.md), [Architecture](docs/Architecture.md), [Module specifications](docs/Module-Specifications.md), [UI/UX guidelines](docs/DESIGN.md) and [Implementation plan](docs/Implementation-Plan.md). Those documents are drafts awaiting owner approval; they label what exists and what is proposed.
 
@@ -35,7 +35,7 @@ One-time setup: **Settings → Pages → Source: GitHub Actions**.
 | `assets/js/config.js` | **Module links and the access matrix. Edit here to wire a system in** |
 | `assets/js/programs.js` | Our degree programs: filter and the program pop-up |
 | `assets/js/dots.js` | The interactive dot background |
-| `assets/js/site.js` | Nav, side menu, search, role preview, scroll reveal |
+| `assets/js/site.js` | Nav, side menu, search, sign-in pop-up, scroll reveal |
 | `AGENTS.md` | Project rules for people and AI agents (proposed) |
 | `docs/PRD.md` `docs/Architecture.md` `docs/Module-Specifications.md` `docs/Implementation-Plan.md` | Requirements, architecture, modules and plan (drafts for approval) |
 | `docs/DESIGN.md` | UI/UX guidelines: color, type, motion, accessibility, content |
@@ -110,9 +110,8 @@ To cut a new release: update `release` in `assets/js/config.js` and add an entry
 
 ## Draft status
 
-- There is no sign-in and no server. Do not collect personal data through the portal.
+- Sign-in and roles exist on the VM (Google, DLSU accounts only), but no content is behind them yet. Do not collect personal data through the pages.
 - Content summarized from the old CCS site is marked *to be confirmed* until its owner confirms it.
 - Sample content is marked "Sample".
-- "Viewing as" hides content that is No for the chosen role and shows View, Use or Manage badges on the rest, using the access matrix from the owner's table of 2026-10-20 ([docs/PRD.md](docs/PRD.md) section 2.1). It is a preview only: hidden content is still in the public page source and **nothing is protected**. Real access control must be done on the server when sign-in is built.
-- Sign-in is a disabled placeholder.
+- Cards marked for a role are hidden in the browser for people who do not have that role (signed out means Guest), using the access matrix from the owner's table of 2026-10-20 ([docs/PRD.md](docs/PRD.md) section 2.1). Hidden content is still in the public page source, so **this is not protection**; real protection means moving content into `protected/` behind a server rule.
 - Open decisions are listed on the last slide of the blueprint (student list source, public syllabi, guest access, publication consent).

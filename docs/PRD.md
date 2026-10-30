@@ -104,8 +104,8 @@ tagged as a whole.
 
 | Area | State |
 | --- | --- |
-| Portal site `ccs-portal-website` v0.12.0 | **Existing (verified).** 14 static pages, five doors, Jubilee Progress, mega menu, search, side menu, degree programs with pop-ups, about and departments pages, registration pop-up (Google Form), dot background, role preview badges. Hosted on GitHub Pages with HTTPS enforced. |
-| Real sign-in, roles, server-side access control | **Does not exist.** The "Viewing as" switch only changes badges. |
+| Portal site `ccs-portal-website` v0.12.0 | **Existing (verified).** 14 static pages, five doors, Jubilee Progress, mega menu, search, side menu, degree programs with pop-ups, about and departments pages, registration pop-up (Google Form), dot background, role badges. Hosted on GitHub Pages with HTTPS enforced; now also served from the CCS VM (see the next row). |
+| Real sign-in, roles, server-side access control | **Existing (verified on the VM, 2026-10-30):** Google sign-in with the owner's DLSU account, role from a SQLite table, audit log. **Not yet:** any rule protecting content, and refusal of non-DLSU accounts by real Google. The "Viewing as" switch was removed in 0.14.2. |
 | Task Tracker (Request a Service) v2.7 | **Existing (not tested).** Browser-only prototype with simulated data. |
 | Student Conference Grant Support System v2.1 | **Existing (not tested).** Browser-only simulation; optional Google Apps Script writes to a Sheet, Drive and email. |
 | Virtual Office dashboard v2.2 | **Existing (not tested).** Reads published Google Sheet CSVs in the browser. Login is client-side. |
