@@ -67,7 +67,7 @@ study|community|partnerships.html   old addresses that redirect
 assets/css/tokens.css  portal tokens, loaded after ccs-design
 assets/css/site.css    components and layout
 assets/js/config.js    module links, release number, access matrix (preview only), sign-in settings
-assets/js/site.js      nav, mega menu, side menu, search, role preview, sign-in pop-up, register pop-up, footer
+assets/js/site.js      nav, mega menu, side menu, search, role-based hiding, sign-in pop-up, register pop-up, footer
 assets/js/programs.js  degree programs filter and pop-up
 assets/js/dots.js      dot background
 server/                sign-in server (app.js, db.js, access.js, index.js), users tool (users.js), tests (test/), deploy examples (deploy/)
@@ -130,7 +130,7 @@ docs/                  project documentation
 
 ## Security reminders
 
-- The pages are still static files. Anything in `*.html` and `assets/` is public, including content that the "Viewing as" switch or a role hides.
+- The pages are still static files. Anything in `*.html` and `assets/` is public, including content that a role hides in the browser.
   That hiding happens only in the browser. Do not describe it, or the access table in `config.js`, as access control.
 - **Verified on the CCS VM on 2026-10-30:** the owner signed in with their DLSU Google account and the server's audit log recorded `login_ok role=admin`;
   the live `config.js` carries the client ID; the 13 server tests pass locally and on the VM (they cover refused sign-ins with a stubbed Google check,
@@ -145,6 +145,5 @@ docs/                  project documentation
 
 ## Known out-of-date statements (to fix; Decision needed)
 
-These still describe the state before the server and contradict the section above: `README.md` (says release 0.12.0 and "no sign-in and no server"),
-`docs/PRD.md` (rows saying real sign-in, roles and a database do not exist), and `docs/Architecture.md` section 2.3 ("no server-side access control").
+`docs/Implementation-Plan.md` and `docs/Module-Specifications.md` still say the portal is v0.12.0, and `docs/PRD.md` rows C8 and C10 describe the state at 0.12.0.
 By the order of authority above, fix them in the documents rather than choosing between them.
