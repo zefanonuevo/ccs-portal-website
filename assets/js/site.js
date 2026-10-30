@@ -55,8 +55,7 @@
     ['Events', 'Across the college', 'resources.html#events'],
     ['Forms and downloads', 'Across the college', 'resources.html#forms'],
     ['Policies and guidelines', 'Across the college', 'resources.html#policies'],
-    ['How things work', 'Across the college', 'resources.html#how'],
-    ['Connected systems', 'Home', 'index.html#systems']
+    ['How things work', 'Across the college', 'resources.html#how']
   ];
 
   /* Mega menu: sub-menus for each area, built from the area pages' sections and cards. */
@@ -168,8 +167,8 @@
 
   var page = (location.pathname.split('/').pop() || 'index.html');
   var role = 0;
-  try { role = Math.min(4, Math.max(0, parseInt(localStorage.getItem('ccs-role') || '0', 10) || 0)); } catch (e) {}
-  /* Sign-in prototype session (tab only). When present it sets the role and the preview switch is locked. */
+  try { localStorage.removeItem('ccs-role'); } catch (e) {} /* the old "Viewing as" choice is gone: signed out means Guest */
+  /* Sign-in session (this tab only; the server's cookie is the truth). When present it sets the role. */
   var session = null;
   try { session = JSON.parse(sessionStorage.getItem('ccs-session')); } catch (e) {}
   function esc(t) { return String(t == null ? '' : t).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
@@ -178,13 +177,6 @@
     return i < 0 ? 0 : i;
   }
   if (session) role = roleIndex(session.role);
-
-  function roleSelect(id) {
-    return '<label style="display:contents"><span class="sr">Preview the portal as</span>' +
-      '<select class="role-select" id="' + id + '" aria-label="Preview the portal as"' + (session ? ' disabled title="Your role comes from signing in"' : '') + '>' +
-      C.roles.map(function (r, i) { return '<option value="' + i + '"' + (i === role ? ' selected' : '') + '>' + (session ? 'Signed in as ' : 'Viewing as ') + r + '</option>'; }).join('') +
-      '</select></label>';
-  }
 
   function megaItem(m) {
     var id = 'mega-' + m.key;
@@ -209,13 +201,11 @@
   header.innerHTML =
     '<div class="wrap">' +
     '<a class="brand" href="index.html" aria-label="' + C.name + ' home">' + ICON.mark + '<span>' + C.name + '</span></a>' +
-    '<span class="tag">' + C.version + '</span>' +
     '<nav class="nav-links" aria-label="Doors">' + MEGA.map(megaItem).join('') + '</nav>' +
     '<div class="nav-tools">' +
-    roleSelect('role-top') +
     '<button class="icon-btn" id="open-search" aria-label="Search (press /)">' + ICON.search + '</button>' +
     '<button class="icon-btn" id="open-menu" aria-label="Open menu" aria-expanded="false" aria-controls="sheet">' + ICON.menu + '</button>' +
-    (session ? '<span class="nav-who">' + esc(session.name || session.email) + '</span>' : '') +
+    (session ? '<span class="nav-who" title="' + esc(session.email) + '">' + esc(session.name || session.email) + ' \u00B7 ' + esc(C.roles[role]) + '</span>' : '') +
     '<button class="btn small nav-signin" id="signin-btn" type="button">' + (session ? 'Sign out' : 'Sign in') + '</button>' +
     '</div></div>';
 
@@ -228,7 +218,7 @@
     AREAS.map(function (a) { return '<a href="' + a.href + '"><b>' + a.label + '</b><span>' + a.line + '</span></a>'; }).join('') +
     '<div class="group">Across the college</div>' +
     SIDE.map(function (a) { return '<a href="' + a.href + '"' + accAttr(a.label) + '><b>' + a.label + '</b><span>' + a.line + '</span></a>'; }).join('') +
-    '</nav><div class="role-row"><span>Preview access</span>' + roleSelect('role-sheet') + '</div></aside>';
+    '</nav>' + (session ? '<div class="role-row"><span>Signed in as ' + esc(session.name || session.email) + ' (' + esc(C.roles[role]) + ')</span></div>' : '') + '</aside>';
 
   var dlg = document.createElement('dialog');
   dlg.className = 'search';
@@ -249,7 +239,7 @@
     '<a href="' + mods.design.url + '" target="_blank" rel="noopener">Design system</a>' +
     '<a href="' + mods.tracker.repo + '" target="_blank" rel="noopener">Task Tracker on GitHub</a>' +
     '<a href="' + mods.scgss.repo + '" target="_blank" rel="noopener">Grant Support on GitHub</a></div>' +
-    '<p class="fine">' + C.name + ' ' + C.version + ' \u00B7 release v' + C.release + ' \u00B7 <a href="https://github.com/zefanonuevo/ccs-portal-website/blob/main/CHANGELOG.md" target="_blank" rel="noopener">Version history</a>. Draft for review: sample content is marked, access shown here is a preview and is not enforced until sign-in is built.</p></div>';
+    '<p class="fine">' + C.name + ' \u00B7 release v' + C.release + ' \u00B7 <a href="https://github.com/zefanonuevo/ccs-portal-website/blob/main/CHANGELOG.md" target="_blank" rel="noopener">Version history</a>. Draft for review: sample content is marked, and what each role sees here is not yet enforced for all content.</p></div>';
 
   var main = document.querySelector('main');
   if (main) { main.id = main.id || 'main'; }
@@ -393,13 +383,12 @@
   var TEXT = { View: 'You can view', Use: 'You can use', Manage: 'You can manage' };
   var CONTAINERS = '.grid, .two, .quick, .bento, .mega-col';
   function applyRole() {
-    var hiddenCount = 0;
     /* 1. tagged content: hide when the row is No, otherwise show a badge */
     Array.prototype.forEach.call(document.querySelectorAll('[data-access]'), function (el) {
       var lvl = levelFor(el.getAttribute('data-access'));
       var chip = el.querySelector('.access-chip');
       if (lvl === 'No') {
-        el.hidden = true; hiddenCount++;
+        el.hidden = true;
         if (chip) { chip.remove(); }
         return;
       }
@@ -429,26 +418,7 @@
       if (hasGated && !anyShown) { sec.hidden = true; sec.setAttribute('data-noaccess-empty', ''); }
       else if (sec.hasAttribute('data-noaccess-empty')) { sec.hidden = false; sec.removeAttribute('data-noaccess-empty'); }
     });
-    /* 5. one quiet line, so people know something is hidden and why */
-    var main = document.querySelector('main'), note = document.getElementById('access-note');
-    if (main && hiddenCount) {
-      if (!note) {
-        note = document.createElement('div'); note.id = 'access-note'; note.className = 'wrap';
-        note.innerHTML = '<p class="note"></p>'; main.appendChild(note);
-      }
-      note.querySelector('p').textContent = role === 0
-        ? 'Some items are hidden because they need you to sign in. Use Sign in, or the Viewing as menu, to see what your role can open.'
-        : 'Some items are hidden because they are not available to your role (' + C.roles[role] + ').';
-      note.hidden = false;
-    } else if (note) { note.hidden = true; }
   }
-  function setRole(v) {
-    role = v;
-    try { localStorage.setItem('ccs-role', String(v)); } catch (e) {}
-    document.getElementById('role-top').value = v; document.getElementById('role-sheet').value = v;
-    applyRole();
-  }
-  ['role-top', 'role-sheet'].forEach(function (id) { document.getElementById(id).addEventListener('change', function (e) { setRole(parseInt(e.target.value, 10)); }); });
   applyRole();
 
   /* ---------- sign-in PROTOTYPE: sample accounts, or Google plus the Apps Script backend when configured ---------- */

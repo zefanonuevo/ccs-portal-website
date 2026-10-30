@@ -23,7 +23,7 @@ One-time setup: **Settings → Pages → Source: GitHub Actions**.
 
 | Path | What |
 | --- | --- |
-| `index.html` | Home: search, quick actions, I'm a... entry points, five doors, Jubilee band, news, connected systems |
+| `index.html` | Home: search, quick actions, I'm a... entry points, five doors, Jubilee band, news |
 | `academics.html` `services.html` `research.html` `partners.html` `people.html` | The five doors |
 | `programs.html` | Our degree programs (under Academics): undergraduate and graduate, with the filter |
 | `about.html` `departments.html` | About the College; Leadership and departments (under People) |
