@@ -60,6 +60,19 @@ anything if the download looks wrong). It applies to every site on that Apache. 
 Check: sign in, then `sudo -u ccsportal node users.js audit` (from `server/`) should show your own public address, not a Cloudflare one.
 Status: Proposed. The script was tested only with sample lists, not against Cloudflare's real list or a real Apache.
 
+## Serving another site under the same address (for example /scgss/)
+This server only serves the portal pages and `assets/`, so any other path returns 404. A separate site such as Student Grants at `/scgss/` has to be served by Apache itself,
+and the proxy rule must leave that path out. Put these lines in the HTTPS virtual host **before** the `ProxyPass /` line (Apache uses the first match):
+```
+Alias /scgss/ /var/www/scgss/
+<Directory /var/www/scgss/>
+    Require all granted
+</Directory>
+ProxyPass /scgss/ !
+```
+`/var/www/scgss/` is where the site's files are copied (for example a `git clone` of `ccs-scgss`; do not point it at the portal repo). Then `sudo apache2ctl configtest && sudo systemctl reload apache2`.
+Anything under that path is public and has no sign-in check. Status: Proposed, not yet run on the VM.
+
 ## Updating
 ```
 git pull

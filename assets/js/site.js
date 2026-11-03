@@ -29,7 +29,7 @@
     ['How to apply', 'Academics: admission', 'academics.html#apply'],
     ['Finishing your degree', 'Academics: graduation', 'academics.html#apply'],
     ['Request a Service', 'Services: Task Tracker', 'services.html#services'],
-    ['Student Grants', 'Services: apply, track, reimburse', 'services.html#services'],
+    ['Student Grants', 'Services: apply, track, reimburse', C.modules.scgss.url],
     ['Virtual Office', 'Services: register, join Zoom, knowledge base', 'services.html#virtual-office'],
     ['Equipment and inventory', 'Services', 'services.html#more'],
     ['Publication highlights', 'Research', 'research.html#publications'],
@@ -80,7 +80,7 @@
     { key: 'services', href: 'services.html', label: 'Services', line: 'Ask, apply, register: everything here is something you do.', groups: [
       { title: 'Ask and apply', items: [
         { href: 'services.html#request-service', label: 'Request a service', line: 'Submit a request and follow it' },
-        { href: 'services.html#grants', label: 'Student grants', line: 'Apply, track and claim reimbursement' }
+        { href: C.modules.scgss.url, label: 'Student grants', line: 'Apply, track and claim reimbursement' }
       ] },
       { title: 'Virtual Office', items: [
         { href: 'services.html#register', label: 'Register and join Zoom', line: 'Registration and your queue number' },
