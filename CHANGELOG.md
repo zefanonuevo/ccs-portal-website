@@ -3,9 +3,14 @@
 Every release is a git tag, so any of them can be opened, downloaded or restored.
 See [Versions and restoring](README.md#versions-and-restoring).
 
-The release number shown in the footer of every page comes from `release` in
-`assets/js/config.js`. Change it together with this file when you cut a new release.
+The release number comes from `release` in `assets/js/config.js` (it is no longer shown on the pages since 0.14.6; it still names the css and js files). Change it together with this file when you cut a new release.
 (`version: 'Draft v1'` is the draft stage of the whole site, not the release number.)
+
+## 0.14.6 - Cleaner cards and footer (2026-11-03)
+- **The "You can view / use / manage" labels are removed from every card, tile and link.** The access table still hides items that are No for a role; it just no longer labels the rest.
+- **The footer's Systems column is removed** (Request a Service, Student Grants, Design system, Task Tracker on GitHub, Grant Support on GitHub). Those links are still available from the menu, Services and the home page.
+- **The footer line "CCS Commons · release v... · Version history" is removed.** The footer keeps the address, the Doors and Across the college lists, and the draft note about sample content.
+  Release number raised to 0.14.6 so cached copies are replaced. Not tagged.
 
 ## 0.14.5 - Student Grants links go to /scgss/ (2026-11-03)
 - **Every Student Grants link now opens https://ccs.dlsu.edu.ph/scgss/** instead of the Services page or the old GitHub Pages address: the Services menu item, the Services card,

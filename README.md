@@ -60,7 +60,7 @@ Every page loads [ccs-design](https://github.com/zefanonuevo/ccs-design) (`ccs-t
 ## Versions and restoring
 
 Every release is a git tag with a GitHub Release, and [CHANGELOG.md](CHANGELOG.md) says
-what changed in each. The release number is shown in the footer of every page.
+what changed in each. The release number is in `assets/js/config.js`; the pages no longer show it.
 
 | Release | What it is |
 |---|---|

@@ -227,19 +227,13 @@
 
   var foot = document.createElement('footer');
   foot.className = 'foot';
-  var mods = C.modules;
   foot.innerHTML =
     '<div class="wrap"><div><a class="brand" href="index.html">' + ICON.mark + '<span>' + C.name + '</span></a>' +
     '<p style="margin-top:12px;max-width:34ch">A central hub for the College of Computer Studies, built around the Jubilee strategy.</p>' +
     '<p style="margin-top:12px;max-width:34ch">10th Floor, Br. Andrew Gonzalez Hall, 2401 Taft Avenue, Manila<br>(632) 8524-4611 loc. 300</p></div>' +
     '<div><h4>Doors</h4>' + AREAS.map(function (a) { return '<a href="' + a.href + '">' + a.label + '</a>'; }).join('') + '</div>' +
     '<div><h4>Across the college</h4>' + SIDE.map(function (a) { return '<a href="' + a.href + '"' + accAttr(a.label) + '>' + a.label + '</a>'; }).join('') + '</div>' +
-    '<div><h4>Systems</h4><a href="' + mods.tracker.url + '" target="_blank" rel="noopener">' + mods.tracker.name + '</a>' +
-    '<a href="' + mods.scgss.url + '" target="_blank" rel="noopener">' + mods.scgss.name + '</a>' +
-    '<a href="' + mods.design.url + '" target="_blank" rel="noopener">Design system</a>' +
-    '<a href="' + mods.tracker.repo + '" target="_blank" rel="noopener">Task Tracker on GitHub</a>' +
-    '<a href="' + mods.scgss.repo + '" target="_blank" rel="noopener">Grant Support on GitHub</a></div>' +
-    '<p class="fine">' + C.name + ' \u00B7 release v' + C.release + ' \u00B7 <a href="https://github.com/zefanonuevo/ccs-portal-website/blob/main/CHANGELOG.md" target="_blank" rel="noopener">Version history</a>. Draft for review: sample content is marked, and what each role sees here is not yet enforced for all content.</p></div>';
+    '<p class="fine">Draft for review: sample content is marked, and what each role sees here is not yet enforced for all content.</p></div>';
 
   var main = document.querySelector('main');
   if (main) { main.id = main.id || 'main'; }
@@ -379,11 +373,10 @@
     });
   });
 
-  /* ---------- role preview: data-access="grants" adds a badge ---------- */
-  var TEXT = { View: 'You can view', Use: 'You can use', Manage: 'You can manage' };
+  /* ---------- role-based hiding: data-access="grants" hides the item when the role's row is No ---------- */
   var CONTAINERS = '.grid, .two, .quick, .bento, .mega-col';
   function applyRole() {
-    /* 1. tagged content: hide when the row is No, otherwise show a badge */
+    /* 1. tagged content: hide when the row is No */
     Array.prototype.forEach.call(document.querySelectorAll('[data-access]'), function (el) {
       var lvl = levelFor(el.getAttribute('data-access'));
       var chip = el.querySelector('.access-chip');
@@ -393,10 +386,7 @@
         return;
       }
       el.hidden = false;
-      if (el.tagName === 'SECTION') { return; }
-      if (!chip) { chip = document.createElement('span'); el.appendChild(chip); }
-      chip.className = 'chip access-chip';
-      chip.textContent = TEXT[lvl];
+      if (chip) { chip.remove(); }   /* no "You can view/use/manage" label any more */
     });
     /* 2. menu, search and footer links */
     Array.prototype.forEach.call(document.querySelectorAll('[data-acc]'), function (a) {
