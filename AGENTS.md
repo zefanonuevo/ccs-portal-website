@@ -69,7 +69,7 @@ assets/css/site.css    components and layout
 assets/js/config.js    module links, release number, access matrix (preview only), sign-in settings
 assets/js/site.js      nav, mega menu, side menu, search, role-based hiding, sign-in pop-up, register pop-up, footer
 assets/js/programs.js  degree programs filter and pop-up
-assets/js/dots.js      dot background
+assets/js/network.js   network mesh background
 server/                sign-in server (app.js, db.js, access.js, index.js), users tool (users.js), tests (test/), deploy examples (deploy/)
 protected/             files only signed-in roles may open, once a rule exists in server/access.js (folder not created yet; no rules yet)
 prototypes/            earlier sign-in prototype (Google Apps Script); replaced by server/ on the VM, kept for reference

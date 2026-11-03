@@ -249,11 +249,11 @@
   skip.after(header);
   document.body.append(sheet, dlg, foot);
 
-  /* ---------- decorative dot field (assets/js/dots.js), loaded after the page is usable ---------- */
-  var dots = document.createElement('script');
-  dots.src = 'assets/js/dots.js?v=' + C.release;
-  dots.defer = true;
-  document.head.appendChild(dots);
+  /* ---------- decorative network mesh (assets/js/network.js), loaded after the page is usable ---------- */
+  var net = document.createElement('script');
+  net.src = 'assets/js/network.js?v=' + C.release;
+  net.defer = true;
+  document.head.appendChild(net);
 
   /* ---------- mega menu ---------- */
   var megaItems = header.querySelectorAll('.mega-item');

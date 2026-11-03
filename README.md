@@ -34,7 +34,7 @@ One-time setup: **Settings → Pages → Source: GitHub Actions**.
 | `assets/css/site.css` | Components and layout |
 | `assets/js/config.js` | **Module links and the access matrix. Edit here to wire a system in** |
 | `assets/js/programs.js` | Our degree programs: filter and the program pop-up |
-| `assets/js/dots.js` | The interactive dot background |
+| `assets/js/network.js` | The network mesh background (same effect as the TSG website) |
 | `assets/js/site.js` | Nav, side menu, search, sign-in pop-up, scroll reveal |
 | `AGENTS.md` | Project rules for people and AI agents (proposed) |
 | `docs/PRD.md` `docs/Architecture.md` `docs/Module-Specifications.md` `docs/Implementation-Plan.md` | Requirements, architecture, modules and plan (drafts for approval) |
