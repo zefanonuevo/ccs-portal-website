@@ -29,6 +29,11 @@
   --band-muted: #a9bdb2;
   --nav-bg: rgba(244, 247, 243, 0.82);
 
+  /* network mesh background (network.js reads these two as r, g, b) */
+  --net-rgb: 11, 93, 69;
+  --net-pulse-rgb: 18, 134, 79;
+  --ambient-glow: rgba(11, 93, 69, 0.08);
+
   /* type: --f-display and --f-body (system font stack) come from ccs-design */
 
   /* shape */
@@ -65,6 +70,9 @@
     --band-text: var(--paper);
     --band-muted: #9fb3a8;
     --nav-bg: rgba(11, 19, 15, 0.82);
+    --net-rgb: 95, 207, 165;
+    --net-pulse-rgb: 170, 240, 208;
+    --ambient-glow: rgba(95, 207, 165, 0.10);
     color-scheme: dark;
   }
 }

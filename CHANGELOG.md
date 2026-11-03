@@ -7,6 +7,12 @@ The release number shown in the footer of every page comes from `release` in
 `assets/js/config.js`. Change it together with this file when you cut a new release.
 (`version: 'Draft v1'` is the draft stage of the whole site, not the release number.)
 
+## 0.14.4 - Network mesh background (2026-11-03)
+- **The dot grid behind the pages is replaced by the network mesh used on the TSG website**: drifting dots, thin lines between dots that come close, small packets
+  travelling along the lines, and dots that light up near the mouse. A soft green glow sits at the top right. It follows light and dark mode, is a still picture under reduced motion,
+  and ignores touch. `assets/js/dots.js` is replaced by `assets/js/network.js`, adapted from `initNetwork` in the TSG theme. New tokens: `--net-rgb`, `--net-pulse-rgb`, `--ambient-glow`.
+  Release number raised to 0.14.4 so cached copies are replaced. Not tagged.
+
 ## 0.14.3 - Clearer roles and students by email pattern (2026-11-03)
 - **Roles renamed and one added.** `admin` becomes **Super Administrator** (everything). New **Faculty Administrator**: the same as Faculty, plus the dashboard links
   (Academic, Research and Usage dashboards, level View). The matrix in `config.js` has a sixth column for it. The server stores them as `super-administrator` and `faculty-administrator`.
