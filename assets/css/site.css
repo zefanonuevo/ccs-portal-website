@@ -351,7 +351,7 @@ html:has(body.sheet-open) { overflow: hidden; }
 
 /* footer */
 .foot { margin-top: 56px; border-top: 1px solid var(--line); padding: 40px 0 56px; color: var(--muted); font-size: 15px; }
-.foot .wrap { display: grid; grid-template-columns: 1.4fr repeat(3, 1fr); gap: 28px; }
+.foot .wrap { display: grid; grid-template-columns: 1.4fr repeat(2, 1fr); gap: 28px; }
 .foot h4 { font: 600 12px var(--f-body); letter-spacing: .1em; text-transform: uppercase; color: var(--text); margin-bottom: 10px; }
 .foot a { color: var(--muted); text-decoration: none; display: block; padding: 3px 0; }
 .foot .fine { grid-column: 1 / -1; border-top: 1px solid var(--line); padding-top: 18px; font-size: 13.5px; }
