@@ -6,7 +6,30 @@ const crypto = require('node:crypto');
 const fs = require('node:fs');
 const path = require('node:path');
 
-const ROLES = ['admin', 'faculty', 'staff', 'student'];
+/* super-administrator: everything. faculty-administrator: a faculty member who also holds an administrator post (faculty rights plus the dashboard links). */
+const ROLES = ['super-administrator', 'faculty-administrator', 'faculty', 'staff', 'student'];
+const ROLE_CHECK = ROLES.map((r) => "'" + r + "'").join(',');
+
+/** Older databases only allowed admin/faculty/staff/student. Rebuild the users table with the new role names; an old 'admin' becomes 'super-administrator'. */
+function migrateRoles(db) {
+  const row = db.prepare("SELECT sql FROM sqlite_master WHERE type = 'table' AND name = 'users'").get();
+  if (!row || row.sql.includes("'super-administrator'")) return;
+  db.transaction(() => {
+    db.exec(`
+      CREATE TABLE users_new (
+        email      TEXT PRIMARY KEY,
+        role       TEXT NOT NULL CHECK (role IN (${ROLE_CHECK})),
+        name       TEXT NOT NULL DEFAULT '',
+        program    TEXT NOT NULL DEFAULT '',
+        active     INTEGER NOT NULL DEFAULT 1,
+        updated_at TEXT NOT NULL
+      );
+      INSERT INTO users_new SELECT email, CASE role WHEN 'admin' THEN 'super-administrator' ELSE role END, name, program, active, updated_at FROM users;
+      DROP TABLE users;
+      ALTER TABLE users_new RENAME TO users;
+    `);
+  })();
+}
 
 function open(file) {
   if (file !== ':memory:') fs.mkdirSync(path.dirname(file), { recursive: true });
@@ -16,7 +39,7 @@ function open(file) {
   db.exec(`
     CREATE TABLE IF NOT EXISTS users (
       email      TEXT PRIMARY KEY,
-      role       TEXT NOT NULL CHECK (role IN ('admin','faculty','staff','student')),
+      role       TEXT NOT NULL CHECK (role IN (${ROLE_CHECK})),
       name       TEXT NOT NULL DEFAULT '',
       program    TEXT NOT NULL DEFAULT '',
       active     INTEGER NOT NULL DEFAULT 1,
@@ -39,6 +62,7 @@ function open(file) {
       ip     TEXT NOT NULL DEFAULT ''
     );
   `);
+  migrateRoles(db);
   return db;
 }
 

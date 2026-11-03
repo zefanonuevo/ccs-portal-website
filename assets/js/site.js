@@ -173,7 +173,7 @@
   try { session = JSON.parse(sessionStorage.getItem('ccs-session')); } catch (e) {}
   function esc(t) { return String(t == null ? '' : t).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function roleIndex(name) {
-    var i = C.roles.map(function (r) { return r.toLowerCase(); }).indexOf(String(name || '').toLowerCase());
+    var i = C.roles.map(function (r) { return r.toLowerCase(); }).indexOf(String(name || '').toLowerCase().replace(/-/g, ' '));
     return i < 0 ? 0 : i;
   }
   if (session) role = roleIndex(session.role);

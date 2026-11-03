@@ -3,7 +3,7 @@
 window.CCS = {
   name: 'CCS Commons',
   version: 'Draft v1',
-  release: '0.14.2',   // single source for the release number shown in the footer; keep in step with CHANGELOG.md
+  release: '0.14.3',   // single source for the release number shown in the footer; keep in step with CHANGELOG.md
   modules: {
     tracker: {
       name: 'Request a Service',
@@ -61,47 +61,48 @@ window.CCS = {
     clientId: '',
     apiUrl: '',
     sample: [
-      { name: 'Sample Admin', email: 'admin.sample@example.test', role: 'Admin' },
+      { name: 'Sample Super Administrator', email: 'admin.sample@example.test', role: 'Super Administrator' },
+      { name: 'Sample Faculty Administrator', email: 'facadmin.sample@example.test', role: 'Faculty Administrator' },
       { name: 'Sample Faculty', email: 'faculty.sample@example.test', role: 'Faculty' },
       { name: 'Sample Staff', email: 'staff.sample@example.test', role: 'Staff' },
       { name: 'Sample Student', email: 'student.sample@example.test', role: 'Student' },
       { name: 'Not on the list', email: 'unlisted.sample@example.test', role: 'Guest' }
     ]
   },
-  /* "Who sees what": owner-supplied table of 2026-10-20 (supersedes Blueprint v2). Order here: guest, student, faculty, staff, admin. */
-  roles: ['Guest', 'Student', 'Faculty', 'Staff', 'Admin'],
+  /* "Who sees what": owner-supplied table of 2026-10-20 (supersedes Blueprint v2). Order here: guest, student, faculty, staff, faculty administrator, super administrator. */
+  roles: ['Guest', 'Student', 'Faculty', 'Staff', 'Faculty Administrator', 'Super Administrator'],
   access: {
-    program: ['View', 'View', 'View', 'View', 'Manage'],
-    outcomes: ['No', 'View', 'View', 'View', 'Manage'],
-    flowcharts: ['No', 'View', 'View', 'View', 'Manage'],
-    courses: ['No', 'View', 'View', 'View', 'Manage'],
-    syllabi: ['No', 'No', 'View', 'View', 'Manage'],
-    admission: ['View', 'View', 'View', 'View', 'Manage'],
-    graduation: ['View', 'View', 'View', 'View', 'Manage'],
-    leadership: ['View', 'View', 'View', 'View', 'Manage'],
-    service: ['No', 'No', 'Use', 'Use', 'Manage'],
-    grants: ['No', 'Use', 'Use', 'Use', 'Manage'],
-    virtual: ['Use', 'Use', 'Use', 'Use', 'Manage'],
-    vodash: ['No', 'No', 'No', 'View', 'Manage'],
-    kb: ['No', 'No', 'Use', 'Use', 'Manage'],
-    inventory: ['No', 'No', 'Use', 'Use', 'Manage'],
-    forms: ['View', 'Use', 'Use', 'Use', 'Manage'],
-    pubhighlights: ['View', 'View', 'View', 'View', 'Manage'],
-    pubrecords: ['No', 'No', 'Use', 'Use', 'Manage'],
-    publish: ['No', 'No', 'Use', 'Use', 'Manage'],
-    projhighlights: ['View', 'View', 'View', 'View', 'Manage'],
-    projstatus: ['No', 'No', 'View', 'Use', 'Manage'],
-    grantsum: ['No', 'No', 'View', 'Use', 'Manage'],
-    centers: ['No', 'View', 'View', 'Use', 'Manage'],
-    partnerhl: ['View', 'View', 'View', 'View', 'Manage'],
-    partnerdir: ['No', 'No', 'View', 'Use', 'Manage'],
-    partnertracker: ['No', 'No', 'Use', 'Use', 'Manage'],
-    partnerstart: ['View', 'View', 'Use', 'Use', 'Manage'],
-    spotlight: ['View', 'View', 'Use', 'Use', 'Manage'],
-    news: ['View', 'View', 'View', 'Use', 'Manage'],
-    directory: ['View', 'View', 'Use', 'Use', 'Manage'],
-    agreements: ['No', 'No', 'View', 'Use', 'Manage'],
-    dashboards: ['No', 'No', 'No', 'No', 'Manage']
+    program: ['View', 'View', 'View', 'View', 'View', 'Manage'],
+    outcomes: ['No', 'View', 'View', 'View', 'View', 'Manage'],
+    flowcharts: ['No', 'View', 'View', 'View', 'View', 'Manage'],
+    courses: ['No', 'View', 'View', 'View', 'View', 'Manage'],
+    syllabi: ['No', 'No', 'View', 'View', 'View', 'Manage'],
+    admission: ['View', 'View', 'View', 'View', 'View', 'Manage'],
+    graduation: ['View', 'View', 'View', 'View', 'View', 'Manage'],
+    leadership: ['View', 'View', 'View', 'View', 'View', 'Manage'],
+    service: ['No', 'No', 'Use', 'Use', 'Use', 'Manage'],
+    grants: ['No', 'Use', 'Use', 'Use', 'Use', 'Manage'],
+    virtual: ['Use', 'Use', 'Use', 'Use', 'Use', 'Manage'],
+    vodash: ['No', 'No', 'No', 'View', 'View', 'Manage'],
+    kb: ['No', 'No', 'Use', 'Use', 'Use', 'Manage'],
+    inventory: ['No', 'No', 'Use', 'Use', 'Use', 'Manage'],
+    forms: ['View', 'Use', 'Use', 'Use', 'Use', 'Manage'],
+    pubhighlights: ['View', 'View', 'View', 'View', 'View', 'Manage'],
+    pubrecords: ['No', 'No', 'Use', 'Use', 'Use', 'Manage'],
+    publish: ['No', 'No', 'Use', 'Use', 'Use', 'Manage'],
+    projhighlights: ['View', 'View', 'View', 'View', 'View', 'Manage'],
+    projstatus: ['No', 'No', 'View', 'Use', 'View', 'Manage'],
+    grantsum: ['No', 'No', 'View', 'Use', 'View', 'Manage'],
+    centers: ['No', 'View', 'View', 'Use', 'View', 'Manage'],
+    partnerhl: ['View', 'View', 'View', 'View', 'View', 'Manage'],
+    partnerdir: ['No', 'No', 'View', 'Use', 'View', 'Manage'],
+    partnertracker: ['No', 'No', 'Use', 'Use', 'Use', 'Manage'],
+    partnerstart: ['View', 'View', 'Use', 'Use', 'Use', 'Manage'],
+    spotlight: ['View', 'View', 'Use', 'Use', 'Use', 'Manage'],
+    news: ['View', 'View', 'View', 'Use', 'View', 'Manage'],
+    directory: ['View', 'View', 'Use', 'Use', 'Use', 'Manage'],
+    agreements: ['No', 'No', 'View', 'Use', 'View', 'Manage'],
+    dashboards: ['No', 'No', 'No', 'No', 'View', 'Manage']
     // Source: owner's detailed table (dated 2026-10-20, received 2026-10-28). See docs/PRD.md section 2.1.
     // No row yet (values pending, so no key): curriculum mapping, what you will study, equipment requests, Jubilee Progress.
   }

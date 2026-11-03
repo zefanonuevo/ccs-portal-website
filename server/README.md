@@ -6,7 +6,7 @@ Not yet run on the VM and not yet run against real Google.**
 A small Node.js server for the CCS VM. It serves the same public pages as before and adds:
 
 - Google sign-in, limited to `@dlsu.edu.ph` accounts with a verified email (token checked by Google's library, then domain and `hd`).
-- Roles (`admin`, `faculty`, `staff`, `student`) from a SQLite table on the VM. A DLSU account that is not listed is a `student` if the part before the `@` has an underscore
+- Roles (`super-administrator`, `faculty-administrator`, `faculty`, `staff`, `student`) from a SQLite table on the VM. A faculty administrator is a faculty member plus the dashboard links. A DLSU account that is not listed is a `student` if the part before the `@` has an underscore
   (`juan_dela_cruz@`), otherwise a `guest`. A listed person always gets the listed role, and a listed person who is switched off is a `guest`.
 - Sessions: a random cookie (`HttpOnly`, `Secure`, `SameSite=Lax`). Only its hash is stored. The role is read from the table on every request,
   so switching someone off or changing their role takes effect at once.
@@ -34,7 +34,7 @@ To really protect something, move it into `protected/<area>/` and add a rule in 
    npm ci --omit=dev
    ```
 3. **Settings.** `cp .env.example .env`, then `chmod 600 .env` and fill in `GOOGLE_CLIENT_ID` and `BASE_URL` (your https address).
-4. **Your first user.** `node users.js add your.address@dlsu.edu.ph admin "Your Name"` then `node users.js list`.
+4. **Your first user.** `node users.js add your.address@dlsu.edu.ph super-administrator "Your Name"` then `node users.js list`.
 5. **Run as a service.** Copy `deploy/ccs-portal.service` to `/etc/systemd/system/`, edit `User` and `WorkingDirectory`, then
    `sudo systemctl daemon-reload && sudo systemctl enable --now ccs-portal`. Check: `curl http://127.0.0.1:3000/healthz` prints `ok`.
    Logs: `journalctl -u ccs-portal -e`.
@@ -42,7 +42,7 @@ To really protect something, move it into `protected/<area>/` and add a rule in 
    then `sudo apache2ctl configtest && sudo systemctl reload apache2`. Apache must no longer serve the repo folder directly.
 7. **Google.** Google Cloud Console, OAuth client of type *Web application*. Authorized JavaScript origin: your https address (no path, no trailing slash).
    No redirect URI is needed. No client secret is used.
-8. **Try it.** Open the site, press Sign in, use the listed account. The top bar should say "Signed in as Admin".
+8. **Try it.** Open the site, press Sign in, use the listed account. The top bar should show your name and "Super Administrator".
    Then try an unlisted DLSU account (should be Guest) and a non-DLSU account (should be refused).
 
 ## Behind Cloudflare: real visitor addresses

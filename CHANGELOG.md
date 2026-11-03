@@ -7,7 +7,12 @@ The release number shown in the footer of every page comes from `release` in
 `assets/js/config.js`. Change it together with this file when you cut a new release.
 (`version: 'Draft v1'` is the draft stage of the whole site, not the release number.)
 
-## Unreleased - Students by email pattern (2026-11-03)
+## 0.14.3 - Clearer roles and students by email pattern (2026-11-03)
+- **Roles renamed and one added.** `admin` becomes **Super Administrator** (everything). New **Faculty Administrator**: the same as Faculty, plus the dashboard links
+  (Academic, Research and Usage dashboards, level View). The matrix in `config.js` has a sixth column for it. The server stores them as `super-administrator` and `faculty-administrator`.
+  An existing database is migrated when the server starts: old `admin` rows become `super-administrator`. Back up `server/data/ccs.db` before the first start.
+  Super Administrator replaces Admin in the top bar, the sample sign-in accounts and the docs. Tested in a simulated browser for each role; 15 server tests pass.
+  Release number raised to 0.14.3 so cached copies are replaced. Not tagged.
 - **A DLSU account that is not in the user table is now a Student when the part before the @ has an underscore** (`juan_dela_cruz@dlsu.edu.ph`), and a Guest otherwise.
   The listed role always wins, and a listed person who is switched off stays a Guest. Server change only: after `git pull`, restart the service. No page changed, so the release number stays 0.14.2.
   Covered by the server tests (14). Not yet run with a real student account.
