@@ -7,6 +7,12 @@ The release number shown in the footer of every page comes from `release` in
 `assets/js/config.js`. Change it together with this file when you cut a new release.
 (`version: 'Draft v1'` is the draft stage of the whole site, not the release number.)
 
+## 0.14.5 - Student Grants links go to /scgss/ (2026-11-03)
+- **Every Student Grants link now opens https://ccs.dlsu.edu.ph/scgss/** instead of the Services page or the old GitHub Pages address: the Services menu item, the Services card,
+  the home page quick action, the search result and the footer. All read one address, `modules.scgss.url` in `assets/js/config.js`. The Services card, the home quick action and the footer
+  link still open in a new tab; the menu item and search result open in the same tab. Apache must serve `/scgss/` (see `server/README.md`).
+  Release number raised to 0.14.5 so cached copies are replaced. Not tagged.
+
 ## 0.14.4 - Network mesh background (2026-11-03)
 - **The dot grid behind the pages is replaced by the network mesh used on the TSG website**: drifting dots, thin lines between dots that come close, small packets
   travelling along the lines, and dots that light up near the mouse. A soft green glow sits at the top right. It follows light and dark mode, is a still picture under reduced motion,
