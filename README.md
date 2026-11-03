@@ -47,7 +47,7 @@ The portal links (it does not embed them) to four sibling systems, plus one Goog
 | Module | Portal label | Repo | Live |
 | --- | --- | --- | --- |
 | CCS Task Tracker | Request a Service | [ccs-task-tracker](https://github.com/zefanonuevo/ccs-task-tracker) | https://zefanonuevo.github.io/ccs-task-tracker/ |
-| CCS Student Conference Grant Support System | Student Grants | [ccs-scgss](https://github.com/zefanonuevo/ccs-scgss) | https://zefanonuevo.github.io/ccs-scgss/ |
+| CCS Student Conference Grant Support System | Student Grants | [ccs-scgss](https://github.com/zefanonuevo/ccs-scgss) | https://ccs.dlsu.edu.ph/scgss/ |
 | CCS Virtual Office Registration | Register form (Services, Virtual Office) | Google Form, opens in a pop-up | https://docs.google.com/forms/d/e/1FAIpQLScxxeeRJRwj0GbZBP6ahK0fUJOmgXz0ASjOI8aDNTrTBWj4QQ/viewform |
 | CCS Virtual Office Dashboard | Usage dashboard (Services, Virtual Office) | [ccs-vo-dashboard](https://github.com/zefanonuevo/ccs-vo-dashboard) | https://zefanonuevo.github.io/ccs-vo-dashboard/ |
 

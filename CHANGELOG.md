@@ -7,6 +7,11 @@ The release number shown in the footer of every page comes from `release` in
 `assets/js/config.js`. Change it together with this file when you cut a new release.
 (`version: 'Draft v1'` is the draft stage of the whole site, not the release number.)
 
+## 0.14.4 - Student Grants link moved (2026-11-03)
+- **Every Student Grants link now goes to https://ccs.dlsu.edu.ph/scgss/** (home quick action, Services card, footer). They all read one address, `modules.scgss.url` in `assets/js/config.js`.
+  The page at that address is served by Apache, not by this portal's Node server (which returns 404 for anything but the portal pages), so Apache must serve `/scgss/` separately; see `server/README.md`.
+  Release number raised to 0.14.4 so cached copies are replaced. Not tagged.
+
 ## 0.14.3 - Clearer roles and students by email pattern (2026-11-03)
 - **Roles renamed and one added.** `admin` becomes **Super Administrator** (everything). New **Faculty Administrator**: the same as Faculty, plus the dashboard links
   (Academic, Research and Usage dashboards, level View). The matrix in `config.js` has a sixth column for it. The server stores them as `super-administrator` and `faculty-administrator`.

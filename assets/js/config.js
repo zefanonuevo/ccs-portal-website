@@ -3,7 +3,7 @@
 window.CCS = {
   name: 'CCS Commons',
   version: 'Draft v1',
-  release: '0.14.3',   // single source for the release number shown in the footer; keep in step with CHANGELOG.md
+  release: '0.14.4',   // single source for the release number shown in the footer; keep in step with CHANGELOG.md
   modules: {
     tracker: {
       name: 'Request a Service',
@@ -19,7 +19,7 @@ window.CCS = {
       blurb: 'Apply, track approval and claim reimbursement.',
       status: 'Live',
       repo: 'https://github.com/zefanonuevo/ccs-scgss',
-      url: 'https://zefanonuevo.github.io/ccs-scgss/'
+      url: 'https://ccs.dlsu.edu.ph/scgss/'
     },
     vo: {
       name: 'Usage Dashboard',
