@@ -7,6 +7,11 @@ The release number shown in the footer of every page comes from `release` in
 `assets/js/config.js`. Change it together with this file when you cut a new release.
 (`version: 'Draft v1'` is the draft stage of the whole site, not the release number.)
 
+## Unreleased - Students by email pattern (2026-11-03)
+- **A DLSU account that is not in the user table is now a Student when the part before the @ has an underscore** (`juan_dela_cruz@dlsu.edu.ph`), and a Guest otherwise.
+  The listed role always wins, and a listed person who is switched off stays a Guest. Server change only: after `git pull`, restart the service. No page changed, so the release number stays 0.14.2.
+  Covered by the server tests (14). Not yet run with a real student account.
+
 ## 0.14.2 - Production look: preview switch, hidden-items note and Draft v1 removed (2026-10-30)
 - **The "Viewing as" preview switch is removed** (top bar and side menu), and so is the note "Some items are hidden because...", on every page.
   Signed out, a visitor is a Guest. Signed in, the role comes from the server. The header shows the signed-in name and role.

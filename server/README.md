@@ -6,7 +6,8 @@ Not yet run on the VM and not yet run against real Google.**
 A small Node.js server for the CCS VM. It serves the same public pages as before and adds:
 
 - Google sign-in, limited to `@dlsu.edu.ph` accounts with a verified email (token checked by Google's library, then domain and `hd`).
-- Roles (`admin`, `faculty`, `staff`, `student`; anyone else signed in is `guest`) from a SQLite table on the VM.
+- Roles (`admin`, `faculty`, `staff`, `student`) from a SQLite table on the VM. A DLSU account that is not listed is a `student` if the part before the `@` has an underscore
+  (`juan_dela_cruz@`), otherwise a `guest`. A listed person always gets the listed role, and a listed person who is switched off is a `guest`.
 - Sessions: a random cookie (`HttpOnly`, `Secure`, `SameSite=Lax`). Only its hash is stored. The role is read from the table on every request,
   so switching someone off or changing their role takes effect at once.
 - Deny by default for `/protected/`: a file there is served only if a rule in `access.js` allows the signed-in role.

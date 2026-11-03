@@ -52,10 +52,23 @@ test('listed account signs in with its role; cookie is httpOnly, Secure and Same
   t.close();
 });
 
-test('unlisted DLSU account is a Guest', async () => {
+test('unlisted DLSU account without an underscore is a Guest', async () => {
+  const t = await start();
+  const r = await login(t, tok('maria.delacruz@dlsu.edu.ph'));
+  assert.equal(r.body.role, 'guest'); assert.equal((await me(t, r.cookie)).role, 'guest');
+  t.close();
+});
+
+test('unlisted DLSU account with an underscore is a Student; the list overrides the pattern', async () => {
   const t = await start();
   const r = await login(t, tok('juan_dela_cruz@dlsu.edu.ph'));
-  assert.equal(r.body.role, 'guest'); assert.equal((await me(t, r.cookie)).role, 'guest');
+  assert.equal(r.body.role, 'student'); assert.equal((await me(t, r.cookie)).role, 'student');
+  // listed with another role: the list wins
+  t.store.upsertUser({ email: 'ann_lee@dlsu.edu.ph', role: 'staff' });
+  assert.equal(t.store.roleFor('ann_lee@dlsu.edu.ph'), 'staff');
+  // listed and switched off: Guest, not Student
+  t.store.setActive('ann_lee@dlsu.edu.ph', false);
+  assert.equal(t.store.roleFor('ann_lee@dlsu.edu.ph'), 'guest');
   t.close();
 });
 
