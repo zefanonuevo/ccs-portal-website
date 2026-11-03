@@ -233,7 +233,7 @@
     '<p style="margin-top:12px;max-width:34ch">10th Floor, Br. Andrew Gonzalez Hall, 2401 Taft Avenue, Manila<br>(632) 8524-4611 loc. 300</p></div>' +
     '<div><h4>Doors</h4>' + AREAS.map(function (a) { return '<a href="' + a.href + '">' + a.label + '</a>'; }).join('') + '</div>' +
     '<div><h4>Across the college</h4>' + SIDE.map(function (a) { return '<a href="' + a.href + '"' + accAttr(a.label) + '>' + a.label + '</a>'; }).join('') + '</div>' +
-    '<p class="fine">Draft for review: sample content is marked, and what each role sees here is not yet enforced for all content.</p></div>';
+    '</div>';
 
   var main = document.querySelector('main');
   if (main) { main.id = main.id || 'main'; }

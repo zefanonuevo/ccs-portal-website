@@ -9,7 +9,7 @@ The release number comes from `release` in `assets/js/config.js` (it is no longe
 ## 0.14.6 - Cleaner cards and footer (2026-11-03)
 - **The "You can view / use / manage" labels are removed from every card, tile and link.** The access table still hides items that are No for a role; it just no longer labels the rest.
 - **The footer's Systems column is removed** (Request a Service, Student Grants, Design system, Task Tracker on GitHub, Grant Support on GitHub). Those links are still available from the menu, Services and the home page.
-- **The footer line "CCS Commons · release v... · Version history" is removed.** The footer keeps the address, the Doors and Across the college lists, and the draft note about sample content.
+- **The footer line "CCS Commons · release v... · Version history" is removed.** The "Draft for review: sample content is marked..." note is removed too. The footer keeps only the address and the Doors and Across the college lists.
   Release number raised to 0.14.6 so cached copies are replaced. Not tagged.
 
 ## 0.14.5 - Student Grants links go to /scgss/ (2026-11-03)
