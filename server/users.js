@@ -7,7 +7,8 @@
      node users.js enable <email>
      node users.js import <file.csv>    (columns: email,role,name,program,active)
      node users.js audit [count]        (latest sign-ins and changes)
-   Anyone with a DLSU Google account who is not listed signs in as a Guest. */
+   A DLSU Google account that is not listed signs in as a Student when the part before the @ has an underscore
+   (juan_dela_cruz@), and as a Guest otherwise. A listed person always gets the listed role; a switched-off one is a Guest. */
 const fs = require('node:fs');
 const path = require('node:path');
 const { open, makeStore, parseCsv, normEmail, ROLES } = require('./db');

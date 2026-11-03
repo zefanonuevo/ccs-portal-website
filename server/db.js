@@ -64,10 +64,14 @@ function makeStore(db) {
 
   return {
     ROLES,
-    /** The role for an email, or 'guest' when the person is not listed or is switched off. Read on every request, so changes apply at once. */
+    /** The role for an email. Read on every request, so changes apply at once.
+        Listed and switched on: the listed role. Listed but switched off: guest.
+        Not listed: student when the part before the @ has an underscore (DLSU student addresses look like juan_dela_cruz@), otherwise guest. */
     roleFor(email) {
-      const u = q.getUser.get(normEmail(email));
-      return u && u.active === 1 && ROLES.includes(u.role) ? u.role : 'guest';
+      email = normEmail(email);
+      const u = q.getUser.get(email);
+      if (u) return u.active === 1 && ROLES.includes(u.role) ? u.role : 'guest';
+      return studentPattern(email) ? 'student' : 'guest';
     },
     getUser: (email) => q.getUser.get(normEmail(email)),
     upsertUser({ email, role, name = '', program = '', active = true }) {
@@ -95,6 +99,9 @@ function makeStore(db) {
     lastAudit: (n = 20) => q.lastAudit.all(n)
   };
 }
+
+/** True for an address whose local part has an underscore, the DLSU student pattern. */
+function studentPattern(email) { return normEmail(email).split('@')[0].includes('_'); }
 
 /** Minimal CSV reader: header row, comma separated, double quotes for fields that contain commas. */
 function parseCsv(text) {
