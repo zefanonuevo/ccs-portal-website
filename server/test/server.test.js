@@ -44,11 +44,11 @@ const raw = (t, p, cookie) => new Promise((resolve, reject) => {
 const me = async (t, cookie) => (await fetch(t.base + '/api/me', { headers: cookie ? { Cookie: cookie } : {} })).json();
 
 test('listed account signs in with its role; cookie is httpOnly, Secure and SameSite', async () => {
-  const t = await start(); t.store.upsertUser({ email: 'maria.delacruz@dlsu.edu.ph', role: 'admin', name: 'Maria' });
+  const t = await start(); t.store.upsertUser({ email: 'maria.delacruz@dlsu.edu.ph', role: 'super-administrator', name: 'Maria' });
   const r = await login(t, tok('Maria.DelaCruz@dlsu.edu.ph'));
-  assert.equal(r.status, 200); assert.equal(r.body.role, 'admin'); assert.equal(r.body.email, 'maria.delacruz@dlsu.edu.ph');
+  assert.equal(r.status, 200); assert.equal(r.body.role, 'super-administrator'); assert.equal(r.body.email, 'maria.delacruz@dlsu.edu.ph');
   assert.match(r.setCookie, /HttpOnly/); assert.match(r.setCookie, /Secure/); assert.match(r.setCookie, /SameSite=Lax/);
-  const m = await me(t, r.cookie); assert.deepEqual([m.signedIn, m.role], [true, 'admin']);
+  const m = await me(t, r.cookie); assert.deepEqual([m.signedIn, m.role], [true, 'super-administrator']);
   t.close();
 });
 
@@ -135,7 +135,7 @@ test('/protected is deny by default and checks the role', async () => {
   fs.writeFileSync(path.join(root, 'protected/vodash/data.txt'), 'staff secret');
   fs.writeFileSync(path.join(root, 'protected/open-nowhere/x.txt'), 'no rule');
   fs.writeFileSync(path.join(root, 'secret.txt'), 'outside protected');
-  const t = await start({ siteRoot: root, rules: [{ prefix: '/protected/vodash/', roles: ['staff', 'admin'] }] });
+  const t = await start({ siteRoot: root, rules: [{ prefix: '/protected/vodash/', roles: ['staff', 'super-administrator'] }] });
   t.store.upsertUser({ email: 's.t@dlsu.edu.ph', role: 'staff' }); t.store.upsertUser({ email: 'f.t@dlsu.edu.ph', role: 'faculty' });
   const staff = (await login(t, tok('s.t@dlsu.edu.ph'))).cookie, fac = (await login(t, tok('f.t@dlsu.edu.ph'))).cookie;
   const get = async (p, c) => fetch(t.base + p, { headers: c ? { Cookie: c } : {} });
@@ -178,14 +178,32 @@ test('checkPayload', () => {
 test('users CLI: add, warn on a mismatched address format, refuse other domains, import, disable', () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'ccs-cli-')); const env = Object.assign({}, process.env, { DB_PATH: path.join(dir, 't.db') });
   const run = (...a) => spawnSync(process.execPath, [path.join(__dirname, '..', 'users.js'), ...a], { env, encoding: 'utf8' });
-  let r = run('add', 'Maria.DelaCruz@dlsu.edu.ph', 'admin', 'Maria', 'Dela', 'Cruz'); assert.equal(r.status, 0); assert.match(r.stdout, /maria\.delacruz@dlsu\.edu\.ph as admin/); assert.doesNotMatch(r.stdout, /Warning/);
+  let r = run('add', 'Maria.DelaCruz@dlsu.edu.ph', 'super-administrator', 'Maria', 'Dela', 'Cruz'); assert.equal(r.status, 0); assert.match(r.stdout, /maria\.delacruz@dlsu\.edu\.ph as super-administrator/); assert.doesNotMatch(r.stdout, /Warning/);
   r = run('add', 'juan.cruz@dlsu.edu.ph', 'student'); assert.equal(r.status, 0); assert.match(r.stdout, /Warning: looks like a staff or faculty address/);
-  r = run('add', 'someone@gmail.com', 'admin'); assert.notEqual(r.status, 0); assert.match(r.stderr, /Not a @dlsu\.edu\.ph address/);
+  r = run('add', 'someone@gmail.com', 'super-administrator'); assert.notEqual(r.status, 0); assert.match(r.stderr, /Not a @dlsu\.edu\.ph address/);
   r = run('add', 'a.b@dlsu.edu.ph', 'boss'); assert.notEqual(r.status, 0); assert.match(r.stderr, /Role must be one of/);
   fs.writeFileSync(path.join(dir, 'u.csv'), 'email,role,name,program,active\njuan_dela_cruz@dlsu.edu.ph,student,"Cruz, Juan",BS CS,TRUE\nbad@example.com,student,X,,TRUE\nold_one@dlsu.edu.ph,student,Old,,FALSE\n');
   r = run('import', path.join(dir, 'u.csv')); assert.equal(r.status, 1); assert.match(r.stdout, /2 saved, 1 skipped/); assert.match(r.stderr, /Row 3 skipped/);
   r = run('disable', 'maria.delacruz@dlsu.edu.ph'); assert.match(r.stdout, /switched off/);
-  r = run('list'); assert.match(r.stdout, /OFF\s+admin\s+maria\.delacruz@dlsu\.edu\.ph/); assert.match(r.stdout, /OFF\s+student\s+old_one@/); assert.match(r.stdout, /on\s+student\s+juan_dela_cruz@/);
+  r = run('list'); assert.match(r.stdout, /OFF\s+super-administrator\s+maria\.delacruz@dlsu\.edu\.ph/); assert.match(r.stdout, /OFF\s+student\s+old_one@/); assert.match(r.stdout, /on\s+student\s+juan_dela_cruz@/);
   r = run('audit'); assert.match(r.stdout, /user_set/); assert.match(r.stdout, /user_disable/);
   r = run('disable', 'nobody@dlsu.edu.ph'); assert.notEqual(r.status, 0);
+});
+
+test('an older database (admin role) is migrated: admin becomes super-administrator, new roles are accepted', () => {
+  const Database = require('better-sqlite3');
+  const file = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'ccs-mig-')), 'old.db');
+  const old = new Database(file);
+  old.exec(`CREATE TABLE users (email TEXT PRIMARY KEY, role TEXT NOT NULL CHECK (role IN ('admin','faculty','staff','student')),
+    name TEXT NOT NULL DEFAULT '', program TEXT NOT NULL DEFAULT '', active INTEGER NOT NULL DEFAULT 1, updated_at TEXT NOT NULL);
+    INSERT INTO users VALUES ('a.b@dlsu.edu.ph','admin','A B','',1,'2026-10-30T00:00:00Z'), ('c.d@dlsu.edu.ph','faculty','C D','',1,'2026-10-30T00:00:00Z');`);
+  old.close();
+  const store = makeStore(open(file));
+  assert.equal(store.roleFor('a.b@dlsu.edu.ph'), 'super-administrator');
+  assert.equal(store.roleFor('c.d@dlsu.edu.ph'), 'faculty');
+  store.upsertUser({ email: 'e.f@dlsu.edu.ph', role: 'faculty-administrator' });
+  assert.equal(store.roleFor('e.f@dlsu.edu.ph'), 'faculty-administrator');
+  assert.throws(() => store.upsertUser({ email: 'g.h@dlsu.edu.ph', role: 'admin' }), /Role must be one of/);
+  const again = makeStore(open(file)); // opening twice is safe
+  assert.equal(again.roleFor('a.b@dlsu.edu.ph'), 'super-administrator');
 });

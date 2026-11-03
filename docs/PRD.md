@@ -39,7 +39,7 @@ Design targets (Approved, Blueprint v2; the two-click figure is itself marked as
 | Office coordinator, assistants, Dean, approvers | Run the Task Tracker and Grant Support workflows | Services |
 | Guest | Public information only | any |
 
-Roles in the access matrix are Guest, Student, Faculty, Staff, Admin (Approved, Blueprint v2; matrix revised by the owner on 2026-10-20, section 2.1). The modules use
+**Update 2026-11-03:** the sign-in server uses Super Administrator (the old Admin column) and a new Faculty Administrator (the Faculty column, plus View on the dashboard rows `dashboards` and `vodash`), set by the owner. The table below still shows the five original columns. Roles in the access matrix are Guest, Student, Faculty, Staff, Admin (Approved, Blueprint v2; matrix revised by the owner on 2026-10-20, section 2.1). The modules use
 richer roles of their own (see Module-Specifications.md). A single role model is **Proposed** (Architecture.md section 6).
 
 ### 2.1 Access matrix (owner-supplied, detailed table dated 2026-10-20, received 2026-10-28; **Approved**)

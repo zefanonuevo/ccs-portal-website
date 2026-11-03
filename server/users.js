@@ -2,7 +2,7 @@
 'use strict';
 /* Manage who has which role. Run on the VM from the server folder:
      node users.js list
-     node users.js add <email> <admin|faculty|staff|student> [name...]
+     node users.js add <email> <super-administrator|faculty-administrator|faculty|staff|student> [name...]
      node users.js disable <email>      (the person becomes a Guest at once)
      node users.js enable <email>
      node users.js import <file.csv>    (columns: email,role,name,program,active)

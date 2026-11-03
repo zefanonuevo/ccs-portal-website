@@ -1,9 +1,9 @@
 'use strict';
 /* Which roles may open files under /protected/. Deny by default: a path with no matching rule is refused.
-   Put a file in the repo's protected/ folder, then add a rule here. Roles: guest, student, faculty, staff, admin.
+   Put a file in the repo's protected/ folder, then add a rule here. Roles: guest, student, faculty, staff, faculty-administrator, super-administrator.
    The rule keys follow the access table in assets/js/config.js; keep the two in step (docs/PRD.md section 2.1).
    Example (not active):
-     { prefix: '/protected/vodash/', roles: ['staff', 'admin'] }                              */
+     { prefix: '/protected/vodash/', roles: ['staff', 'faculty-administrator', 'super-administrator'] }                              */
 const RULES = [];
 
 /** @returns {string[]|null} the allowed roles for a normalized /protected/... path, or null when no rule matches. */
