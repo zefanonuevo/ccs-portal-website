@@ -111,6 +111,6 @@ Clean install from a fresh clone, then probes against the running server:
 ## Known gaps (Decision needed)
 - The user list source: this uses SQLite. A Google Sheet sync is possible later; the server would read the local copy.
 - Guest rights (D7): guests are signed in with no extra rights. Nothing in `/protected/` allows them yet.
-- DLSU IT approval of the OAuth app and the data privacy office's approval of the user list (see `prototypes/google-signin/README.md`).
+- DLSU IT approval of the OAuth app and the data privacy office's approval of the user list.
 - `npm audit` reports 2 moderate findings in `uuid`, pulled in by `google-auth-library`. They concern an option this server never uses. Re-check when upgrading.
 - Sessions are kept in the same database; a very large number of users would need a cleanup job (expired rows are removed at each new sign-in).

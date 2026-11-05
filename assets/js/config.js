@@ -55,7 +55,7 @@ window.CCS = {
     }
   },
   /* Sign-in PROTOTYPE (off by default). With clientId and apiUrl empty, "Sign in" opens SAMPLE accounts only:
-     it proves nothing about who someone is and enforces nothing. Real mode is described in prototypes/google-signin/README.md.
+     it proves nothing about who someone is and enforces nothing. Real mode is the server: see server/README.md.
      The client ID is public by design; never put a secret here. Sample people are fictional. */
   signin: {
     clientId: '',

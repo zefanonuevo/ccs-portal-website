@@ -53,7 +53,7 @@ visitor -> Cloudflare -> Apache (HTTPS, port 443) -> Node server on 127.0.0.1:30
                                                     -> reads the pages from the repo folder /var/www/ccs-portal
 ```
 
-- The server serves only the pages in the repo root and `assets/`. Everything else (`server/`, `docs/`, `.git/`, `prototypes/`) returns 404.
+- The server serves only the pages in the repo root and `assets/`. Everything else (`server/`, `docs/`, `.git/`) returns 404.
 - It adds `signin.clientId`, `apiUrl` and `server` to `config.js` from `server/.env`, so the Google client ID is not edited into the repo.
 - The users list, sessions and audit log are in a SQLite file under `server/data/` on the VM. It is git-ignored and never in the repo.
 - Updating the VM: `git pull` in `/var/www/ccs-portal`. Changes to pages, styles and scripts show at once. Changes under `server/` need
@@ -72,13 +72,12 @@ assets/js/programs.js  degree programs filter and pop-up
 assets/js/network.js   network mesh background
 server/                sign-in server (app.js, db.js, access.js, index.js), users tool (users.js), tests (test/), deploy examples (deploy/)
 protected/             files only signed-in roles may open, once a rule exists in server/access.js (folder not created yet; no rules yet)
-prototypes/            earlier sign-in prototype (Google Apps Script); replaced by server/ on the VM, kept for reference
 docs/                  project documentation
 ```
 
 **Run locally.**
 - Pages only: `python -m http.server 8080`, then open http://localhost:8080 (shows the sample sign-in; nothing is checked).
-- Server: `cd server && npm ci && npm test` (13 tests with a stubbed Google check). To run it: `NODE_ENV=development GOOGLE_CLIENT_ID=<id> node index.js`
+- Server: `cd server && npm ci && npm test` (16 tests with a stubbed Google check). To run it: `NODE_ENV=development GOOGLE_CLIENT_ID=<id> node index.js`
   then open http://127.0.0.1:3000. Real Google sign-in locally also needs that address added as an authorized JavaScript origin in Google Cloud.
 
 ## Rules for changes

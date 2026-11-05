@@ -155,7 +155,7 @@ test('only the public pages and assets are served from the repo; code, docs and 
   const t = await start();
   const status = async (p) => (await fetch(t.base + p, { redirect: 'manual' })).status;
   for (const p of ['/', '/index.html', '/academics.html', '/study.html', '/assets/css/site.css', '/assets/js/site.js', '/healthz']) assert.equal(await status(p), 200, p);
-  for (const p of ['/server/index.js', '/server/data/ccs.db', '/server/.env', '/server/package.json', '/AGENTS.md', '/docs/PRD.md', '/prototypes/google-signin/Code.gs', '/.git/HEAD', '/.git/config', '/.github/workflows/pages.yml', '/README.md', '/CHANGELOG.md', '/nope.html']) assert.equal(await status(p), 404, p);
+  for (const p of ['/server/index.js', '/server/data/ccs.db', '/server/.env', '/server/package.json', '/AGENTS.md', '/docs/PRD.md', '/CHANGELOG.md', '/.git/HEAD', '/.git/config', '/.github/workflows/pages.yml', '/README.md', '/CHANGELOG.md', '/nope.html']) assert.equal(await status(p), 404, p);
   for (const p of ['/assets/../AGENTS.md', '/assets/%2e%2e/AGENTS.md', '/assets/..%2fAGENTS.md', '/assets/%2e%2e%2fserver%2findex.js', '/assets/..\\AGENTS.md']) {
     const res = await raw(t, p); assert.ok([400, 403, 404].includes(res.status), p + ' -> ' + res.status); assert.doesNotMatch(res.text, /CCS Commons portal|require\(/);
   }
