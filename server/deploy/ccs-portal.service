@@ -9,6 +9,7 @@ Type=simple
 User=ccsportal
 WorkingDirectory=/var/www/ccs-portal-website/server
 ExecStart=/usr/bin/node index.js
+Environment=NODE_ENV=production
 Restart=on-failure
 RestartSec=3
 NoNewPrivileges=true

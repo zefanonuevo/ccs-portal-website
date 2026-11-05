@@ -6,6 +6,11 @@ See [Versions and restoring](README.md#versions-and-restoring).
 The release number comes from `release` in `assets/js/config.js` (it is no longer shown on the pages since 0.14.6; it still names the css and js files). Change it together with this file when you cut a new release.
 (`version: 'Draft v1'` is the draft stage of the whole site, not the release number.)
 
+## Unreleased (2026-11-05)
+- **Server fix (found by QA):** an oversized sign-in body returned Express's default error page with a stack trace and file paths. The server now answers `413` with short JSON, and no unhandled error shows a stack. New test (16 in total).
+- `server/deploy/ccs-portal.service` sets `NODE_ENV=production`. If the installed unit lacks it, add the line and restart the service.
+- New `docs/architecture.svg` and an updated `docs/Architecture.md` section 2; installation steps and QA notes in `server/README.md`; README and version mentions refreshed.
+
 ## 0.14.6 - Cleaner cards and footer (2026-11-03)
 - **The "You can view / use / manage" labels are removed from every card, tile and link.** The access table still hides items that are No for a role; it just no longer labels the rest.
 - **The footer's Systems column is removed** (Request a Service, Student Grants, Design system, Task Tracker on GitHub, Grant Support on GitHub). Those links are still available from the menu, Services and the home page.
