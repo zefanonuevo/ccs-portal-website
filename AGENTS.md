@@ -77,7 +77,7 @@ docs/                  project documentation
 
 **Run locally.**
 - Pages only: `python -m http.server 8080`, then open http://localhost:8080 (shows the sample sign-in; nothing is checked).
-- Server: `cd server && npm ci && npm test` (13 tests with a stubbed Google check). To run it: `NODE_ENV=development GOOGLE_CLIENT_ID=<id> node index.js`
+- Server: `cd server && npm ci && npm test` (16 tests with a stubbed Google check). To run it: `NODE_ENV=development GOOGLE_CLIENT_ID=<id> node index.js`
   then open http://127.0.0.1:3000. Real Google sign-in locally also needs that address added as an authorized JavaScript origin in Google Cloud.
 
 ## Rules for changes
