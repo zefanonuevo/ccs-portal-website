@@ -7,6 +7,7 @@ The release number comes from `release` in `assets/js/config.js` (it is no longe
 (`version: 'Draft v1'` is the draft stage of the whole site, not the release number.)
 
 ## Unreleased (2026-11-05)
+- **Repo cleanup:** removed `prototypes/google-signin/` (the old Apps Script sign-in prototype, replaced by `server/`; it stays in git history).
 - **Server fix (found by QA):** an oversized sign-in body returned Express's default error page with a stack trace and file paths. The server now answers `413` with short JSON, and no unhandled error shows a stack. New test (16 in total).
 - `server/deploy/ccs-portal.service` sets `NODE_ENV=production`. If the installed unit lacks it, add the line and restart the service.
 - New `docs/architecture.svg` and an updated `docs/Architecture.md` section 2; installation steps and QA notes in `server/README.md`; README and version mentions refreshed.
