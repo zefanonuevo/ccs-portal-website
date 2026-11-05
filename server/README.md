@@ -102,7 +102,7 @@ They do not prove that Google accepts your OAuth client, or that Apache is set u
 Clean install from a fresh clone, then probes against the running server:
 - Code, docs, `.git`, `.env`, the database, `package.json` and `node_modules` all return 404; encoded and `..` paths return 404 or 400. Pages and `assets/` return 200.
 - `/protected/*` returns 401 when signed out. Sign-in and sign-out without the site's `Origin` return 403. Bad or empty bodies return 400. A forged token returns 401.
-- 7 failed sign-ins from one address were allowed before the limit (some earlier probes counted); then 429.
+- The sign-in limit held: 20 attempts from one address were allowed, then 429 (the unit test covers the 21st). A spoofed `X-Forwarded-For` is honoured when it comes straight to port 3000, which only Apache can reach.
 - **Defect found and fixed:** a very large sign-in body made Express send its default error page, which includes a stack trace with server file paths unless `NODE_ENV=production`.
   The server now answers `413` with short JSON, and the service file sets `NODE_ENV=production`. If your installed unit lacks that line, add it and restart.
 - Known, left as is: file names are case-insensitive (`/assets/js/CONFIG.JS` works); no Content-Security-Policy; no HSTS (set it in Cloudflare);
