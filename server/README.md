@@ -1,7 +1,10 @@
 # CCS Commons server
 
-**Status: Proposed. Written on branch `google-auth-server` and tested only with a stubbed Google check (see Testing).
-Not yet run on the VM and not yet run against real Google.**
+**Status: Running on the CCS VM (`https://ccs.dlsu.edu.ph`). Real Google sign-in has been confirmed for the super administrator account.
+Not yet confirmed: the refusal of a personal Gmail on the live site, faculty and student sign-ins, the Cloudflare bypass rule, and `/scgss/` through Apache.
+The 16 tests use a stubbed Google check. A clean install from a fresh clone was repeated on 2026-11-05 (Node 22.23): `npm ci`, tests, start and API probes all passed.**
+
+Architecture picture: [docs/architecture.svg](../docs/architecture.svg) (browser, Cloudflare, Apache, this API, SQLite, Google).
 
 A small Node.js server for the CCS VM. It serves the same public pages as before and adds:
 
@@ -33,10 +36,14 @@ To really protect something, move it into `protected/<area>/` and add a rule in 
    cd <repo>/server
    npm ci --omit=dev
    ```
-3. **Settings.** `cp .env.example .env`, then `chmod 600 .env` and fill in `GOOGLE_CLIENT_ID` and `BASE_URL` (your https address).
+   The folder name on the live VM is `/var/www/ccs-portal` (not `ccs-portal-website`). Use your own path in steps 4 and 5.
+3. **Settings.** `cp .env.example .env`, then `chmod 600 .env` and fill in `GOOGLE_CLIENT_ID` and `BASE_URL` (your https address, no trailing slash).
+   If `GOOGLE_CLIENT_ID` is empty the server still starts, prints a warning, and every visitor is a guest. `BASE_URL` must match the address in the browser exactly,
+   or every sign-in is refused with "Request not allowed from this address".
 4. **Your first user.** `node users.js add your.address@dlsu.edu.ph super-administrator "Your Name"` then `node users.js list`.
 5. **Run as a service.** Copy `deploy/ccs-portal.service` to `/etc/systemd/system/`, edit `User` and `WorkingDirectory`, then
-   `sudo systemctl daemon-reload && sudo systemctl enable --now ccs-portal`. Check: `curl http://127.0.0.1:3000/healthz` prints `ok`.
+   `sudo systemctl daemon-reload && sudo systemctl enable --now ccs-portal`. The unit sets `NODE_ENV=production`; keep it. The service user must be able to
+   write `server/data/` (the database is created there on first start). Check: `curl http://127.0.0.1:3000/healthz` prints `ok`.
    Logs: `journalctl -u ccs-portal -e`.
 6. **Apache.** `sudo a2enmod proxy proxy_http headers`, merge the lines from `deploy/apache-ccs-portal.conf` into your existing HTTPS virtual host,
    then `sudo apache2ctl configtest && sudo systemctl reload apache2`. Apache must no longer serve the repo folder directly.
@@ -87,9 +94,19 @@ CSV columns: `email,role,name,program,active`. The tool warns (does not block) w
 for example by stopping the service and copying the file. Never commit it: it holds personal data.
 
 ## Testing
-`cd server && npm test` runs 13 tests against a stubbed Google check: domain and `hd` rules, unverified and garbage tokens, same-origin check,
-rate limit, sessions (logout, expiry, role change, switched off), `/protected` deny by default and path tricks, which files are public, the users tool.
+`cd server && npm test` runs 16 tests against a stubbed Google check: domain and `hd` rules, unverified and garbage tokens, same-origin check,
+rate limit, sessions (logout, expiry, role change, switched off), `/protected` deny by default and path tricks, which files are public, the users tool, old-database migration, oversized bodies.
 They do not prove that Google accepts your OAuth client, or that Apache is set up correctly. Check those on the VM (steps 7 and 8).
+
+## QA notes (2026-11-05)
+Clean install from a fresh clone, then probes against the running server:
+- Code, docs, `.git`, `.env`, the database, `package.json` and `node_modules` all return 404; encoded and `..` paths return 404 or 400. Pages and `assets/` return 200.
+- `/protected/*` returns 401 when signed out. Sign-in and sign-out without the site's `Origin` return 403. Bad or empty bodies return 400. A forged token returns 401.
+- 7 failed sign-ins from one address were allowed before the limit (some earlier probes counted); then 429.
+- **Defect found and fixed:** a very large sign-in body made Express send its default error page, which includes a stack trace with server file paths unless `NODE_ENV=production`.
+  The server now answers `413` with short JSON, and the service file sets `NODE_ENV=production`. If your installed unit lacks that line, add it and restart.
+- Known, left as is: file names are case-insensitive (`/assets/js/CONFIG.JS` works); no Content-Security-Policy; no HSTS (set it in Cloudflare);
+  `users.js import` with a missing file prints the system error text. `X-Forwarded-For` is trusted from one hop, so port 3000 must stay bound to 127.0.0.1 (it is).
 
 ## Known gaps (Decision needed)
 - The user list source: this uses SQLite. A Google Sheet sync is possible later; the server would read the local copy.

@@ -7,7 +7,7 @@ depend on how fast the open decisions in [PRD.md](PRD.md) section 6 are settled.
 
 - **Phase** = a group of work with entry criteria (what must be true to start) and exit criteria (what must be shown to finish).
 - **Gate** = an owner approval point. Work after a gate does not start until the gate is passed.
-- Existing work is not redone. Phase 1 starts from the current portal (v0.12.0).
+- Existing work is not redone. Phase 1 starts from the current portal (v0.12.0 when this plan was written; now 0.14.6).
 - "Tested" means run and observed, with the result recorded. Nothing is called working before that.
 
 ## 2. Phase overview

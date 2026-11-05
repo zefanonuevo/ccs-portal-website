@@ -165,6 +165,16 @@ function createApp({ store, verify, config, rules }) {
   });
 
   app.use((req, res) => res.status(404).type('text').send('Not found'));
+
+  /* Last resort: never send Express's default error page, which includes a stack trace
+     (file paths) unless NODE_ENV=production. Found by QA with an oversized sign-in body. */
+  app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
+    const status = err && (err.status || err.statusCode);
+    const code = status >= 400 && status < 500 ? status : 500;
+    if (code === 500) console.error('Unhandled error:', err && err.message);
+    if (res.headersSent) return res.destroy();
+    res.status(code).json({ ok: false, error: code === 413 ? 'Request too large' : code === 500 ? 'Server error' : 'Bad request' });
+  });
   return app;
 }
 

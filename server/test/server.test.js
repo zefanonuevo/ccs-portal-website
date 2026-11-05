@@ -168,6 +168,17 @@ test('config.js gets the client ID and same-origin sign-in address from the serv
   t.close();
 });
 
+test('an oversized sign-in body gets a short JSON 413, not Express\'s error page with a stack trace', async () => {
+  const t = await start();
+  try {
+    const res = await fetch(t.base + '/auth/google', { method: 'POST', headers: { Origin: ORIGIN, 'Content-Type': 'text/plain' }, body: 'a'.repeat(200000) });
+    const text = await res.text();
+    assert.equal(res.status, 413);
+    assert.deepEqual(JSON.parse(text), { ok: false, error: 'Request too large' });
+    assert.ok(!/node_modules|\sat /.test(text));
+  } finally { t.close(); }
+});
+
 test('checkPayload', () => {
   assert.deepEqual(checkPayload({ email: 'A.B@DLSU.edu.ph', hd: 'dlsu.edu.ph', email_verified: true, name: 'N' }, 'dlsu.edu.ph'), { email: 'a.b@dlsu.edu.ph', name: 'N' });
   assert.throws(() => checkPayload({ email: 'a@dlsu.edu.ph.evil.com', hd: 'dlsu.edu.ph', email_verified: true }, 'dlsu.edu.ph'), /@dlsu\.edu\.ph/);

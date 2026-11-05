@@ -16,6 +16,15 @@ and change nothing until the owner approves them. Labels are defined in [PRD.md]
 
 ### 2.1 Components
 
+How the live site at `https://ccs.dlsu.edu.ph` is put together (source: [architecture.svg](architecture.svg)):
+
+![CCS Commons architecture: browser, Cloudflare, Apache, the Node and Express API, SQLite, Google](architecture.svg)
+
+Steps 1 to 3 are a sign-in: the browser gets an ID token from Google, posts it to `/auth/google`, and the server checks it against Google's public keys,
+then sets a session cookie. The role comes from SQLite on every later request. `/scgss/` is served by Apache and never reaches Node.
+
+The systems the portal only links to:
+
 ```mermaid
 flowchart LR
   V[Visitor browser] --> P[Portal: ccs-portal-website<br/>static, GitHub Pages]
@@ -38,15 +47,15 @@ flowchart LR
 | Topic | Today | Label |
 | --- | --- | --- |
 | Portal stack | HTML, CSS, JavaScript. No framework, bundler or package manager. | Existing (verified) |
-| Hosting | GitHub Pages, deployed by a workflow on push to `main`. HTTPS is enforced. | Existing (verified) |
+| Hosting | The CCS VM (`ccs.dlsu.edu.ph`: Cloudflare, Apache, Node), updated by `git pull`. GitHub Pages still publishes a copy from `main` and has no server. | Existing (verified) |
 | Origin | The portal and all module sites are served from `https://zefanonuevo.github.io/...`, so they share one browser origin and one `localStorage`. | Existing (verified by URL) |
-| Authentication | None on the portal. Tracker and grants accept a demo password in the browser. The VO dashboard compares a SHA-256 hash in the browser against `users.json`, which is served publicly. The research dashboard has none. | Existing (verified by reading code; not tested) |
+| Authentication | Portal on the VM: Google sign-in limited to verified `@dlsu.edu.ph` accounts, server-side sessions (verified by tests and by the owner's own sign-in). Tracker and grants accept a demo password in the browser. The VO dashboard compares a SHA-256 hash in the browser against `users.json`, which is served publicly. The research dashboard has none. | Existing (verified by reading code; not tested) |
 | Authorization | The access matrix lives in `assets/js/config.js` and only drives preview badges. | Existing (verified) |
 | Data | Browser `localStorage` and IndexedDB (tracker, grants). Published Google Sheets read as CSV (VO and research dashboards). Content for programs and departments is embedded in pages and in `programs.js`. | Existing (verified by reading) |
-| Backend | None. The only server-side code is an optional Google Apps Script in `ccs-scgss/google/Code.gs`, deployed by the owner. Its comments describe it as a shared token, "not a user sign-in". | Existing (verified by reading); deployment not inspected |
-| Security headers | No Content-Security-Policy meta tag on any of the 14 pages. GitHub Pages cannot set response headers. | Existing (verified) |
+| Backend | `server/`: Node.js 22, Express, SQLite (`users`, `sessions`, `audit`). Besides it, an optional Google Apps Script in `ccs-scgss/google/Code.gs`, deployed by the owner. Its comments describe it as a shared token, "not a user sign-in". | Existing (verified by reading); deployment not inspected |
+| Security headers | The server sets `nosniff`, `Referrer-Policy`, `X-Frame-Options` and `Cache-Control: no-store` on API replies. There is still no Content-Security-Policy and no HSTS header (set HSTS in Cloudflare). | Existing (verified) |
 | Analytics and tracking | No analytics script found in the portal. | Existing (verified by search) |
-| Tests and CI | None, apart from the deploy workflow. | Existing (verified) |
+| Tests and CI | 16 server tests (`npm test` in `server/`, Google check stubbed). No CI runs them; run before each release. | Existing (verified) |
 | Registration | Google Form opened in an iframe pop-up with a "new tab" fallback. | Existing (verified by reading); not tested |
 
 ### 2.3 What is not true today

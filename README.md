@@ -1,10 +1,10 @@
 # ccs-portal-website
 
-CCS Commons: the portal for the College of Computer Studies. **Release 0.14.2.** The pages are public and static. A small Node.js server on the CCS VM (see [server/README.md](server/README.md)) adds Google sign-in for DLSU accounts, roles and an audit log, but **no content is protected yet**: everything in the pages is still public, so do not put personal data in them. Separate prototype systems are linked, not embedded.
+CCS Commons: the portal for the College of Computer Studies. **Release 0.14.6.** The pages are public and static. A small Node.js server on the CCS VM (see [server/README.md](server/README.md)) adds Google sign-in for DLSU accounts, roles and an audit log, but **no content is protected yet**: everything in the pages is still public, so do not put personal data in them. Separate prototype systems are linked, not embedded.
 
 **Start here:** [AGENTS.md](AGENTS.md) (rules for changing the project) and the documents in [docs/](docs/): [PRD](docs/PRD.md), [Architecture](docs/Architecture.md), [Module specifications](docs/Module-Specifications.md), [UI/UX guidelines](docs/DESIGN.md) and [Implementation plan](docs/Implementation-Plan.md). Those documents are drafts awaiting owner approval; they label what exists and what is proposed.
 
-Built from *CCS Portal Blueprint v2*, revised by *CCS Commons Blueprint 1.2* (five doors, the CCS Commons name, a Jubilee Progress page). A static site (HTML, CSS, a little JavaScript, no build step), deployed to GitHub Pages.
+Built from *CCS Portal Blueprint v2*, revised by *CCS Commons Blueprint 1.2* (five doors, the CCS Commons name, a Jubilee Progress page). A static site (HTML, CSS, a little JavaScript, no build step), served from the CCS VM (`https://ccs.dlsu.edu.ph`) and also published to GitHub Pages.
 
 ## Run it locally
 
@@ -16,7 +16,9 @@ Open http://localhost:8080.
 
 ## Deploy
 
-Push to `main`. `.github/workflows/pages.yml` publishes the repo root to GitHub Pages.
+**CCS VM (the live site):** `git pull` in the repo folder; if `server/` changed, also `cd server && npm ci --omit=dev && sudo systemctl restart ccs-portal`. Full install: [server/README.md](server/README.md).
+
+**GitHub Pages:** push to `main`. `.github/workflows/pages.yml` publishes the repo root to GitHub Pages.
 One-time setup: **Settings → Pages → Source: GitHub Actions**.
 
 ## How it is organized
@@ -36,6 +38,8 @@ One-time setup: **Settings → Pages → Source: GitHub Actions**.
 | `assets/js/programs.js` | Our degree programs: filter and the program pop-up |
 | `assets/js/network.js` | The network mesh background (same effect as the TSG website) |
 | `assets/js/site.js` | Nav, side menu, search, sign-in pop-up, scroll reveal |
+| `server/` | Node.js server: Google sign-in, roles, sessions, audit, SQLite (see its README) |
+| `docs/architecture.svg` | Architecture picture of the live system |
 | `AGENTS.md` | Project rules for people and AI agents (proposed) |
 | `docs/PRD.md` `docs/Architecture.md` `docs/Module-Specifications.md` `docs/Implementation-Plan.md` | Requirements, architecture, modules and plan (drafts for approval) |
 | `docs/DESIGN.md` | UI/UX guidelines: color, type, motion, accessibility, content |
@@ -55,7 +59,7 @@ To point at a different deployment, change its `url` in `config.js`. Nothing els
 
 ## Same design everywhere
 
-Every page loads [ccs-design](https://github.com/zefanonuevo/ccs-design) (`ccs-tokens.css`, v2) first. Its palette is green, white and black, and the same file is loaded by the Task Tracker, the Grant Support System and the Virtual Office dashboard. **The portal (and the grants system) currently override the palette on top of it** (`assets/css/tokens.css`, with amber added for attention), so editing `ccs-design` alone does not change every site. Moving the full palette into `ccs-design` is proposed in [docs/Architecture.md](docs/Architecture.md) section 9.
+Every page loads [ccs-design](https://github.com/zefanonuevo/ccs-design) (`ccs-tokens.css`, v3) first. Its palette is green, white and black, and the same file is loaded by the Task Tracker, the Grant Support System and the Virtual Office dashboard. **The portal (and the grants system) currently override the palette on top of it** (`assets/css/tokens.css`, with amber added for attention), so editing `ccs-design` alone does not change every site. Moving the full palette into `ccs-design` is proposed in [docs/Architecture.md](docs/Architecture.md) section 9.
 
 ## Versions and restoring
 
