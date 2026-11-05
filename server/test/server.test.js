@@ -179,6 +179,22 @@ test('an oversized sign-in body gets a short JSON 413, not Express\'s error page
   } finally { t.close(); }
 });
 
+test('security headers: CSP with base-uri, HSTS on https, redirect stubs allowed by hash', async () => {
+  const t = await start();
+  try {
+    const res = await fetch(t.base + '/community.html');
+    const csp = res.headers.get('content-security-policy');
+    assert.match(csp, /base-uri 'self'/);
+    assert.match(csp, /object-src 'none'/);
+    assert.match(csp, /frame-ancestors 'self'/);
+    assert.ok(!/script-src[^;]*unsafe-inline/.test(csp));
+    assert.match(csp, /script-src[^;]*'sha256-/);
+    assert.equal(res.headers.get('strict-transport-security'), 'max-age=31536000');
+    const api = await fetch(t.base + '/api/me');
+    assert.ok(api.headers.get('content-security-policy'));
+  } finally { t.close(); }
+});
+
 test('checkPayload', () => {
   assert.deepEqual(checkPayload({ email: 'A.B@DLSU.edu.ph', hd: 'dlsu.edu.ph', email_verified: true, name: 'N' }, 'dlsu.edu.ph'), { email: 'a.b@dlsu.edu.ph', name: 'N' });
   assert.throws(() => checkPayload({ email: 'a@dlsu.edu.ph.evil.com', hd: 'dlsu.edu.ph', email_verified: true }, 'dlsu.edu.ph'), /@dlsu\.edu\.ph/);
