@@ -4,6 +4,7 @@
 const express = require('express');
 const fs = require('node:fs');
 const path = require('node:path');
+const crypto = require('node:crypto');
 const { OAuth2Client } = require('google-auth-library');
 const access = require('./access');
 
@@ -47,8 +48,36 @@ function createApp({ store, verify, config, rules }) {
   app.set('trust proxy', 1); // one hop: Apache on this VM
 
   /* ---------- headers on every response ---------- */
+  /* Content-Security-Policy. Inline scripts are blocked except the few tiny redirect stubs (community.html and
+     friends), which are allowed by hash: the hashes are computed from the files at start-up, so editing a stub
+     cannot silently break it. Inline style attributes are used all over the pages, hence 'unsafe-inline' for styles only. */
+  const inlineHashes = [];
+  try {
+    for (const f of fs.readdirSync(cfg.siteRoot).filter((n) => n.endsWith('.html'))) {
+      const html = fs.readFileSync(path.join(cfg.siteRoot, f), 'utf8');
+      for (const m of html.matchAll(/<script>([\s\S]*?)<\/script>/g)) {
+        inlineHashes.push("'sha256-" + crypto.createHash('sha256').update(m[1]).digest('base64') + "'");
+      }
+    }
+  } catch (e) { /* no site folder (tests) */ }
+  const CSP = [
+    "default-src 'self'",
+    "base-uri 'self'",
+    "object-src 'none'",
+    "form-action 'self'",
+    "frame-ancestors 'self'",
+    "script-src 'self' https://accounts.google.com/gsi/client " + inlineHashes.join(' '),
+    "style-src 'self' 'unsafe-inline' https://zefanonuevo.github.io https://fonts.googleapis.com https://accounts.google.com/gsi/style",
+    "font-src 'self' https://fonts.gstatic.com https://zefanonuevo.github.io",
+    "img-src 'self' data: https:",
+    "frame-src https://accounts.google.com https://docs.google.com",
+    "connect-src 'self' https://accounts.google.com"
+  ].join('; ').replace(/ ;/g, ';');
+  const HSTS = /^https:/i.test(cfg.baseUrl) ? 'max-age=31536000' : '';
   app.use((req, res, next) => {
+    if (HSTS) res.set('Strict-Transport-Security', HSTS);
     res.set({
+      'Content-Security-Policy': CSP,
       'X-Content-Type-Options': 'nosniff',
       'Referrer-Policy': 'strict-origin-when-cross-origin',
       'X-Frame-Options': 'SAMEORIGIN',

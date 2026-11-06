@@ -53,7 +53,7 @@ flowchart LR
 | Authorization | The access matrix lives in `assets/js/config.js` and only drives preview badges. | Existing (verified) |
 | Data | Browser `localStorage` and IndexedDB (tracker, grants). Published Google Sheets read as CSV (VO and research dashboards). Content for programs and departments is embedded in pages and in `programs.js`. | Existing (verified by reading) |
 | Backend | `server/`: Node.js 22, Express, SQLite (`users`, `sessions`, `audit`). Besides it, an optional Google Apps Script in `ccs-scgss/google/Code.gs`, deployed by the owner. Its comments describe it as a shared token, "not a user sign-in". | Existing (verified by reading); deployment not inspected |
-| Security headers | The server sets `nosniff`, `Referrer-Policy`, `X-Frame-Options` and `Cache-Control: no-store` on API replies. There is still no Content-Security-Policy and no HSTS header (set HSTS in Cloudflare). | Existing (verified) |
+| Security headers | The server sets `nosniff`, `Referrer-Policy`, `X-Frame-Options` and `Cache-Control: no-store` on API replies. It also sends a Content-Security-Policy and, on https, Strict-Transport-Security (since 2026-11-06; not yet checked in a browser on the live site). | Existing (verified) |
 | Analytics and tracking | No analytics script found in the portal. | Existing (verified by search) |
 | Tests and CI | 16 server tests (`npm test` in `server/`, Google check stubbed). No CI runs them; run before each release. | Existing (verified) |
 | Registration | Google Form opened in an iframe pop-up with a "new tab" fallback. | Existing (verified by reading); not tested |

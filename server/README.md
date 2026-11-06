@@ -105,8 +105,17 @@ Clean install from a fresh clone, then probes against the running server:
 - The sign-in limit held: 20 attempts from one address were allowed, then 429 (the unit test covers the 21st). A spoofed `X-Forwarded-For` is honoured when it comes straight to port 3000, which only Apache can reach.
 - **Defect found and fixed:** a very large sign-in body made Express send its default error page, which includes a stack trace with server file paths unless `NODE_ENV=production`.
   The server now answers `413` with short JSON, and the service file sets `NODE_ENV=production`. If your installed unit lacks that line, add it and restart.
-- Known, left as is: file names are case-insensitive (`/assets/js/CONFIG.JS` works); no Content-Security-Policy; no HSTS (set it in Cloudflare);
+- Known, left as is: file names are case-insensitive (`/assets/js/CONFIG.JS` works); (Content-Security-Policy and HSTS were added afterwards, see below);
   `users.js import` with a missing file prints the system error text. `X-Forwarded-For` is trusted from one hop, so port 3000 must stay bound to 127.0.0.1 (it is).
+
+## Security headers
+Every response carries a Content-Security-Policy (default-src 'self'; `base-uri 'self'`, `object-src 'none'`, `form-action 'self'`, `frame-ancestors 'self'`;
+scripts only from this site and Google's sign-in script; the three tiny redirect pages are allowed by hash, computed at start-up) and, when `BASE_URL` is https,
+`Strict-Transport-Security: max-age=31536000` (one year, no `includeSubDomains`, no preload). Tested in a browser against the local server with no violations.
+**Not yet seen on the live site:** after deploying, open the portal with the browser console open (F12), sign in, open the Virtual Office form pop-up, and look for
+"Refused to ..." messages. If one names a site the pages really need (for example a font host), add that site to the matching directive in `server/app.js`.
+Inline style attributes are used all over the pages, so `style-src` still allows `'unsafe-inline'`; scripts do not.
+To roll back quickly, set `Content-Security-Policy-Report-Only` instead of `Content-Security-Policy` in `server/app.js`.
 
 ## Known gaps (Decision needed)
 - The user list source: this uses SQLite. A Google Sheet sync is possible later; the server would read the local copy.
