@@ -20,8 +20,7 @@ How the live site at `https://ccs.dlsu.edu.ph` is put together (source: [archite
 
 ![CCS Commons architecture: browser, Cloudflare, Apache, the Node and Express API, SQLite, Google](architecture.svg)
 
-Steps 1 to 3 are a sign-in: the browser gets an ID token from Google, posts it to `/auth/google`, and the server checks it against Google's public keys,
-then sets a session cookie. The role comes from SQLite on every later request. `/scgss/` is served by Apache and never reaches Node.
+Steps 1 to 3 are a sign-in: the browser first gets a one-time number from `/auth/nonce`, Google puts it in the ID token, the browser posts both to `/auth/google`, and the server checks the token against Google's public keys and the number, then sets a session cookie. The role comes from SQLite on every later request. `/scgss/` is served by Apache and never reaches Node.
 
 The systems the portal only links to:
 

@@ -26,5 +26,10 @@ const app = createApp({
   }
 });
 
+/* Keep the audit log for a limited time (it holds emails and IP addresses). Change AUDIT_DAYS in .env to match DLSU's data privacy rules. */
+const auditDays = Number(process.env.AUDIT_DAYS) || 180;
+const prune = () => { try { const n = store.pruneAudit(auditDays); if (n) console.log('Audit log: removed ' + n + ' lines older than ' + auditDays + ' days'); } catch (e) { console.error('Audit prune failed:', e.message); } };
+prune(); setInterval(prune, 24 * 3600 * 1000).unref();
+
 const port = Number(process.env.PORT) || 3000;
 app.listen(port, '127.0.0.1', () => console.log('CCS Commons server on http://127.0.0.1:' + port));

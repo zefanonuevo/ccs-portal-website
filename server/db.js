@@ -67,6 +67,7 @@ function open(file) {
 }
 
 const now = () => new Date().toISOString();
+const MAX_SESSIONS_PER_USER = 5;
 const hash = (s) => crypto.createHash('sha256').update(s).digest('hex');
 const normEmail = (e) => String(e || '').trim().toLowerCase();
 
@@ -83,6 +84,8 @@ function makeStore(db) {
     delSession: db.prepare('DELETE FROM sessions WHERE id_hash = ?'),
     delExpired: db.prepare('DELETE FROM sessions WHERE expires_at <= ?'),
     addAudit: db.prepare('INSERT INTO audit (ts, email, event, detail, ip) VALUES (?, ?, ?, ?, ?)'),
+    pruneAudit: db.prepare('DELETE FROM audit WHERE ts < ?'),
+    capSessions: db.prepare('DELETE FROM sessions WHERE email = ? AND id_hash NOT IN (SELECT id_hash FROM sessions WHERE email = ? ORDER BY rowid DESC LIMIT ?)'),
     lastAudit: db.prepare('SELECT ts, email, event, detail, ip FROM audit ORDER BY id DESC LIMIT ?')
   };
 
@@ -112,6 +115,7 @@ function makeStore(db) {
       const created = new Date();
       const expires = new Date(created.getTime() + hours * 3600 * 1000);
       q.addSession.run(hash(id), normEmail(email), String(name || ''), created.toISOString(), expires.toISOString());
+      q.capSessions.run(normEmail(email), normEmail(email), MAX_SESSIONS_PER_USER); // keep only the newest few sign-ins per person
       return { id, expires };
     },
     findSession(id) {
@@ -120,6 +124,8 @@ function makeStore(db) {
     },
     deleteSession(id) { if (id) q.delSession.run(hash(String(id))); },
     audit(email, event, detail = '', ip = '') { q.addAudit.run(now(), normEmail(email), event, String(detail).slice(0, 300), ip); },
+    /** Deletes audit lines older than the given number of days. Returns how many were removed. */
+    pruneAudit(days) { return q.pruneAudit.run(new Date(Date.now() - days * 86400000).toISOString()).changes; },
     lastAudit: (n = 20) => q.lastAudit.all(n)
   };
 }

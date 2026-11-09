@@ -476,15 +476,21 @@
       var s = document.createElement('script');
       s.src = 'https://accounts.google.com/gsi/client'; s.async = true;
       s.onerror = function () { fail('Could not load Google sign-in. Check your connection.'); };
-      s.onload = function () {
-        google.accounts.id.initialize({ client_id: S.clientId, callback: function (r) {
-          fetch(S.apiUrl, { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'login', idToken: r.credential }) })
-            .then(function (x) { return x.json(); })
-            .then(function (o) { if (!o.ok) throw new Error(o.error || 'Sign-in was refused'); saveSession({ name: o.name, email: o.email, role: o.role, mode: 'google' }); })
-            .catch(function (err) { fail(err.message); });
-        } });
-        google.accounts.id.renderButton(body.querySelector('#si-g'), { theme: 'outline', size: 'large', width: 280 });
-      };
+      /* Each Google sign-in carries a one-time number from this server (nonce). It is used up by one attempt, so get a fresh one every time the button is set up. */
+      function setup() {
+        var nurl = S.nonceUrl || '/auth/nonce';
+        fetch(nurl, { credentials: 'same-origin' }).then(function (x) { return x.json(); }).then(function (n) {
+          if (!n.ok) throw new Error(n.error || 'Could not start sign-in');
+          google.accounts.id.initialize({ client_id: S.clientId, nonce: n.nonce, callback: function (r) {
+            fetch(S.apiUrl, { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'login', idToken: r.credential, nonce: n.nonce }) })
+              .then(function (x) { return x.json(); })
+              .then(function (o) { if (!o.ok) throw new Error(o.error || 'Sign-in was refused'); saveSession({ name: o.name, email: o.email, role: o.role, mode: 'google' }); })
+              .catch(function (err) { fail(err.message); setup(); });
+          } });
+          google.accounts.id.renderButton(body.querySelector('#si-g'), { theme: 'outline', size: 'large', width: 280 });
+        }).catch(function (err) { fail(err.message); });
+      }
+      s.onload = setup;
       document.head.appendChild(s);
     }
     btn.addEventListener('click', function () {
