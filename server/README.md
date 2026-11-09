@@ -94,8 +94,9 @@ CSV columns: `email,role,name,program,active`. The tool warns (does not block) w
 for example by stopping the service and copying the file. Never commit it: it holds personal data.
 
 ## Testing
-`cd server && npm test` runs 16 tests against a stubbed Google check: domain and `hd` rules, unverified and garbage tokens, same-origin check,
-rate limit, sessions (logout, expiry, role change, switched off), `/protected` deny by default and path tricks, which files are public, the users tool, old-database migration, oversized bodies.
+`cd server && node --test --test-force-exit test/server.test.js` (or `npm test`) runs 22 tests against a stubbed Google check: domain and `hd` rules, unverified and garbage tokens, same-origin check,
+the one-time number (replay, a refused attempt keeps it), the failure-only rate limit, sessions (logout, expiry, role change, switched off, the 5-session cap), `/protected` deny by default and path tricks, `protected_denied` logging and audit pruning, which files are public, the users tool, old-database migration, oversized bodies, security headers, the `__Host-` cookie name and `backup.js`.
+If a test fails it can leave its server open, so `npm test` may hang; `--test-force-exit` avoids that.
 They do not prove that Google accepts your OAuth client, or that Apache is set up correctly. Check those on the VM (steps 7 and 8).
 
 ## QA notes (2026-11-05)
@@ -112,8 +113,8 @@ Clean install from a fresh clone, then probes against the running server:
 Every response carries a Content-Security-Policy (default-src 'self'; `base-uri 'self'`, `object-src 'none'`, `form-action 'self'`, `frame-ancestors 'self'`;
 scripts only from this site and Google's sign-in script; the three tiny redirect pages are allowed by hash, computed at start-up) and, when `BASE_URL` is https,
 `Strict-Transport-Security: max-age=31536000` (one year, no `includeSubDomains`, no preload). Tested in a browser against the local server with no violations.
-**Not yet seen on the live site:** after deploying, open the portal with the browser console open (F12), sign in, open the Virtual Office form pop-up, and look for
-"Refused to ..." messages. If one names a site the pages really need (for example a font host), add that site to the matching directive in `server/app.js`.
+**Seen on the live site (2026-11-09):** one CSP header and the HSTS header, and sign-in works. If a page ever shows "Refused to ..." in the browser console (F12), and it names a site the pages really need (for example a font host), add that site to the matching directive in `server/app.js`.
+**Apache must not add its own CSP** for the portal. Two CSP headers are combined and the stricter parts of both apply, which breaks sign-in. In `ccs-portal.conf` the `Header ... Content-Security-Policy` line is commented out. `/scgss/` is served by Apache and keeps its own CSP in `app-scgss.conf`.
 Inline style attributes are used all over the pages, so `style-src` still allows `'unsafe-inline'`; scripts do not.
 To roll back quickly, set `Content-Security-Policy-Report-Only` instead of `Content-Security-Policy` in `server/app.js`.
 
@@ -141,11 +142,20 @@ Anyone added or changed after that backup has to be added again; sign-in session
 **Limit:** the copies sit on the same VM. If the VM's disk is lost, they are lost too. Copy `/var/backups/ccs-portal` to another place now and then (DLSU storage, or another machine with `rsync`), and treat the copies as personal data.
 
 ## Sign-in hardening (2026-11-09, from the OWASP review)
-- **Nonce.** The page first asks `GET /auth/nonce` for a one-time number (valid 5 minutes, used once), gives it to Google, and Google puts it inside the ID token. The server refuses a token whose number was not issued here, was already used, or does not match. A stolen or replayed token no longer signs anyone in.
+- **Nonce.** The page first asks `GET /auth/nonce` for a one-time number (valid 30 minutes, used up only by a successful sign-in, so a refused attempt does not burn it), gives it to Google, and Google puts it inside the ID token. The server refuses a token whose number was not issued here, was already used, or does not match. A stolen or replayed token no longer signs anyone in.
 - **Limits.** Only failed sign-ins count: 60 per 10 minutes per address (campus users may share one address). Good sign-ins and wrong-origin requests never count. The table cannot grow without end. Each person keeps at most 5 live sessions; the oldest are dropped.
 - **Logging.** The audit log now also records `protected_denied` (a signed-out or wrong-role request to `/protected/`) and `rate_limited`, at most 10 lines per address per 10 minutes so the log cannot be flooded. Lines older than `AUDIT_DAYS` (default 180) are deleted daily. **180 days is a placeholder: set it to what DLSU's data privacy office requires.**
 - **Cookie.** Renamed `__Host-ccs_sid` (https only, this host only, whole site). Everyone must sign in again once after deploying. In local development (`NODE_ENV=development`) the old name `ccs_sid` is used because the prefix needs https.
 - **Dependencies.** `npm audit` reports 2 moderate findings (`uuid` through `gaxios`, inside `google-auth-library`). The flaw is in `uuid` v3, v5 and v6 with a buffer argument; `gaxios` only calls `v4`, so it is not reachable. `npm audit fix` cannot clear it (checked 2026-11-09). Accepted until `google-auth-library` ships an update; re-check with `npm audit --omit=dev` after each dependency update.
+
+## Apache, TLS and Cloudflare checklist (owner runs these; not done by the repo)
+- **TLS versions:** `SSLProtocol -all +TLSv1.2 +TLSv1.3` in `/etc/apache2/mods-available/ssl.conf`, then `sudo apachectl configtest && sudo systemctl reload apache2`. Check: `openssl s_client -connect ccs.dlsu.edu.ph:443 -tls1_1` must fail (tested 2026-11-09).
+- **Certificates:** visitors get Cloudflare's certificate (renewed automatically). The origin uses the DLSU wildcard certificate (valid to 2027-01-29), renewed by DLSU IT; run `sudo systemctl reload apache2` after each renewal and set a reminder for December 2026.
+- **Cloudflare:** Minimum TLS version 1.2; SSL/TLS mode Full (strict); a cache bypass rule for `/api/*`, `/auth/*` and `/protected/*`. After each release that changes `assets/`, the `?v=` number must change, or Cloudflare and browsers keep the old script (this caused the sign-in lock-out of 2026-11-09).
+- **Not yet done / DLSU IT:** DNSSEC and a CAA record (DNS level); a decision on `includeSubDomains` for HSTS (only if no `*.ccs.dlsu.edu.ph` site needs plain http).
+
+## GitHub repository settings
+Dependabot alerts, secret scanning and security advisories are on. The repo is public, owner-only (no collaborators), and the VM deploys with `git pull`, so whoever can push to `main` can change the live site. Recommended: two-factor sign-in on the owner account, no long-lived classic tokens, a `main` ruleset that blocks force pushes and deletion, code scanning (CodeQL default setup), private vulnerability reporting, push protection. See [../SECURITY.md](../SECURITY.md) for how to report a problem.
 
 ## Decisions
 - **2026-11-09, Student Grants stays at `/scgss/`** on the portal's address (served by Apache, not Node), instead of its own subdomain. Accepted risk: it shares the origin, so a script flaw in it could call the portal's `/api/me` or sign people out (the session cookie is HttpOnly and stays safe). **Revisit** when the Student Grants app changes how it handles scripts or user input, or when restricted content goes live on the portal; then move it to its own subdomain.

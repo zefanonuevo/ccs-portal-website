@@ -52,16 +52,16 @@ flowchart LR
 | Authorization | The access matrix lives in `assets/js/config.js` and only drives preview badges. | Existing (verified) |
 | Data | Browser `localStorage` and IndexedDB (tracker, grants). Published Google Sheets read as CSV (VO and research dashboards). Content for programs and departments is embedded in pages and in `programs.js`. | Existing (verified by reading) |
 | Backend | `server/`: Node.js 22, Express, SQLite (`users`, `sessions`, `audit`). Besides it, an optional Google Apps Script in `ccs-scgss/google/Code.gs`, deployed by the owner. Its comments describe it as a shared token, "not a user sign-in". | Existing (verified by reading); deployment not inspected |
-| Security headers | The server sets `nosniff`, `Referrer-Policy`, `X-Frame-Options` and `Cache-Control: no-store` on API replies. It also sends a Content-Security-Policy and, on https, Strict-Transport-Security (since 2026-11-06; not yet checked in a browser on the live site). | Existing (verified) |
+| Security headers | The server sets `nosniff`, `Referrer-Policy`, `X-Frame-Options` and `Cache-Control: no-store` on API replies. It also sends a Content-Security-Policy and, on https, Strict-Transport-Security (since 2026-11-06; seen live on 2026-11-09 as one CSP header; the session cookie is `__Host-ccs_sid`). | Existing (verified) |
 | Analytics and tracking | No analytics script found in the portal. | Existing (verified by search) |
-| Tests and CI | 16 server tests (`npm test` in `server/`, Google check stubbed). No CI runs them; run before each release. | Existing (verified) |
+| Tests and CI | 22 server tests (`npm test` in `server/`, Google check stubbed). No CI runs them; run before each release. | Existing (verified) |
 | Registration | Google Form opened in an iframe pop-up with a "new tab" fallback. | Existing (verified by reading); not tested |
 
 ### 2.3 What is not true today
 
 - The server on the CCS VM checks Google sign-in, keeps roles and sessions, and denies files under `protected/` by default. **No rule exists yet, so no role restriction is enforced on any content.** The GitHub Pages copy has no server.
-- There is no database, audit trail or backup for module data.
-- Nothing here has been security-reviewed.
+- There is no database or audit trail for module data. The portal's own SQLite file (users, sessions, audit) is backed up nightly on the same VM (`server/backup.js`, 14 copies); an off-VM copy is not set up.
+- An OWASP Top 10 design review was done on 2026-11-09 and its fixes are in (nonce, limits, logging, cookie, headers, backups). Still open: content behind sign-in has not been moved to the server, and deploy trust depends on the GitHub account (two-factor, branch protection). This is not a penetration test.
 
 ## 3. Constraints and assumptions
 

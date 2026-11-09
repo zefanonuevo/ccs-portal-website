@@ -40,6 +40,7 @@ One-time setup: **Settings → Pages → Source: GitHub Actions**.
 | `assets/js/site.js` | Nav, side menu, search, sign-in pop-up, scroll reveal |
 | `server/` | Node.js server: Google sign-in, roles, sessions, audit, SQLite (see its README) |
 | `docs/architecture.svg` | Architecture picture of the live system |
+| `SECURITY.md` | How to report a security problem privately |
 | `AGENTS.md` | Project rules for people and AI agents (proposed) |
 | `docs/PRD.md` `docs/Architecture.md` `docs/Module-Specifications.md` `docs/Implementation-Plan.md` | Requirements, architecture, modules and plan (drafts for approval) |
 | `docs/DESIGN.md` | UI/UX guidelines: color, type, motion, accessibility, content |
