@@ -1,0 +1,4 @@
+# /etc/cron.d/ccs-portal-backup  (copy this file there; change the folder if the repo is elsewhere)
+# Every night at 02:17 server time: back up the CCS Commons database as the service user.
+# Messages go to the system log:  journalctl -t ccs-portal-backup
+17 2 * * * ccsportal cd /var/www/ccs-portal/server && /usr/bin/node backup.js 2>&1 | /usr/bin/logger -t ccs-portal-backup

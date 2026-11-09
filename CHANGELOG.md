@@ -6,6 +6,9 @@ See [Versions and restoring](README.md#versions-and-restoring).
 The release number comes from `release` in `assets/js/config.js` (it is no longer shown on the pages since 0.14.6; it still names the css and js files). Change it together with this file when you cut a new release.
 (`version: 'Draft v1'` is the draft stage of the whole site, not the release number.)
 
+## Unreleased (2026-11-09, backups)
+- New `server/backup.js` (online SQLite backup, integrity-checked, keeps 14), `server/deploy/ccs-portal-backup.cron`, and a "Backups and restore" section in `server/README.md`. Test added (22 in total).
+
 ## 0.14.7 - Sign-in fix (2026-11-09)
 - Fix: a refused sign-in no longer uses up the one-time number; it now lasts 30 minutes and is used up only by a successful sign-in. The error for a missing or unknown number says to reload the page. Release number raised so browsers fetch the new `site.js` (the same `?v=` had left some browsers on the old script, which sends no number).
 

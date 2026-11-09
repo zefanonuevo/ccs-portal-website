@@ -252,6 +252,21 @@ test('security headers: CSP with base-uri, HSTS on https, redirect stubs allowed
   } finally { t.close(); }
 });
 
+test('backup.js: makes a verified copy, keeps only the newest N, fails loudly on a missing database', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'ccs-bak-'));
+  const env = Object.assign({}, process.env, { DB_PATH: path.join(dir, 'live.db'), BACKUP_DIR: path.join(dir, 'bk'), BACKUP_KEEP: '2' });
+  const run = () => require('node:child_process').spawnSync(process.execPath, [path.join(__dirname, '..', 'backup.js')], { env, encoding: 'utf8' });
+  assert.notEqual(run().status, 0, 'no database: fails');
+  const db = open(env.DB_PATH); const st = makeStore(db); st.upsertUser({ email: 'a.b@dlsu.edu.ph', role: 'faculty' }); db.close();
+  fs.mkdirSync(env.BACKUP_DIR, { recursive: true });
+  for (const n of ['ccs-20200101-000000.db', 'ccs-20200102-000000.db', 'ccs-20200103-000000.db']) fs.writeFileSync(path.join(env.BACKUP_DIR, n), 'old');
+  const r = run(); assert.equal(r.status, 0, r.stderr); assert.match(r.stdout, /1 people/);
+  const left = fs.readdirSync(env.BACKUP_DIR).sort();
+  assert.equal(left.length, 2, 'only the newest 2 kept: ' + left);
+  const copy = open(path.join(env.BACKUP_DIR, left[left.length - 1])); assert.equal(makeStore(copy).getUser('a.b@dlsu.edu.ph').role, 'faculty'); copy.close();
+  assert.equal(fs.statSync(path.join(env.BACKUP_DIR, left[left.length - 1])).mode & 0o077, 0, 'copy is private to its owner');
+});
+
 test('checkPayload', () => {
   assert.deepEqual(checkPayload({ email: 'A.B@DLSU.edu.ph', hd: 'dlsu.edu.ph', email_verified: true, name: 'N' }, 'dlsu.edu.ph'), { email: 'a.b@dlsu.edu.ph', name: 'N', nonce: '' });
   assert.throws(() => checkPayload({ email: 'a@dlsu.edu.ph.evil.com', hd: 'dlsu.edu.ph', email_verified: true }, 'dlsu.edu.ph'), /@dlsu\.edu\.ph/);
