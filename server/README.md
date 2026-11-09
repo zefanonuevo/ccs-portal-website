@@ -117,6 +117,13 @@ scripts only from this site and Google's sign-in script; the three tiny redirect
 Inline style attributes are used all over the pages, so `style-src` still allows `'unsafe-inline'`; scripts do not.
 To roll back quickly, set `Content-Security-Policy-Report-Only` instead of `Content-Security-Policy` in `server/app.js`.
 
+## Sign-in hardening (2026-11-09, from the OWASP review)
+- **Nonce.** The page first asks `GET /auth/nonce` for a one-time number (valid 5 minutes, used once), gives it to Google, and Google puts it inside the ID token. The server refuses a token whose number was not issued here, was already used, or does not match. A stolen or replayed token no longer signs anyone in.
+- **Limits.** Only failed sign-ins count: 60 per 10 minutes per address (campus users may share one address). Good sign-ins and wrong-origin requests never count. The table cannot grow without end. Each person keeps at most 5 live sessions; the oldest are dropped.
+- **Logging.** The audit log now also records `protected_denied` (a signed-out or wrong-role request to `/protected/`) and `rate_limited`, at most 10 lines per address per 10 minutes so the log cannot be flooded. Lines older than `AUDIT_DAYS` (default 180) are deleted daily. **180 days is a placeholder: set it to what DLSU's data privacy office requires.**
+- **Cookie.** Renamed `__Host-ccs_sid` (https only, this host only, whole site). Everyone must sign in again once after deploying. In local development (`NODE_ENV=development`) the old name `ccs_sid` is used because the prefix needs https.
+- **Dependencies.** `npm audit` reports 2 moderate findings (`uuid` through `gaxios`, inside `google-auth-library`). The flaw is in `uuid` v3, v5 and v6 with a buffer argument; `gaxios` only calls `v4`, so it is not reachable. `npm audit fix` cannot clear it (checked 2026-11-09). Accepted until `google-auth-library` ships an update; re-check with `npm audit --omit=dev` after each dependency update.
+
 ## Known gaps (Decision needed)
 - The user list source: this uses SQLite. A Google Sheet sync is possible later; the server would read the local copy.
 - Guest rights (D7): guests are signed in with no extra rights. Nothing in `/protected/` allows them yet.

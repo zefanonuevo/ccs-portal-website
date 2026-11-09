@@ -26,7 +26,23 @@ function checkPayload(p, domain) {
   if (!p || !email) { const e = new Error('No email in the sign-in'); e.reason = 'bad_token'; throw e; }
   if (p.email_verified !== true && p.email_verified !== 'true') { const e = new Error('Your Google email is not verified'); e.reason = 'unverified'; e.email = email; throw e; }
   if (!email.endsWith('@' + domain) || p.hd !== domain) { const e = new Error('Please use your @' + domain + ' account'); e.reason = 'wrong_domain'; e.email = email; throw e; }
-  return { email, name: p.name || '' };
+  return { email, name: p.name || '', nonce: typeof p.nonce === 'string' ? p.nonce : '' };
+}
+
+/** Counts events per key inside a time window. Oldest keys are dropped when the table is full, so it cannot grow without end. */
+function makeLimiter(max, windowMs, cap = 5000) {
+  const m = new Map();
+  const recent = (k, t) => (m.get(k) || []).filter((x) => t - x < windowMs);
+  return {
+    blocked(k) { return recent(k, Date.now()).length >= max; },
+    hit(k) {
+      const t = Date.now(), l = recent(k, t); l.push(t);
+      m.delete(k); m.set(k, l);
+      if (m.size > cap) m.delete(m.keys().next().value);
+    },
+    /** true when still under the limit (and counts it); false when over. */
+    take(k) { if (this.blocked(k)) return false; this.hit(k); return true; }
+  };
 }
 
 function parseCookies(header) {
@@ -41,8 +57,10 @@ function parseCookies(header) {
 function createApp({ store, verify, config, rules }) {
   const cfg = Object.assign({
     siteRoot: path.resolve(__dirname, '..'),
-    clientId: '', baseUrl: '', sessionHours: 8, cookieSecure: true, cookieName: 'ccs_sid'
+    clientId: '', baseUrl: '', sessionHours: 8, cookieSecure: true, cookieName: ''
   }, config);
+  /* The __Host- prefix makes browsers accept the cookie only over https, from this host, for the whole site (no Domain). It cannot be used over plain http (local development). */
+  if (!cfg.cookieName) cfg.cookieName = cfg.cookieSecure ? '__Host-ccs_sid' : 'ccs_sid';
   const app = express();
   app.disable('x-powered-by');
   app.set('trust proxy', 1); // one hop: Apache on this VM
@@ -109,15 +127,27 @@ function createApp({ store, verify, config, rules }) {
     next();
   }
 
-  /* Simple per-address limit on sign-in attempts: 20 per 10 minutes. */
-  const attempts = new Map();
-  function limitLogins(req, res, next) {
-    const t = Date.now(), win = 10 * 60 * 1000;
-    const list = (attempts.get(req.ip) || []).filter((x) => t - x < win);
-    if (list.length >= 20) return res.status(429).json({ ok: false, error: 'Too many attempts. Try again in a few minutes.' });
-    list.push(t); attempts.set(req.ip, list);
-    if (attempts.size > 5000) attempts.clear();
-    next();
+  /* Limits. Many people on campus can share one outgoing address, so only FAILED sign-ins count, and the
+     limit is generous (60 per 10 minutes per address). Successful sign-ins never count. */
+  const failedLogins = makeLimiter(60, 10 * 60 * 1000);
+  const nonceLimiter = makeLimiter(120, 10 * 60 * 1000);
+  const auditGate = makeLimiter(10, 10 * 60 * 1000); // at most 10 "refused" log lines per address per 10 minutes, so the log cannot be flooded
+  const nonces = new Map(); // one-time numbers that tie a Google sign-in to this server: nonce -> expiry time
+  function newNonce() {
+    const t = Date.now();
+    for (const [k, exp] of nonces) { if (exp <= t) nonces.delete(k); else break; }
+    if (nonces.size >= 5000) nonces.delete(nonces.keys().next().value);
+    const n = crypto.randomBytes(24).toString('base64url');
+    nonces.set(n, t + 5 * 60 * 1000);
+    return n;
+  }
+  function useNonce(n) { // true once per nonce, only before it expires
+    const exp = typeof n === 'string' ? nonces.get(n) : undefined;
+    if (typeof n === 'string') nonces.delete(n);
+    return exp !== undefined && exp > Date.now();
+  }
+  function logRefused(req, email, event, detail) {
+    if (auditGate.take(req.ip)) store.audit(email || '', event, detail, req.ip);
   }
 
   /* ---------- API ---------- */
@@ -129,14 +159,31 @@ function createApp({ store, verify, config, rules }) {
     res.json({ ok: true, signedIn: true, email: req.user.email, name: req.user.name, role: req.user.role });
   });
 
-  // The page posts text/plain JSON ({ action: 'login', idToken }), the same message the old Apps Script prototype used.
-  app.post('/auth/google', limitLogins, sameOrigin, express.text({ type: '*/*', limit: '16kb' }), async (req, res) => {
+  /* Step 0 of a sign-in: the page asks for a one-time number, hands it to Google, and Google puts it inside the ID token.
+     A stolen or replayed token is then useless: its number was already used, or was never issued here. */
+  app.get('/auth/nonce', (req, res) => {
+    res.set('Cache-Control', 'no-store');
+    if (!nonceLimiter.take(req.ip)) return res.status(429).json({ ok: false, error: 'Too many attempts. Try again in a few minutes.' });
+    res.json({ ok: true, nonce: newNonce() });
+  });
+
+  // The page posts text/plain JSON ({ action: 'login', idToken, nonce }).
+  function blockedLogin(req, res, next) {
+    if (failedLogins.blocked(req.ip)) {
+      logRefused(req, '', 'rate_limited', 'sign-in');
+      return res.status(429).json({ ok: false, error: 'Too many attempts. Try again in a few minutes.' });
+    }
+    next();
+  }
+  app.post('/auth/google', sameOrigin, blockedLogin, express.text({ type: '*/*', limit: '16kb' }), async (req, res) => {
     res.set('Cache-Control', 'no-store');
     let body;
     try { body = JSON.parse(req.body); } catch (e) { body = null; }
-    if (!body || body.action !== 'login' || typeof body.idToken !== 'string') return res.status(400).json({ ok: false, error: 'Bad request' });
+    if (!body || body.action !== 'login' || typeof body.idToken !== 'string') { failedLogins.hit(req.ip); return res.status(400).json({ ok: false, error: 'Bad request' }); }
     try {
+      const nonceOk = useNonce(body.nonce);
       const who = await verify(body.idToken);
+      if (!nonceOk || who.nonce !== body.nonce) { const e = new Error('The sign-in expired. Please try again.'); e.reason = 'bad_nonce'; e.email = who.email; throw e; }
       const listed = store.getUser(who.email);
       const role = store.roleFor(who.email);
       const name = (listed && listed.name) || who.name || who.email;
@@ -145,6 +192,7 @@ function createApp({ store, verify, config, rules }) {
       store.audit(who.email, 'login_ok', 'role=' + role, req.ip);
       res.json({ ok: true, email: who.email, name, role });
     } catch (err) {
+      failedLogins.hit(req.ip);
       store.audit(err.email || '', 'login_denied', err.reason || 'error', req.ip);
       res.status(401).json({ ok: false, error: err.reason ? err.message : 'Sign-in failed' });
     }
@@ -166,6 +214,7 @@ function createApp({ store, verify, config, rules }) {
           'window.CCS.signin = window.CCS.signin || {};\n' +
           'window.CCS.signin.clientId = ' + JSON.stringify(cfg.clientId) + ';\n' +
           'window.CCS.signin.apiUrl = "/auth/google";\n' +
+          'window.CCS.signin.nonceUrl = "/auth/nonce";\n' +
           'window.CCS.signin.server = true;\n';
       }
       res.type('application/javascript').set('Cache-Control', 'no-cache').send(src);
@@ -179,9 +228,9 @@ function createApp({ store, verify, config, rules }) {
     try { p = decodeURIComponent(req.originalUrl.split('?')[0]); } catch (e) { return res.status(400).type('text').send('Bad request'); }
     if (p.includes('\0') || p.includes('\\') || p.split('/').includes('..')) return res.status(400).type('text').send('Bad request');
     p = path.posix.normalize(p);
-    if (!req.user) return res.status(401).type('text').send('Sign in to open this page');
+    if (!req.user) { logRefused(req, '', 'protected_denied', '401 ' + p); return res.status(401).type('text').send('Sign in to open this page'); }
     const allowed = access.rolesFor(p, rules);
-    if (!allowed || !allowed.includes(req.user.role)) return res.status(403).type('text').send('Your role cannot open this page');
+    if (!allowed || !allowed.includes(req.user.role)) { logRefused(req, req.user.email, 'protected_denied', '403 ' + req.user.role + ' ' + p); return res.status(403).type('text').send('Your role cannot open this page'); }
     next();
   }, express.static(path.join(cfg.siteRoot, 'protected'), { dotfiles: 'deny', index: false, redirect: false }));
 

@@ -6,6 +6,9 @@ See [Versions and restoring](README.md#versions-and-restoring).
 The release number comes from `release` in `assets/js/config.js` (it is no longer shown on the pages since 0.14.6; it still names the css and js files). Change it together with this file when you cut a new release.
 (`version: 'Draft v1'` is the draft stage of the whole site, not the release number.)
 
+## Unreleased (2026-11-09)
+- **Sign-in hardening (OWASP review):** one-time nonce tied to each Google sign-in (`GET /auth/nonce`; replayed or stolen tokens are refused); sign-in limit now counts only failures, 60 per 10 minutes per address, and no longer counts wrong-origin requests; at most 5 sessions per person; refused `/protected/` requests and rate-limit blocks are logged; audit lines older than `AUDIT_DAYS` (default 180) are deleted daily; session cookie renamed `__Host-ccs_sid` (everyone signs in again once). 21 tests. `npm audit` findings reviewed and accepted (not reachable).
+
 ## Unreleased (2026-11-06)
 - **Security headers:** the server now sends a Content-Security-Policy (with `base-uri 'self'`, `object-src 'none'`, `form-action 'self'`, `frame-ancestors 'self'`, scripts from this site and Google sign-in only) and `Strict-Transport-Security` when `BASE_URL` is https. New test (17 in total). Please check the live site's browser console after deploying.
 

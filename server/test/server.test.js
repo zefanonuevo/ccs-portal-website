@@ -29,8 +29,16 @@ async function start({ rules = [], siteRoot = REPO } = {}) {
   return { store, base, close: () => server.close() };
 }
 
-async function login(t, idToken, headers = {}) {
-  const res = await fetch(t.base + '/auth/google', { method: 'POST', headers: Object.assign({ Origin: ORIGIN, 'Content-Type': 'text/plain;charset=utf-8' }, headers), body: JSON.stringify({ action: 'login', idToken }) });
+async function getNonce(t) { return (await (await fetch(t.base + '/auth/nonce')).json()).nonce; }
+
+/** Signs in the way the page does: ask for a nonce, "Google" puts it in the token (the stub token is JSON), post both.
+    opts.nonce overrides what is sent in the request; opts.tokenNonce overrides what is inside the token. */
+async function login(t, idToken, headers = {}, opts = {}) {
+  const nonce = await getNonce(t);
+  let token = idToken;
+  try { const p = JSON.parse(idToken); if (p && typeof p === 'object') { p.nonce = 'tokenNonce' in opts ? opts.tokenNonce : nonce; token = JSON.stringify(p); } } catch (e) { /* not JSON: a forged token, sent as is */ }
+  const sent = 'nonce' in opts ? opts.nonce : nonce;
+  const res = await fetch(t.base + '/auth/google', { method: 'POST', headers: Object.assign({ Origin: ORIGIN, 'Content-Type': 'text/plain;charset=utf-8' }, headers), body: JSON.stringify({ action: 'login', idToken: token, nonce: sent }) });
   const setCookie = res.headers.get('set-cookie') || '';
   return { status: res.status, body: await res.json(), setCookie, cookie: setCookie.split(';')[0] };
 }
@@ -113,19 +121,63 @@ test('logout ends the session on the server', async () => {
 
 test('forged, expired and missing cookies are signed out', async () => {
   const t = await start();
-  assert.equal((await me(t, 'ccs_sid=forged')).signedIn, false);
+  assert.equal((await me(t, '__Host-ccs_sid=forged')).signedIn, false);
   assert.equal((await me(t)).signedIn, false);
   const expired = t.store.createSession('a.b@dlsu.edu.ph', 'A', -1); // already past its end time
-  assert.equal((await me(t, 'ccs_sid=' + expired.id)).signedIn, false, 'expired session');
+  assert.equal((await me(t, '__Host-ccs_sid=' + expired.id)).signedIn, false, 'expired session');
   const live = t.store.createSession('a.b@dlsu.edu.ph', 'A', 1);
-  assert.equal((await me(t, 'ccs_sid=' + live.id)).signedIn, true, 'control: a live session works');
+  assert.equal((await me(t, '__Host-ccs_sid=' + live.id)).signedIn, true, 'control: a live session works');
   t.close();
 });
 
-test('rate limit: 21st attempt from one address is refused', async () => {
+test('rate limit: only FAILED sign-ins count; the 61st failure from one address is refused, good sign-ins never count', async () => {
   const t = await start(); let last;
-  for (let i = 0; i < 21; i++) last = await login(t, 'not-a-token');
+  for (let i = 0; i < 25; i++) assert.equal((await login(t, tok('a.b@dlsu.edu.ph'))).status, 200, 'good sign-ins are not limited');
+  for (let i = 0; i < 61; i++) last = await login(t, 'not-a-token');
   assert.equal(last.status, 429);
+  assert.ok(t.store.lastAudit(500).some((r) => r.event === 'rate_limited'), 'the block is logged');
+  t.close();
+});
+
+test('rate limit: requests from the wrong origin do not use up the allowance', async () => {
+  const t = await start();
+  for (let i = 0; i < 70; i++) await fetch(t.base + '/auth/google', { method: 'POST', headers: { Origin: 'https://evil.test' }, body: '{}' });
+  assert.equal((await login(t, tok('a.b@dlsu.edu.ph'))).status, 200);
+  t.close();
+});
+
+test('nonce: a token without the right one-time number is refused, and a number works only once', async () => {
+  const t = await start();
+  assert.equal((await login(t, tok('a.b@dlsu.edu.ph'), {}, { nonce: 'made-up', tokenNonce: 'made-up' })).status, 401, 'number the server never issued');
+  assert.equal((await login(t, tok('a.b@dlsu.edu.ph'), {}, { nonce: undefined })).status, 401, 'no number sent');
+  const n = await getNonce(t);
+  assert.equal((await login(t, tok('a.b@dlsu.edu.ph'), {}, { nonce: n, tokenNonce: 'other' })).status, 401, 'token carries a different number');
+  const ok = await login(t, tok('a.b@dlsu.edu.ph'));
+  assert.equal(ok.status, 200);
+  // replay: the same token and the same nonce again
+  const n2 = await getNonce(t);
+  const body = JSON.stringify({ action: 'login', idToken: tok('a.b@dlsu.edu.ph', { nonce: n2 }), nonce: n2 });
+  const post = () => fetch(t.base + '/auth/google', { method: 'POST', headers: { Origin: ORIGIN, 'Content-Type': 'text/plain' }, body });
+  assert.equal((await post()).status, 200); assert.equal((await post()).status, 401, 'replay refused');
+  t.close();
+});
+
+test('a person keeps at most 5 sessions; the oldest are dropped', async () => {
+  const t = await start(); const ids = [];
+  for (let i = 0; i < 7; i++) ids.push(t.store.createSession('a.b@dlsu.edu.ph', 'A', 1).id);
+  assert.equal(t.store.findSession(ids[0]), null); assert.equal(t.store.findSession(ids[1]), null);
+  assert.ok(t.store.findSession(ids[6]));
+  t.close();
+});
+
+test('refused /protected requests are logged, and old audit lines can be pruned', async () => {
+  const t = await start();
+  await fetch(t.base + '/protected/x.html');
+  assert.ok(t.store.lastAudit(50).some((r) => r.event === 'protected_denied' && /^401 /.test(r.detail)));
+  t.store.audit('old@dlsu.edu.ph', 'login_ok', '', '1.1.1.1');
+  const before = t.store.lastAudit(500).length;
+  assert.equal(t.store.pruneAudit(-1), before, 'prune with a future cutoff removes all');
+  assert.equal(t.store.pruneAudit(180), 0);
   t.close();
 });
 
@@ -196,7 +248,7 @@ test('security headers: CSP with base-uri, HSTS on https, redirect stubs allowed
 });
 
 test('checkPayload', () => {
-  assert.deepEqual(checkPayload({ email: 'A.B@DLSU.edu.ph', hd: 'dlsu.edu.ph', email_verified: true, name: 'N' }, 'dlsu.edu.ph'), { email: 'a.b@dlsu.edu.ph', name: 'N' });
+  assert.deepEqual(checkPayload({ email: 'A.B@DLSU.edu.ph', hd: 'dlsu.edu.ph', email_verified: true, name: 'N' }, 'dlsu.edu.ph'), { email: 'a.b@dlsu.edu.ph', name: 'N', nonce: '' });
   assert.throws(() => checkPayload({ email: 'a@dlsu.edu.ph.evil.com', hd: 'dlsu.edu.ph', email_verified: true }, 'dlsu.edu.ph'), /@dlsu\.edu\.ph/);
   assert.throws(() => checkPayload({ email: 'a@dlsu.edu.ph', hd: 'dlsu.edu.ph', email_verified: 'false' }, 'dlsu.edu.ph'), /not verified/);
   assert.throws(() => checkPayload(null, 'dlsu.edu.ph'));
