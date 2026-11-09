@@ -125,7 +125,7 @@ docs/                  project documentation
 - Check the browser console for errors.
 - If `server/` changed: run `cd server && npm test`. Say that these tests use a stubbed Google check, so they do not prove real Google behaviour, Apache or Cloudflare.
 - For anything done on the VM, say which steps were run and which were not.
-- State what you checked and what you did not. The pages have no automated tests yet *(see Implementation Plan, Phase 2)*. The server has 13 (`server/test/server.test.js`).
+- State what you checked and what you did not. The pages have no automated tests yet *(see Implementation Plan, Phase 2)*. The server has 22 (`server/test/server.test.js`; run with `node --test --test-force-exit`).
 
 ## Security reminders
 
@@ -139,6 +139,10 @@ docs/                  project documentation
   the audience setting of the Google project (Internal or External in Testing).
 - **What the server enforces today:** sign-in, roles, and files under `protected/`. There are no rules yet, so nothing is protected. Role-restricted cards on the public pages
   are still in the page source until they are moved into `protected/` (rules 18 and 19).
+- **Verified on the live site, 2026-11-09:** one CSP header and HSTS; TLS 1.1 refused; sign-in works after the nonce change (audit `login_ok`).
+- **Release rule that bit us:** when `assets/js/*.js` or `css` changes, raise `release` in `config.js` and `?v=` in every page together. On 2026-11-09 an unchanged `?v=` left browsers on an old `site.js` and sign-in was refused (`bad_nonce`).
+- Do not add a Content-Security-Policy in Apache for the portal; the server sends it.
+- The session cookie is `__Host-ccs_sid` (`ccs_sid` only in local development). Sign-in needs the one-time number from `/auth/nonce`.
 - The GitHub Pages copy has no server and protects nothing.
 - Details and known gaps: [server/README.md](server/README.md) and [docs/Architecture.md](docs/Architecture.md) section 6.
 

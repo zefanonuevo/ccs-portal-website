@@ -6,6 +6,9 @@ See [Versions and restoring](README.md#versions-and-restoring).
 The release number comes from `release` in `assets/js/config.js` (it is no longer shown on the pages since 0.14.6; it still names the css and js files). Change it together with this file when you cut a new release.
 (`version: 'Draft v1'` is the draft stage of the whole site, not the release number.)
 
+## Unreleased (2026-11-09, documentation)
+- Docs brought up to date with the security work: test count (22), nonce lifetime (30 minutes, used up only by a successful sign-in), live check of the headers, no CSP from Apache, an Apache/TLS/Cloudflare checklist, GitHub repository settings, the OWASP review outcome in `docs/Architecture.md`, and the release rule that caused the 2026-11-09 sign-in lock-out. New `SECURITY.md`. No code or page changed, so the release stays 0.14.7.
+
 ## Unreleased (2026-11-09, clean-up)
 - Home page: removed the leftover "Draft v1" from the meta description and "in this draft" from the no-JavaScript message.
 - Planning docs: the PostgreSQL and TypeScript parts are marked as future design; the live portal uses SQLite. Decisions section added to `server/README.md` (Student Grants stays at `/scgss/`, audit period, SQLite).
