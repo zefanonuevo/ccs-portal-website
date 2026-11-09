@@ -152,6 +152,11 @@ test('nonce: a token without the right one-time number is refused, and a number 
   assert.equal((await login(t, tok('a.b@dlsu.edu.ph'), {}, { nonce: undefined })).status, 401, 'no number sent');
   const n = await getNonce(t);
   assert.equal((await login(t, tok('a.b@dlsu.edu.ph'), {}, { nonce: n, tokenNonce: 'other' })).status, 401, 'token carries a different number');
+  // a refused sign-in (wrong domain) does not use up the number: the same page can try again
+  const n3 = await getNonce(t);
+  assert.equal((await login(t, tok('x@gmail.com', { hd: undefined }), {}, { nonce: n3, tokenNonce: n3 })).status, 401);
+  assert.equal((await login(t, tok('a.b@dlsu.edu.ph'), {}, { nonce: n3, tokenNonce: n3 })).status, 200, 'same number still works after a refused attempt');
+  assert.equal((await login(t, tok('a.b@dlsu.edu.ph'), {}, { nonce: n3, tokenNonce: n3 })).status, 401, 'but not after a successful one');
   const ok = await login(t, tok('a.b@dlsu.edu.ph'));
   assert.equal(ok.status, 200);
   // replay: the same token and the same nonce again

@@ -6,6 +6,9 @@ See [Versions and restoring](README.md#versions-and-restoring).
 The release number comes from `release` in `assets/js/config.js` (it is no longer shown on the pages since 0.14.6; it still names the css and js files). Change it together with this file when you cut a new release.
 (`version: 'Draft v1'` is the draft stage of the whole site, not the release number.)
 
+## 0.14.7 - Sign-in fix (2026-11-09)
+- Fix: a refused sign-in no longer uses up the one-time number; it now lasts 30 minutes and is used up only by a successful sign-in. The error for a missing or unknown number says to reload the page. Release number raised so browsers fetch the new `site.js` (the same `?v=` had left some browsers on the old script, which sends no number).
+
 ## Unreleased (2026-11-09)
 - **Sign-in hardening (OWASP review):** one-time nonce tied to each Google sign-in (`GET /auth/nonce`; replayed or stolen tokens are refused); sign-in limit now counts only failures, 60 per 10 minutes per address, and no longer counts wrong-origin requests; at most 5 sessions per person; refused `/protected/` requests and rate-limit blocks are logged; audit lines older than `AUDIT_DAYS` (default 180) are deleted daily; session cookie renamed `__Host-ccs_sid` (everyone signs in again once). 21 tests. `npm audit` findings reviewed and accepted (not reachable).
 
