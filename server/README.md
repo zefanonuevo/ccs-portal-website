@@ -117,6 +117,29 @@ scripts only from this site and Google's sign-in script; the three tiny redirect
 Inline style attributes are used all over the pages, so `style-src` still allows `'unsafe-inline'`; scripts do not.
 To roll back quickly, set `Content-Security-Policy-Report-Only` instead of `Content-Security-Policy` in `server/app.js`.
 
+## Backups and restore
+The user list, sessions and audit log live in one SQLite file (`server/data/ccs.db`). `server/backup.js` copies it with SQLite's own backup (safe while the server runs), checks the copy, and keeps the newest 14 (`BACKUP_KEEP`) in `/var/backups/ccs-portal` (`BACKUP_DIR`). Copies are readable only by the service user because they hold emails.
+
+**Set up once (VM):**
+```
+sudo mkdir -p /var/backups/ccs-portal && sudo chown ccsportal:ccsportal /var/backups/ccs-portal && sudo chmod 700 /var/backups/ccs-portal
+cd /var/www/ccs-portal/server && sudo -u ccsportal node backup.js          # should print "Backup OK ... (73 people)"
+sudo cp deploy/ccs-portal-backup.cron /etc/cron.d/ccs-portal-backup && sudo chmod 644 /etc/cron.d/ccs-portal-backup
+```
+Check the next morning: `ls -l /var/backups/ccs-portal` and `journalctl -t ccs-portal-backup --since yesterday`. A line starting `Backup FAILED` means it did not work.
+
+**Restore** (for example after the database file is damaged or deleted):
+```
+sudo systemctl stop ccs-portal
+cd /var/www/ccs-portal/server/data && sudo -u ccsportal mv ccs.db ccs.db.broken; sudo rm -f ccs.db-wal ccs.db-shm
+sudo -u ccsportal cp /var/backups/ccs-portal/ccs-YYYYMMDD-HHMMSS.db ccs.db       # pick the newest good file; names are UTC
+sudo systemctl start ccs-portal
+cd .. && sudo -u ccsportal node users.js list                                      # check the people are there
+```
+Anyone added or changed after that backup has to be added again; sign-in sessions made after it are gone, so people sign in again.
+
+**Limit:** the copies sit on the same VM. If the VM's disk is lost, they are lost too. Copy `/var/backups/ccs-portal` to another place now and then (DLSU storage, or another machine with `rsync`), and treat the copies as personal data.
+
 ## Sign-in hardening (2026-11-09, from the OWASP review)
 - **Nonce.** The page first asks `GET /auth/nonce` for a one-time number (valid 5 minutes, used once), gives it to Google, and Google puts it inside the ID token. The server refuses a token whose number was not issued here, was already used, or does not match. A stolen or replayed token no longer signs anyone in.
 - **Limits.** Only failed sign-ins count: 60 per 10 minutes per address (campus users may share one address). Good sign-ins and wrong-origin requests never count. The table cannot grow without end. Each person keeps at most 5 live sessions; the oldest are dropped.
