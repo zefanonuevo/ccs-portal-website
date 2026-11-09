@@ -4,11 +4,13 @@
 this review unless marked verified. "Target" columns are **Proposed**. Labels are defined in [PRD.md](PRD.md). The contract every module
 follows is in [Architecture.md](Architecture.md) section 8.
 
+> The PostgreSQL schemas named in the "Target" columns are a future design, not built. The live portal uses SQLite (`server/README.md`).
+
 ## 1. Overview
 
 | Module | Repo | Door | Today | Version | Real data safe? |
 | --- | --- | --- | --- | --- | --- |
-| Portal shell | `ccs-portal-website` | all | Static site, live | 0.14.6 | Holds no personal data |
+| Portal shell | `ccs-portal-website` | all | Static site, live | 0.14.7 | Holds no personal data |
 | Request a Service (Task Tracker) | `ccs-task-tracker` | Services | Browser-only prototype | 2.7.0 | **No.** Simulated data in the browser. |
 | Student Grants (SCGSS) | `ccs-scgss` | Services | Browser-only simulation, optional Google backend | 2.1.0 | **No.** Do not enter real applicant data until the security work is done. |
 | Virtual Office registration | Google Form | Services | Live form, opened in a pop-up | n/a | Controlled by the form owner; not reviewed |

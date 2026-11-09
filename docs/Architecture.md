@@ -71,6 +71,8 @@ flowchart LR
 
 ## 4. Target architecture (Proposed)
 
+> **Future design, not built.** The live portal (section 2) uses one SQLite file on the VM, with no per-module database. PostgreSQL below is the plan for when the Task Tracker and Grants modules move onto the server and need many writers or data shared between modules.
+
 ```mermaid
 flowchart TB
   subgraph Edge[Edge: proxy sets security headers, TLS]
@@ -106,6 +108,8 @@ Phasing: nothing in this diagram is built. Implementation-Plan.md introduces it 
 throughout, and sections 5 to 10 can be adopted one at a time.
 
 ## 5. Technology stack (Proposed)
+
+> **Future design, not built.** Today: Node.js 22 with Express, SQLite, no TypeScript (see section 2). The rows below are recommendations for later.
 
 | Layer | Recommendation | Why |
 | --- | --- | --- |

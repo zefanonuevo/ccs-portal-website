@@ -6,6 +6,10 @@ See [Versions and restoring](README.md#versions-and-restoring).
 The release number comes from `release` in `assets/js/config.js` (it is no longer shown on the pages since 0.14.6; it still names the css and js files). Change it together with this file when you cut a new release.
 (`version: 'Draft v1'` is the draft stage of the whole site, not the release number.)
 
+## Unreleased (2026-11-09, clean-up)
+- Home page: removed the leftover "Draft v1" from the meta description and "in this draft" from the no-JavaScript message.
+- Planning docs: the PostgreSQL and TypeScript parts are marked as future design; the live portal uses SQLite. Decisions section added to `server/README.md` (Student Grants stays at `/scgss/`, audit period, SQLite).
+
 ## Unreleased (2026-11-09, backups)
 - New `server/backup.js` (online SQLite backup, integrity-checked, keeps 14), `server/deploy/ccs-portal-backup.cron`, and a "Backups and restore" section in `server/README.md`. Test added (22 in total).
 

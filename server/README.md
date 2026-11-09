@@ -147,6 +147,11 @@ Anyone added or changed after that backup has to be added again; sign-in session
 - **Cookie.** Renamed `__Host-ccs_sid` (https only, this host only, whole site). Everyone must sign in again once after deploying. In local development (`NODE_ENV=development`) the old name `ccs_sid` is used because the prefix needs https.
 - **Dependencies.** `npm audit` reports 2 moderate findings (`uuid` through `gaxios`, inside `google-auth-library`). The flaw is in `uuid` v3, v5 and v6 with a buffer argument; `gaxios` only calls `v4`, so it is not reachable. `npm audit fix` cannot clear it (checked 2026-11-09). Accepted until `google-auth-library` ships an update; re-check with `npm audit --omit=dev` after each dependency update.
 
+## Decisions
+- **2026-11-09, Student Grants stays at `/scgss/`** on the portal's address (served by Apache, not Node), instead of its own subdomain. Accepted risk: it shares the origin, so a script flaw in it could call the portal's `/api/me` or sign people out (the session cookie is HttpOnly and stays safe). **Revisit** when the Student Grants app changes how it handles scripts or user input, or when restricted content goes live on the portal; then move it to its own subdomain.
+- **2026-11-09, audit log kept 180 days** (`AUDIT_DAYS`, default). A placeholder until DLSU's data privacy office gives a period.
+- **SQLite, not PostgreSQL,** for the live portal: a few tables, one process, a few dozen people. Revisit if modules with many writers move onto this server.
+
 ## Known gaps (Decision needed)
 - The user list source: this uses SQLite. A Google Sheet sync is possible later; the server would read the local copy.
 - Guest rights (D7): guests are signed in with no extra rights. Nothing in `/protected/` allows them yet.
