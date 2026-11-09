@@ -144,5 +144,5 @@ docs/                  project documentation
 
 ## Known out-of-date statements (to fix; Decision needed)
 
-`docs/PRD.md` rows C8 and C10 describe the state at 0.12.0. The version in `docs/Implementation-Plan.md` and `docs/Module-Specifications.md` was refreshed to 0.14.6 on 2026-11-05,
+`docs/PRD.md` rows C8 and C10 describe the state at 0.12.0. The version in `docs/Implementation-Plan.md` and `docs/Module-Specifications.md` was refreshed to 0.14.7 on 2026-11-05,
 but their text still describes the plan, not the live VM. By the order of authority above, fix them in the documents rather than choosing between them.

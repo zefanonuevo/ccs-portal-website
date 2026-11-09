@@ -138,13 +138,15 @@ function createApp({ store, verify, config, rules }) {
     for (const [k, exp] of nonces) { if (exp <= t) nonces.delete(k); else break; }
     if (nonces.size >= 5000) nonces.delete(nonces.keys().next().value);
     const n = crypto.randomBytes(24).toString('base64url');
-    nonces.set(n, t + 5 * 60 * 1000);
+    nonces.set(n, t + 30 * 60 * 1000);
     return n;
   }
-  function useNonce(n) { // true once per nonce, only before it expires
-    const exp = typeof n === 'string' ? nonces.get(n) : undefined;
-    if (typeof n === 'string') nonces.delete(n);
-    return exp !== undefined && exp > Date.now();
+  /* A nonce is checked first and used up only when the whole sign-in succeeds, so a refused attempt (for example a personal Gmail)
+     does not make the person reload the page. After a success the same number can never be used again. */
+  function nonceState(n) { // 'ok' | 'missing' | 'unknown'
+    if (typeof n !== 'string' || !n) return 'missing';
+    const exp = nonces.get(n);
+    return exp !== undefined && exp > Date.now() ? 'ok' : 'unknown';
   }
   function logRefused(req, email, event, detail) {
     if (auditGate.take(req.ip)) store.audit(email || '', event, detail, req.ip);
@@ -181,9 +183,11 @@ function createApp({ store, verify, config, rules }) {
     try { body = JSON.parse(req.body); } catch (e) { body = null; }
     if (!body || body.action !== 'login' || typeof body.idToken !== 'string') { failedLogins.hit(req.ip); return res.status(400).json({ ok: false, error: 'Bad request' }); }
     try {
-      const nonceOk = useNonce(body.nonce);
+      const state = nonceState(body.nonce);
       const who = await verify(body.idToken);
-      if (!nonceOk || who.nonce !== body.nonce) { const e = new Error('The sign-in expired. Please try again.'); e.reason = 'bad_nonce'; e.email = who.email; throw e; }
+      const why = state !== 'ok' ? 'nonce_' + state : who.nonce !== body.nonce ? 'nonce_mismatch' : '';
+      if (why) { const e = new Error('Please reload this page (Ctrl+Shift+R) and sign in again.'); e.reason = why; e.email = who.email; throw e; }
+      nonces.delete(body.nonce); // used up: a replay of this token is refused
       const listed = store.getUser(who.email);
       const role = store.roleFor(who.email);
       const name = (listed && listed.name) || who.name || who.email;

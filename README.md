@@ -1,6 +1,6 @@
 # ccs-portal-website
 
-CCS Commons: the portal for the College of Computer Studies. **Release 0.14.6.** The pages are public and static. A small Node.js server on the CCS VM (see [server/README.md](server/README.md)) adds Google sign-in for DLSU accounts, roles and an audit log, but **no content is protected yet**: everything in the pages is still public, so do not put personal data in them. Separate prototype systems are linked, not embedded.
+CCS Commons: the portal for the College of Computer Studies. **Release 0.14.7.** The pages are public and static. A small Node.js server on the CCS VM (see [server/README.md](server/README.md)) adds Google sign-in for DLSU accounts, roles and an audit log, but **no content is protected yet**: everything in the pages is still public, so do not put personal data in them. Separate prototype systems are linked, not embedded.
 
 **Start here:** [AGENTS.md](AGENTS.md) (rules for changing the project) and the documents in [docs/](docs/): [PRD](docs/PRD.md), [Architecture](docs/Architecture.md), [Module specifications](docs/Module-Specifications.md), [UI/UX guidelines](docs/DESIGN.md) and [Implementation plan](docs/Implementation-Plan.md). Those documents are drafts awaiting owner approval; they label what exists and what is proposed.
 
