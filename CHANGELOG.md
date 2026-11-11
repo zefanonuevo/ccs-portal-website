@@ -6,6 +6,9 @@ See [Versions and restoring](README.md#versions-and-restoring).
 The release number comes from `release` in `assets/js/config.js` (it is no longer shown on the pages since 0.14.6; it still names the css and js files). Change it together with this file when you cut a new release.
 (`version: 'Draft v1'` is the draft stage of the whole site, not the release number.)
 
+## Unreleased (2026-11-11, documentation)
+- `server/README.md`: GitHub settings updated after the owner's check (security policy and `main` ruleset on; private vulnerability reporting and code scanning still to enable). Merged branches are to be deleted after each pull request. Docs only.
+
 ## Unreleased (2026-11-09, documentation)
 - Docs brought up to date with the security work: test count (22), nonce lifetime (30 minutes, used up only by a successful sign-in), live check of the headers, no CSP from Apache, an Apache/TLS/Cloudflare checklist, GitHub repository settings, the OWASP review outcome in `docs/Architecture.md`, and the release rule that caused the 2026-11-09 sign-in lock-out. New `SECURITY.md`. No code or page changed, so the release stays 0.14.7.
 
